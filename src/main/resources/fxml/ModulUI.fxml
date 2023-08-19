@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.lisa.studiumsorganisation.view.ModulUI">
+   <children>
+      <TableView fx:id="tableView" editable="true" layoutX="12.0" layoutY="64.0" prefHeight="209.0" prefWidth="575.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="pruefungsTerminColumn" prefWidth="136.0" text="Prüfungstermin" />
+            <TableColumn fx:id="praktikumBestandenColumn" prefWidth="75.0" text="Praktikum Bestanden" />
+            <TableColumn fx:id="modulBestandenColumn" prefWidth="75.0" text="Modulbestanden" />
+            <TableColumn fx:id="semesterColumn" prefWidth="75.0" text="Semester" />
+        </columns>
+      </TableView>
+      <Label layoutX="29.0" layoutY="29.0" text="Modul" />
+      <Button fx:id="saveButton" layoutX="38.0" layoutY="306.0" mnemonicParsing="false" onAction="#onSave" text="Speichern" />
+      <Button fx:id="addButton" layoutX="293.0" layoutY="306.0" mnemonicParsing="false" onAction="#onAdd" text="Hinzufügen" />
+   </children>
+</AnchorPane>
