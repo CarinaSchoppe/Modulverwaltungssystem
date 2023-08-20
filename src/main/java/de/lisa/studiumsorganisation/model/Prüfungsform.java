@@ -9,13 +9,13 @@ public enum Prüfungsform {
     SONSTIGES("Sonstiges");
 
     
-    private final String name;
+    private final String text;
 
-    Prüfungsform(String name) {
-        this.name = name;
+    Prüfungsform(String text) {
+        this.text = text;
     }
 
-    public String getName() {
-        return name;
+    public String getText() {
+        return text;
     }
 }

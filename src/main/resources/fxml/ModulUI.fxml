@@ -20,5 +20,7 @@
       <Label layoutX="29.0" layoutY="29.0" text="Modul" />
       <Button fx:id="saveButton" layoutX="38.0" layoutY="306.0" mnemonicParsing="false" onAction="#onSave" text="Speichern" />
       <Button fx:id="addButton" layoutX="293.0" layoutY="306.0" mnemonicParsing="false" onAction="#onAdd" text="Hinzufügen" />
+      <Button fx:id="praktikumOpen" layoutX="152.0" layoutY="306.0" mnemonicParsing="false" onAction="#onPraktikumOpen" text="Praktikum öffnen" />
+      <Button fx:id="examOpen" layoutX="412.0" layoutY="306.0" mnemonicParsing="false" onAction="#onExamOpen" text="Prüfung öffnen" />
    </children>
 </AnchorPane>
