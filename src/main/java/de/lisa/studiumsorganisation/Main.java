@@ -12,6 +12,8 @@ public class Main {
         //Database.getInstance().loadAllData();
         //starte UI
         MainUI.start(args);
+
+        //TODO: boolean sind nicht gespeichert bei der UI
     }
 
     private static void dummyData() {
