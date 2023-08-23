@@ -127,6 +127,8 @@ public class PrüfungsversucheUI implements Initializable {
         );
         //update the tableview checkboxes for the praktika and the prüfung
         pruefungNameText.setText(getPrüfung().getFach().getName());
+        pruefungsFormText.setText(getPrüfung().getPrüfungsform().getText());
+
     }
 
 
