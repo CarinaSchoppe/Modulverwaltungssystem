@@ -1,27 +1,34 @@
 package de.lisa.studiumsorganisation.model;
 
+
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
-public class Prüfung {
+public class Fach {
 
+    @Getter
+    private static int fachCounter = 0;
     private final int ID;
-    private Prüfungsform prüfungsform;
-    private static int prüfungCounter = 0;
     private final BooleanProperty bestandenProperty;
+    private String name;
+    private int semester;
     private boolean bestanden;
-    private int fachID;
+    private int credits;
+    private int modulID;
 
-    public Prüfung(int ID, Prüfungsform prüfungsform, int fachID, boolean bestanden) {
+    public Fach(int ID, String name, int semester, boolean bestanden, int credits, int modulID) {
         this.ID = ID;
-        this.prüfungsform = prüfungsform;
-        this.fachID = fachID;
+        this.name = name;
+        this.semester = semester;
         this.bestanden = bestanden;
+        this.credits = credits;
+        this.modulID = modulID;
+        if (ID > fachCounter) fachCounter = ID + 1;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
-        if (ID > prüfungCounter) prüfungCounter = ID + 1;
     }
 
     public boolean isBestanden() {
@@ -33,7 +40,9 @@ public class Prüfung {
         bestandenProperty.set(bestanden);
     }
 
-    public Fach getFach() {
-        return Utility.getInstance().getFächer().stream().filter(fach -> fach.getID() == fachID).findFirst().orElse(null);
+    public Modul getModul() {
+        return Utility.getInstance().getModule().stream().filter(modul -> modul.getID() == modulID).findFirst().orElse(null);
     }
+
+
 }

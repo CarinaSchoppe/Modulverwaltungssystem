@@ -1,30 +1,30 @@
 package de.lisa.studiumsorganisation.util;
 
-import de.lisa.studiumsorganisation.controller.Database;
-import de.lisa.studiumsorganisation.model.Modul;
-import de.lisa.studiumsorganisation.model.Praktikum;
-import de.lisa.studiumsorganisation.model.Prüfung;
+import de.lisa.studiumsorganisation.model.*;
 import lombok.Getter;
 
-import javax.xml.crypto.Data;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.logging.Handler;
 
 @Getter
 public class Utility {
 
 
-    private HashSet<Modul> module;
-    private HashSet<Prüfung> prüfungen;
-    private HashSet<Praktikum> praktika;
+    private final HashSet<Modul> module;
+    private final HashSet<Prüfung> prüfungen;
+    private final HashSet<Praktikum> praktika;
+    private final HashSet<Fach> fächer;
+    private final HashSet<Praktikumstermin> praktikumstermine;
+    private final HashSet<Prüfungsversuch> prüfungsversuche;
+    private final HashSet<Studiengang> studiengänge;
 
     private Utility() {
         module = new HashSet<>();
         prüfungen = new HashSet<>();
         praktika = new HashSet<>();
+        fächer = new HashSet<>();
+        praktikumstermine = new HashSet<>();
+        prüfungsversuche = new HashSet<>();
+        studiengänge = new HashSet<>();
         instance = this;
     }
 
@@ -37,5 +37,5 @@ public class Utility {
         return instance;
     }
 
-   
+
 }

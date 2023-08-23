@@ -5,23 +5,28 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Data;
 
+import java.sql.Time;
+import java.util.Date;
+
 @Data
-public class Prüfung {
+public class Praktikumstermin {
 
+    private static int praktikumsterminCounter = 0;
     private final int ID;
-    private Prüfungsform prüfungsform;
-    private static int prüfungCounter = 0;
     private final BooleanProperty bestandenProperty;
+    private int praktikumID;
+    private Date datum;
+    private Time uhrzeit;
     private boolean bestanden;
-    private int fachID;
 
-    public Prüfung(int ID, Prüfungsform prüfungsform, int fachID, boolean bestanden) {
+    public Praktikumstermin(int ID, int praktikumID, Date datum, Time uhrzeit, boolean bestanden) {
         this.ID = ID;
-        this.prüfungsform = prüfungsform;
-        this.fachID = fachID;
+        this.praktikumID = praktikumID;
+        this.datum = datum;
+        this.uhrzeit = uhrzeit;
         this.bestanden = bestanden;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
-        if (ID > prüfungCounter) prüfungCounter = ID + 1;
+        if (ID > praktikumsterminCounter) praktikumsterminCounter = ID + 1;
     }
 
     public boolean isBestanden() {
@@ -33,7 +38,8 @@ public class Prüfung {
         bestandenProperty.set(bestanden);
     }
 
-    public Fach getFach() {
-        return Utility.getInstance().getFächer().stream().filter(fach -> fach.getID() == fachID).findFirst().orElse(null);
+    public Praktikum getPraktikum() {
+        return Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getID() == praktikumID).findFirst().orElse(null);
     }
+
 }

@@ -1,30 +1,19 @@
 package de.lisa.studiumsorganisation.view;
 
-import java.io.IOException;
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
-import java.util.ResourceBundle;
-
-import de.lisa.studiumsorganisation.controller.Database;
 import de.lisa.studiumsorganisation.model.Modul;
 import de.lisa.studiumsorganisation.model.Praktikum;
-import de.lisa.studiumsorganisation.util.Utility;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class PraktikumUI implements Initializable {
 
@@ -32,64 +21,80 @@ public class PraktikumUI implements Initializable {
     private static Modul modul;
 
     @FXML
+    private Button addButton;
+    @FXML
+    private Button backButton;
+
+    @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
-
     @FXML
-    private Button add;
-
+    private TableColumn<Praktikum, Integer> numberColumn;
     @FXML
-    private Button back;
-
-    @FXML
-    private TableColumn<Praktikum, Boolean> bestandenColumn;
+    private CheckBox praktikumBestandenBox;
 
     @FXML
     private TableColumn<Praktikum, String> datumColumn;
-
     @FXML
-    private Label modulName;
-
+    private Label praktikumNameText;
     @FXML
-    private Button save;
-
+    private Button saveButton;
+    @FXML
+    private TableColumn<Praktikum, Boolean> terminBestandenColumn;
+    @FXML
+    private TableColumn<Praktikum, String> uhrzeitColumn;
     @FXML
     private TableView<Praktikum> tableview;
 
-    @FXML
-    private TableColumn<Praktikum, Integer> versuchColumn;
+    public static Modul getModul() {
+        return modul;
+    }
+
+    public static void setModul(Modul modul) {
+        PraktikumUI.modul = modul;
+    }
 
     @FXML
     void onAdd(ActionEvent event) {
-        modul.getPraktika().add(new Praktikum(Praktikum.getPraktikumCounter(), modul.getID(), false, new Date(), 0, modul));
-        updateTable();
+
     }
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
-        var primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        var root = (Parent)
-                FXMLLoader.load(
-                        Objects.requireNonNull(getClass().getResource("/fxml/ModulUI.fxml")));
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("Studiumsorganisation");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        var stage = (Stage) backButton.getScene().getWindow();
+        stage.close();
+        MainUI.getMainUI().start(stage);
+    }
+
+    @FXML
+    void onPraktikumBestanden(ActionEvent event) {
+
     }
 
     @FXML
     void onSave(ActionEvent event) {
-        Database.getInstance().saveAllData();
-        var alert = new Alert(Alert.AlertType.INFORMATION, "Daten gespeichert");
-        alert.showAndWait();
+
     }
 
+    @FXML
+    void initialize() {
+        assert addButton != null : "fx:id=\"addButton\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
+        assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
+        assert datumColumn != null : "fx:id=\"datumColumn\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
+        assert numberColumn != null : "fx:id=\"numberColumn\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
+        assert praktikumBestandenBox != null : "fx:id=\"praktikumBestandenBox\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
+        assert praktikumNameText != null : "fx:id=\"praktikumNameText\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
+        assert saveButton != null : "fx:id=\"saveButton\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
+        assert tableview != null : "fx:id=\"tableview\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
+        assert terminBestandenColumn != null : "fx:id=\"terminBestandenColumn\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
+        assert uhrzeitColumn != null : "fx:id=\"uhrzeitColumn\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
 
-    public void start(Stage primaryStage, Modul modul) throws IOException {
-        PraktikumUI.modul = modul;
-        var loader = new FXMLLoader(Praktikum.class.getResource("/fxml/PraktikumUI.fxml"));
+    }
+
+    public void start(Stage primaryStage) throws IOException {
+        var loader = new FXMLLoader(getClass().getResource("/fxml/PraktikumUI.fxml"));
         var root = (Parent) loader.load();
         primaryStage.setResizable(false);
         primaryStage.setTitle("Studiumsorganisation");
@@ -98,97 +103,16 @@ public class PraktikumUI implements Initializable {
         primaryStage.show();
     }
 
-    @FXML
-    void initialize() {
-        assert add != null : "fx:id=\"add\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
-        assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
-        assert bestandenColumn != null : "fx:id=\"bestandenColumn\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
-        assert datumColumn != null : "fx:id=\"datumColumn\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
-        assert modulName != null : "fx:id=\"modulName\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
-        assert save != null : "fx:id=\"save\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
-        assert tableview != null : "fx:id=\"tableview\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
-        assert versuchColumn != null : "fx:id=\"versuchColumn\" was not injected: check your FXML file 'PraktikumUI.fxml'.";
-        modulName.setText(modul.getName());
-    }
-
     private void updateTable() {
         tableview.getItems().clear();
-        tableview.getItems().addAll(modul.getPraktika());
+        tableview.getItems().addAll();
         //update the tableview checkboxes for the praktika and the prüfung
-    }
 
+
+    }
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        updateTable();
-        bestandenColumn.setCellValueFactory(cell -> cell.getValue().getBestandenProperty());
-
-        /*  
-    private Date datum;
-    private int versuch;
-    */
-
-        versuchColumn.setCellValueFactory(new PropertyValueFactory<>("versuch"));
-        datumColumn.setCellValueFactory(new PropertyValueFactory<>("datumString"));
-        //set the data for the tableview
-
-        bestandenColumn.setCellFactory(CheckBoxTableCell.forTableColumn(bestandenColumn));
-        bestandenColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<Praktikum, Boolean> newValue) ->
-                        (newValue.getTableView().getItems().get(
-                                newValue.getTablePosition().getRow())
-                        ).setBestanden(newValue.getNewValue())
-        );
-
-
-        StringConverter<Integer> converter = new StringConverter<>() {
-            @Override
-            public String toString(Integer value) {
-                return value != null ? value.toString() : "";
-            }
-
-            @Override
-            public Integer fromString(String string) {
-                try {
-                    return Integer.parseInt(string);
-                } catch (NumberFormatException e) {
-                    return null;
-                }
-            }
-        };
-
-
-        versuchColumn.setCellFactory(TextFieldTableCell.<Praktikum, Integer>forTableColumn(converter));
-        versuchColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<Praktikum, Integer> event) -> {
-                    Praktikum praktikum = event.getRowValue();
-                    praktikum.setVersuch(event.getNewValue());
-                }
-        );
-        final var sdf = new SimpleDateFormat("dd.MM.yyyy");
-
-        final StringConverter<Date> converterDate = new StringConverter<>() {
-            @Override
-            public String toString(Date object) {
-                return object != null ? sdf.format(object) : "";
-            }
-
-            @Override
-            public Date fromString(String string) {
-                try {
-                    return string != null ? sdf.parse(string) : null;
-                } catch (ParseException e) {
-                    // Handle exception (e.g., notify user of error)
-                    return null;
-                }
-            }
-        };
-
-        datumColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        datumColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<Praktikum, String> date) -> date.getTableView().getItems().get(
-                        date.getTablePosition().getRow()
-                ).setDatum(converterDate.fromString(date.getNewValue()))
-        );
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+  
 }
