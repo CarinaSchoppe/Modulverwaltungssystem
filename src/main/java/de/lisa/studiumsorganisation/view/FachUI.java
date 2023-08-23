@@ -34,6 +34,7 @@ public class FachUI implements Initializable {
     public static FachUI getFachUI() {
         return fachUI;
     }
+
     private static Modul modul;
     @FXML
     private ResourceBundle resources;
@@ -103,6 +104,7 @@ public class FachUI implements Initializable {
 
     @FXML
     void onSave(ActionEvent event) {
+//TODO: hier
 
     }
 
@@ -165,9 +167,8 @@ public class FachUI implements Initializable {
     void onPruefung(ActionEvent event) throws IOException {
         var selectedFach = tableview.getSelectionModel().getSelectedItem();
         if (selectedFach != null) {
-
-            PrüfungsversucheUI.setFach(selectedFach);
-            var prüfungUI = new PrüfungsversucheUI();
+            PrüfungsUI.setFach(selectedFach);
+            var prüfungUI = new PrüfungsUI();
             //get current stage based on the event
             var stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             stage.close();

@@ -1,7 +1,7 @@
 package de.lisa.studiumsorganisation.view;
 
-import de.lisa.studiumsorganisation.model.Fach;
 import de.lisa.studiumsorganisation.model.Prüfung;
+import de.lisa.studiumsorganisation.model.Prüfungsversuch;
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class PrüfungsversucheUI implements Initializable {
 
-    private static Fach fach;
+    private static Prüfung prüfung;
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -29,13 +29,13 @@ public class PrüfungsversucheUI implements Initializable {
     @FXML
     private Button backButton;
     @FXML
-    private TableColumn<Prüfung, String> datumColumn;
+    private TableColumn<Prüfungsversuch, String> datumColumn;
     @FXML
-    private TableColumn<Prüfung, Float> noteColumn;
+    private TableColumn<Prüfungsversuch, Float> noteColumn;
     @FXML
-    private TableColumn<Prüfung, Integer> numberColumn;
+    private TableColumn<Prüfungsversuch, Integer> numberColumn;
     @FXML
-    private TableColumn<Prüfung, Button> pruefungBestandenColumn;
+    private TableColumn<Prüfungsversuch, Button> pruefungBestandenColumn;
     @FXML
     private Label pruefungNameText;
     @FXML
@@ -43,18 +43,19 @@ public class PrüfungsversucheUI implements Initializable {
     @FXML
     private Button saveButton;
     @FXML
-    private TableView<Prüfung> tableview;
+    private TableView<Prüfungsversuch> tableview;
     @FXML
-    private TableColumn<Prüfung, String> uhrzeitColumn;
+    private TableColumn<Prüfungsversuch, String> uhrzeitColumn;
     @FXML
     private Button deleteButton;
 
-    public static Fach getFach() {
-        return fach;
+
+    public static Prüfung getPrüfung() {
+        return prüfung;
     }
 
-    public static void setFach(Fach fach) {
-        PrüfungsversucheUI.fach = fach;
+    public static void setPrüfung(Prüfung prüfung) {
+        PrüfungsversucheUI.prüfung = prüfung;
     }
 
     @FXML
@@ -84,12 +85,12 @@ public class PrüfungsversucheUI implements Initializable {
         //get current stage from event
         var stage = (Stage) backButton.getScene().getWindow();
         stage.close();
-        FachUI.getFachUI().start(stage);
+        PrüfungsUI.getPrüfungsUI().start(stage);
     }
 
     @FXML
     void onSave(ActionEvent event) {
-
+//TODO: hier
     }
 
     @FXML
@@ -106,6 +107,7 @@ public class PrüfungsversucheUI implements Initializable {
         assert saveButton != null : "fx:id=\"saveButton\" was not injected: check your FXML file 'PruefungsversucheUI.fxml'.";
         assert tableview != null : "fx:id=\"tableview\" was not injected: check your FXML file 'PruefungsversucheUI.fxml'.";
         assert uhrzeitColumn != null : "fx:id=\"uhrzeitColumn\" was not injected: check your FXML file 'PruefungsversucheUI.fxml'.";
+        pruefungsFormText.setText(getPrüfung().getPrüfungsform().getText());
     }
 
     public void start(Stage primaryStage) throws IOException {
@@ -121,11 +123,10 @@ public class PrüfungsversucheUI implements Initializable {
     private void updateTable() {
         tableview.getItems().clear();
         //get prüfungen based on ModulID -> FachID -> Prüfungen
-        tableview.getItems().addAll(
-                new HashSet<>(Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFachID() == fach.getID()).toList())
+        tableview.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungsversuche().stream().filter(p -> p.getPrüfungsID() == prüfung.getID()).toList())
         );
         //update the tableview checkboxes for the praktika and the prüfung
-        pruefungNameText.setText(fach.getName());
+        pruefungNameText.setText(getPrüfung().getFach().getName());
     }
 
 

@@ -101,6 +101,7 @@ public class PraktikumsversucheUI implements Initializable {
 
     @FXML
     void onSave(ActionEvent event) {
+//TODO: hier
 
     }
 
@@ -117,6 +118,7 @@ public class PraktikumsversucheUI implements Initializable {
         assert tableview != null : "fx:id=\"tableview\" was not injected: check your FXML file 'PraktikumsversucheUI.fxml'.";
         assert terminBestandenColumn != null : "fx:id=\"terminBestandenColumn\" was not injected: check your FXML file 'PraktikumsversucheUI.fxml'.";
         assert uhrzeitColumn != null : "fx:id=\"uhrzeitColumn\" was not injected: check your FXML file 'PraktikumsversucheUI.fxml'.";
+    
     }
 
     public void start(Stage primaryStage) throws IOException {
