@@ -28,9 +28,21 @@ public class Prüfung {
         return bestandenProperty.get();
     }
 
+
+    public static int getPrüfungCounter() {
+        return prüfungCounter;
+    }
+
+    public static void setPrüfungCounter(int prüfungCounter) {
+        Prüfung.prüfungCounter = prüfungCounter;
+    }
+
     public void setBestanden(boolean bestanden) {
         this.bestanden = bestanden;
         bestandenProperty.set(bestanden);
+        //go through all Prüfungsversuche and set them as bestanden
+        var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.ID).toList();
+        versuche.forEach(prüfungsversuch -> prüfungsversuch.setBestanden(bestanden));
     }
 
     public Fach getFach() {

@@ -22,6 +22,14 @@ public class Praktikum {
         if (ID > praktikumCounter) praktikumCounter = ID + 1;
     }
 
+    public static int getPraktikumCounter() {
+        return praktikumCounter;
+    }
+
+    public static void setPraktikumCounter(int praktikumCounter) {
+        Praktikum.praktikumCounter = praktikumCounter;
+    }
+
     public boolean isBestanden() {
         return bestandenProperty.get();
     }
@@ -30,6 +38,9 @@ public class Praktikum {
     public void setBestanden(boolean bestanden) {
         this.bestanden = bestanden;
         bestandenProperty.set(bestanden);
+        //go through all praktikumstermine and set them as bestanden
+        var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.ID).toList();
+        praktikumstermine.forEach(praktikumstermin -> praktikumstermin.setBestanden(bestanden));
     }
 
     public Fach getFach() {

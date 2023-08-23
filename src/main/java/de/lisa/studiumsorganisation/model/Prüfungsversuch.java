@@ -35,6 +35,11 @@ public class Prüfungsversuch {
         return bestandenProperty.get();
     }
 
+
+    public static int getPrüfungsversuchCounter() {
+        return prüfungsversuchCounter;
+    }
+
     public void setBestanden(boolean bestanden) {
         this.bestanden = bestanden;
         bestandenProperty.set(bestanden);

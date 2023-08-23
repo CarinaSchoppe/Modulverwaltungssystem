@@ -32,10 +32,20 @@ public class Fach {
     }
 
     public boolean isBestanden() {
-        return bestandenProperty.get();
+        var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFach().getID() == this.ID).toList();
+        if (prüfungen.isEmpty()) return false;
+        var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFach().getID() == this.ID).toList();
+        if (praktika.isEmpty()) return false;
+        return prüfungen.stream().allMatch(Prüfung::isBestanden) && praktika.stream().allMatch(Praktikum::isBestanden);
     }
 
     public void setBestanden(boolean bestanden) {
+        //get all prüfungen to this fach and set them as bestanden
+        var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFach().getID() == this.ID).toList();
+        prüfungen.forEach(prüfung -> prüfung.setBestanden(bestanden));
+        //get all praktika to this fach and set them as bestanden
+        var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFach().getID() == this.ID).toList();
+        praktika.forEach(praktikum -> praktikum.setBestanden(bestanden));
         this.bestanden = bestanden;
         bestandenProperty.set(bestanden);
     }

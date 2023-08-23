@@ -2,15 +2,15 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="447.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="de.lisa.studiumsorganisation.view.PrüfungUI">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="447.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="de.lisa.studiumsorganisation.view.PrüfungsversucheUI">
     <children>
-        <Label layoutX="14.0" layoutY="26.0" text="Prüfung"/>
+        <Label layoutX="14.0" layoutY="26.0" text="Fach"/>
         <Label fx:id="pruefungNameText" layoutX="73.0" layoutY="26.0" text="Test"/>
         <Label layoutX="449.0" layoutY="26.0" text="Prüfungsform:"/>
         <Label fx:id="pruefungsFormText" layoutX="540.0" layoutY="26.0" text="Test"/>
-        <TableView fx:id="tableview" layoutX="24.0" layoutY="84.0" prefHeight="253.0" prefWidth="524.0">
+        <TableView fx:id="tableview" editable="true" layoutX="24.0" layoutY="84.0" prefHeight="253.0" prefWidth="524.0">
             <columns>
-                <TableColumn fx:id="numberColumn" prefWidth="75.0" text="Nr"/>
+                <TableColumn fx:id="numberColumn" editable="false" prefWidth="75.0" text="Nr"/>
                 <TableColumn fx:id="datumColumn" prefWidth="75.0" text="Datum"/>
                 <TableColumn fx:id="uhrzeitColumn" prefWidth="75.0" text="Uhrzeit"/>
                 <TableColumn fx:id="noteColumn" prefWidth="75.0" text="Note"/>
@@ -20,5 +20,6 @@
         <Button fx:id="addButton" layoutX="47.0" layoutY="371.0" mnemonicParsing="false" onAction="#onAdd" text="Hinzufügen"/>
         <Button fx:id="saveButton" layoutX="154.0" layoutY="371.0" mnemonicParsing="false" onAction="#onSave" text="Speichern"/>
         <Button fx:id="backButton" layoutX="247.0" layoutY="371.0" mnemonicParsing="false" onAction="#onBack" text="Zurück"/>
+        <Button fx:id="deleteButton" layoutX="318.0" layoutY="371.0" mnemonicParsing="false" onAction="#onDelete" text="Löschen"/>
     </children>
 </AnchorPane>

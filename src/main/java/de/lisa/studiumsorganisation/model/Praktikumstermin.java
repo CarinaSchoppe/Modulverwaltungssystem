@@ -38,6 +38,10 @@ public class Praktikumstermin {
         bestandenProperty.set(bestanden);
     }
 
+    public static int getPraktikumsterminCounter() {
+        return praktikumsterminCounter;
+    }
+
     public Praktikum getPraktikum() {
         return Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getID() == praktikumID).findFirst().orElse(null);
     }
