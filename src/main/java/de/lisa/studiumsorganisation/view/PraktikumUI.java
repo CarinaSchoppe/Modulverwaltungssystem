@@ -137,7 +137,9 @@ public class PraktikumUI implements Initializable {
     void onAddPraktikum(ActionEvent event) {
         var praktikum = new Praktikum(Praktikum.getPraktikumCounter(), false, fach.getID());
         Utility.getInstance().getPraktika().add(praktikum);
-        updateTable();
+        tableviewPraktikum.getItems().add(praktikum);
+        tableviewPraktikum.refresh();
+        //TODO: das hier überall
     }
 
     @FXML
