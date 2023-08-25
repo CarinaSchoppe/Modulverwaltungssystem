@@ -99,7 +99,6 @@ public class MainUI extends Application implements Initializable {
 
         var fach = new Fach(Fach.getFachCounter(), "Neues Fach", 0, false, 0, modul.getID());
         Utility.getInstance().getFächer().add(fach);
-        updateTable();
         updateTableFach(modul);
     }
 
@@ -244,7 +243,6 @@ public class MainUI extends Application implements Initializable {
 
     private void updateTable() {
         tableviewModul.getItems().clear();
-        tableviewModul.getItems().addAll();
         //update the tableview checkboxes for the praktika and the prüfung
         tableviewModul.getItems().addAll(Utility.getInstance().getModule());
         tableviewModul.refresh();
