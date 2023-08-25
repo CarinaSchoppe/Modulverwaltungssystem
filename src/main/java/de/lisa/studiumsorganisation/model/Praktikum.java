@@ -19,7 +19,7 @@ public class Praktikum {
         this.bestanden = bestanden;
         this.fachID = fachID;
         this.bestandenProperty = new SimpleBooleanProperty(bestanden);
-        if (ID > praktikumCounter) praktikumCounter = ID + 1;
+        if (ID >= praktikumCounter) praktikumCounter = ID + 1;
     }
 
     public static int getPraktikumCounter() {

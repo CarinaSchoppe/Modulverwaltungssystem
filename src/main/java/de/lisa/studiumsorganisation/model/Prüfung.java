@@ -21,7 +21,7 @@ public class Prüfung {
         this.fachID = fachID;
         this.bestanden = bestanden;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
-        if (ID > prüfungCounter) prüfungCounter = ID + 1;
+        if (ID >= prüfungCounter) prüfungCounter = ID + 1;
     }
 
     public boolean isBestanden() {

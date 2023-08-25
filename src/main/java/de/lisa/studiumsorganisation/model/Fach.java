@@ -27,7 +27,7 @@ public class Fach {
         this.bestanden = bestanden;
         this.credits = credits;
         this.modulID = modulID;
-        if (ID > fachCounter) fachCounter = ID + 1;
+        if (ID >= fachCounter) fachCounter = ID + 1;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
     }
 

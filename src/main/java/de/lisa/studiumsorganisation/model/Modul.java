@@ -1,6 +1,8 @@
 package de.lisa.studiumsorganisation.model;
 
 import de.lisa.studiumsorganisation.util.Utility;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Data;
 
 @Data
@@ -11,13 +13,19 @@ public class Modul {
     private String name;
     private boolean bestanden;
     private int studiengangID;
+    private final BooleanProperty bestandenProperty;
+    private final BooleanProperty praktikaBestandenProperty;
+    private final BooleanProperty pruefungBestandenProperty;
 
     public Modul(int ID, String name, boolean bestanden, int studiengangID) {
         this.ID = ID;
         this.name = name;
         this.bestanden = bestanden;
+        bestandenProperty = new SimpleBooleanProperty(bestanden);
+        praktikaBestandenProperty = new SimpleBooleanProperty(getPraktikaBestanden());
+        pruefungBestandenProperty = new SimpleBooleanProperty(getPrüfungBestanden());
         this.studiengangID = studiengangID;
-        if (ID > modulCounter) modulCounter = ID + 1;
+        if (ID >= modulCounter) modulCounter = ID + 1;
     }
 
     public Studiengang getStudiengang() {
@@ -66,8 +74,8 @@ public class Modul {
 
     public void setBestanden(boolean bestanden) {
         this.bestanden = bestanden;
+        bestandenProperty.set(bestanden);
         if (bestanden) {
-            this.bestanden = true;
             setPraktikaBestanden(true);
             setPrüfungenBestanden(true);
         }

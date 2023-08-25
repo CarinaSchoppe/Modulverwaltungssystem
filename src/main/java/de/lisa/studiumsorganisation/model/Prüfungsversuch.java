@@ -27,7 +27,7 @@ public class Prüfungsversuch {
         this.bestanden = bestanden;
         this.note = note;
         this.prüfungsID = prüfungsID;
-        if (ID > prüfungsversuchCounter) prüfungsversuchCounter = ID + 1;
+        if (ID >= prüfungsversuchCounter) prüfungsversuchCounter = ID + 1;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
     }
 

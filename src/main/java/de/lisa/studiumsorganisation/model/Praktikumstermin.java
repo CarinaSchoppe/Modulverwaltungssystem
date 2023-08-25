@@ -26,7 +26,7 @@ public class Praktikumstermin {
         this.uhrzeit = uhrzeit;
         this.bestanden = bestanden;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
-        if (ID > praktikumsterminCounter) praktikumsterminCounter = ID + 1;
+        if (ID >= praktikumsterminCounter) praktikumsterminCounter = ID + 1;
     }
 
     public boolean isBestanden() {
