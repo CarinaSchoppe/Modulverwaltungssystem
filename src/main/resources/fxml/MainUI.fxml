@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="de.lisa.studiumsorganisation.view.MainUI">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="de.lisa.studiumsorganisation.view.MainUI">
     <children>
         <TableView fx:id="tableview" editable="true" layoutX="31.0" layoutY="58.0" prefHeight="200.0" prefWidth="539.0">
             <columns>
@@ -14,11 +14,25 @@
         </TableView>
         <Button fx:id="addButton" layoutX="57.0" layoutY="271.0" mnemonicParsing="false" onAction="#onAdd" text="Hinzufügen"/>
         <Button fx:id="speichernButton" layoutX="182.0" layoutY="271.0" mnemonicParsing="false" onAction="#onSpeichern" text="Speichern"/>
-        <Button fx:id="fachInfosButton" layoutX="291.0" layoutY="271.0" mnemonicParsing="false" onAction="#onFachInfos" text="Fach"/>
         <Label layoutX="31.0" layoutY="23.0" text="Studiengang"/>
         <Label fx:id="studiengangText" layoutX="115.0" layoutY="23.0" text="test"/>
         <Label layoutX="407.0" layoutY="275.0" text="Gesamt ECTS: "/>
         <Label fx:id="ectsText" layoutX="507.0" layoutY="275.0" text="40 / 210"/>
-        <Button fx:id="deleteButton" layoutX="66.0" layoutY="326.0" mnemonicParsing="false" onAction="#onDelete" text="Löschen"/>
+        <Button fx:id="deleteButton" layoutX="283.0" layoutY="271.0" mnemonicParsing="false" onAction="#onDelete" text="Löschen"/>
+        <TableView fx:id="tableview1" editable="true" layoutX="29.0" layoutY="356.0" prefHeight="213.0" prefWidth="544.0">
+            <columns>
+                <TableColumn fx:id="fachnameColumn" prefWidth="75.0" text="Fach Name"/>
+                <TableColumn fx:id="semesterColumn" prefWidth="75.0" text="Semester"/>
+                <TableColumn fx:id="ectsColumn" prefWidth="75.0" text="ECTS"/>
+                <TableColumn fx:id="fachBestandenColumn" prefWidth="75.0" text="Fach Bestanden"/>
+            </columns>
+        </TableView>
+        <Label layoutX="31.0" layoutY="324.0" text="Modul"/>
+        <Label fx:id="modulNameText" layoutX="84.0" layoutY="324.0" text="Test"/>
+        <Button fx:id="addButton1" layoutX="29.0" layoutY="631.0" mnemonicParsing="false" onAction="#onAdd" text="Hinzufügen"/>
+        <Button fx:id="saveButton" layoutX="136.0" layoutY="631.0" mnemonicParsing="false" onAction="#onSave" text="Speichern"/>
+        <Button fx:id="pruefungButton" layoutX="225.0" layoutY="631.0" mnemonicParsing="false" onAction="#onPruefung" text="Prüfung"/>
+        <Button fx:id="praktikumButton" layoutX="311.0" layoutY="631.0" mnemonicParsing="false" onAction="#onPraktikum" text="Praktikum"/>
+        <Button fx:id="deleteButton1" layoutX="407.0" layoutY="631.0" mnemonicParsing="false" onAction="#onDelete" text="Löschen"/>
     </children>
 </AnchorPane>
