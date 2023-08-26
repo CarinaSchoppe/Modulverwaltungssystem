@@ -17,14 +17,12 @@ public class Praktikumstermin {
     private int praktikumID;
     private Date datum;
     private Time uhrzeit;
-    private boolean bestanden;
 
     public Praktikumstermin(int ID, int praktikumID, Date datum, Time uhrzeit, boolean bestanden) {
         this.ID = ID;
         this.praktikumID = praktikumID;
         this.datum = datum;
         this.uhrzeit = uhrzeit;
-        this.bestanden = bestanden;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
         if (ID >= praktikumsterminCounter) praktikumsterminCounter = ID + 1;
     }
@@ -34,7 +32,6 @@ public class Praktikumstermin {
     }
 
     public void setBestanden(boolean bestanden) {
-        this.bestanden = bestanden;
         bestandenProperty.set(bestanden);
     }
 

@@ -16,7 +16,6 @@ public class Prüfungsversuch {
     private int ID;
     private Date datum;
     private Time uhrzeit;
-    private boolean bestanden;
     private float note;
     private int prüfungsID;
 
@@ -24,7 +23,6 @@ public class Prüfungsversuch {
         this.ID = ID;
         this.datum = datum;
         this.uhrzeit = uhrzeit;
-        this.bestanden = bestanden;
         this.note = note;
         this.prüfungsID = prüfungsID;
         if (ID >= prüfungsversuchCounter) prüfungsversuchCounter = ID + 1;
@@ -41,7 +39,6 @@ public class Prüfungsversuch {
     }
 
     public void setBestanden(boolean bestanden) {
-        this.bestanden = bestanden;
         bestandenProperty.set(bestanden);
     }
 

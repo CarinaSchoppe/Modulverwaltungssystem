@@ -12,19 +12,21 @@ public class Prüfung {
     private Prüfungsform prüfungsform;
     private static int prüfungCounter = 0;
     private final BooleanProperty bestandenProperty;
-    private boolean bestanden;
     private int fachID;
 
     public Prüfung(int ID, Prüfungsform prüfungsform, int fachID, boolean bestanden) {
         this.ID = ID;
         this.prüfungsform = prüfungsform;
         this.fachID = fachID;
-        this.bestanden = bestanden;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
         if (ID >= prüfungCounter) prüfungCounter = ID + 1;
     }
 
     public boolean isBestanden() {
+        //get all prüfungsversuche to this prüfung and check if all are bestanden
+        var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.ID).toList();
+        if (versuche.isEmpty()) return false;
+        bestandenProperty.set(versuche.stream().allMatch(Prüfungsversuch::isBestanden));
         return bestandenProperty.get();
     }
 
@@ -38,7 +40,6 @@ public class Prüfung {
     }
 
     public void setBestanden(boolean bestanden) {
-        this.bestanden = bestanden;
         bestandenProperty.set(bestanden);
         //go through all Prüfungsversuche and set them as bestanden
         var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.ID).toList();

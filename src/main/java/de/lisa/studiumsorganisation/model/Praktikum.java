@@ -9,14 +9,12 @@ import lombok.Data;
 public class Praktikum {
 
     private final int ID;
-    private boolean bestanden;
     private final BooleanProperty bestandenProperty;
     private static int praktikumCounter = 0;
     private int fachID;
 
     public Praktikum(int ID, boolean bestanden, int fachID) {
         this.ID = ID;
-        this.bestanden = bestanden;
         this.fachID = fachID;
         this.bestandenProperty = new SimpleBooleanProperty(bestanden);
         if (ID >= praktikumCounter) praktikumCounter = ID + 1;
@@ -31,12 +29,14 @@ public class Praktikum {
     }
 
     public boolean isBestanden() {
+        var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.ID).toList();
+        if (praktikumstermine.isEmpty()) return false;
+        bestandenProperty.set(praktikumstermine.stream().allMatch(Praktikumstermin::isBestanden));
         return bestandenProperty.get();
     }
 
 
     public void setBestanden(boolean bestanden) {
-        this.bestanden = bestanden;
         bestandenProperty.set(bestanden);
         //go through all praktikumstermine and set them as bestanden
         var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.ID).toList();

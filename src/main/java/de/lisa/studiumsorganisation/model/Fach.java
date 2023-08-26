@@ -36,7 +36,8 @@ public class Fach {
         if (prüfungen.isEmpty()) return false;
         var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFach().getID() == this.ID).toList();
         if (praktika.isEmpty()) return false;
-        return prüfungen.stream().allMatch(Prüfung::isBestanden) && praktika.stream().allMatch(Praktikum::isBestanden);
+        bestandenProperty.set(prüfungen.stream().allMatch(Prüfung::isBestanden) && praktika.stream().allMatch(Praktikum::isBestanden));
+        return bestandenProperty.get();
     }
 
     public void setBestanden(boolean bestanden) {
