@@ -111,6 +111,7 @@ public class PraktikumUI implements Initializable {
         var time = Time.valueOf("00:00:00");
         var versuch = new Praktikumstermin(Praktikumstermin.getPraktikumsterminCounter(), praktikum.getID(), java.sql.Date.valueOf(date), time, false);
         Utility.getInstance().getPraktikumstermine().add(versuch);
+        praktikum.isBestanden();
         updateTerminTable(praktikum);
     }
 
@@ -121,6 +122,10 @@ public class PraktikumUI implements Initializable {
         if (versuch != null) {
             Utility.getInstance().getPrüfungsversuche().remove(versuch);
             tableviewTermin.getItems().remove(versuch);
+            var praktikum = tableviewPraktikum.getSelectionModel().getSelectedItem();
+            if (praktikum != null) {
+                praktikum.isBestanden();
+            }
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -141,6 +146,7 @@ public class PraktikumUI implements Initializable {
         var praktikum = new Praktikum(Praktikum.getPraktikumCounter(), false, fach.getID());
         Utility.getInstance().getPraktika().add(praktikum);
         tableviewPraktikum.getItems().add(praktikum);
+        fach.isBestanden();
         tableviewPraktikum.refresh();
         //TODO: das hier überall
     }
@@ -157,6 +163,7 @@ public class PraktikumUI implements Initializable {
         if (item != null) {
             Utility.getInstance().getPraktikumstermine().removeIf(termin -> termin.getPraktikumID() == item.getID());
             Utility.getInstance().getPraktika().remove(item);
+            fach.isBestanden();
             tableviewPraktikum.getItems().remove(item);
             //delete all corresponding praktikumstermine
         } else {
@@ -241,10 +248,18 @@ public class PraktikumUI implements Initializable {
     private void initPraktikumTable() {
         numberColumnPraktikum.setCellValueFactory(new PropertyValueFactory<>("ID"));
         praktikumBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
-        praktikumBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
-        praktikumBestandenColumn.setOnEditCommit(event -> {
-            var praktikum = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            praktikum.setBestanden(event.getNewValue().get());
+        praktikumBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
+            @Override
+            public void updateItem(BooleanProperty item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    CheckBox checkBox = (CheckBox) this.getGraphic();
+                    checkBox.setOnAction(e -> {
+                        var praktikum = getTableView().getItems().get(getIndex());
+                        praktikum.setBestanden(checkBox.isSelected());
+                    });
+                }
+            }
         });
         tableviewPraktikum.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> updateTerminTable(newSelection));
         updateTable();
@@ -253,10 +268,18 @@ public class PraktikumUI implements Initializable {
     private void initPraktikumsterminTable() {
         numberColumnTermin.setCellValueFactory(new PropertyValueFactory<>("ID"));
         terminBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
-        terminBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
-        terminBestandenColumn.setOnEditCommit(event -> {
-            var praktikumsTermin = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            praktikumsTermin.setBestanden(event.getNewValue().get());
+        terminBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
+            @Override
+            public void updateItem(BooleanProperty item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    CheckBox checkBox = (CheckBox) this.getGraphic();
+                    checkBox.setOnAction(e -> {
+                        var praktikumstermin = getTableView().getItems().get(getIndex());
+                        praktikumstermin.setBestanden(checkBox.isSelected());
+                    });
+                }
+            }
         });
 
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("datum"));

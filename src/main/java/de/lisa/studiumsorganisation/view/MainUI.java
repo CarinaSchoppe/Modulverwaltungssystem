@@ -101,6 +101,7 @@ public class MainUI extends Application implements Initializable {
 
         var fach = new Fach(Fach.getFachCounter(), "Neues Fach", 0, false, 0, modul.getID());
         Utility.getInstance().getFächer().add(fach);
+        modul.isBestanden();
         updateTableFach(modul);
     }
 
@@ -120,6 +121,10 @@ public class MainUI extends Application implements Initializable {
             Utility.getInstance().getPraktikumstermine().removeAll(praktikumstermine);
             Utility.getInstance().getFächer().remove(selectedFach);
             tableviewFach.getItems().remove(selectedFach);
+            var modul = tableviewModul.getSelectionModel().getSelectedItem();
+            if (modul != null) {
+                modul.isBestanden();
+            }
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -279,7 +284,6 @@ public class MainUI extends Application implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
-        System.out.println("test");
         initModulTable();
         initFachTable();
     }
@@ -292,22 +296,49 @@ public class MainUI extends Application implements Initializable {
         ).setName(element.getNewValue()));
 
         pruefungBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("pruefungBestandenProperty"));
-        pruefungBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
-        pruefungBestandenColumn.setOnEditCommit(result -> (result.getTableView().getItems().get(
-                result.getTablePosition().getRow())
-        ).setPrüfungenBestanden(result.getNewValue().get()));
+        pruefungBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
+            @Override
+            public void updateItem(BooleanProperty item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    CheckBox checkBox = (CheckBox) this.getGraphic();
+                    checkBox.setOnAction(e -> {
+                        var modul = getTableView().getItems().get(getIndex());
+                        modul.setPrüfungenBestanden(checkBox.isSelected());
+                    });
+                }
+            }
+        });
 
         praktikaBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("praktikaBestandenProperty"));
-        praktikaBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
-        praktikaBestandenColumn.setOnEditCommit(result -> (result.getTableView().getItems().get(
-                result.getTablePosition().getRow())
-        ).setPraktikaBestanden(result.getNewValue().get()));
+        praktikaBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
+            @Override
+            public void updateItem(BooleanProperty item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    CheckBox checkBox = (CheckBox) this.getGraphic();
+                    checkBox.setOnAction(e -> {
+                        var modul = getTableView().getItems().get(getIndex());
+                        modul.setPraktikaBestanden(checkBox.isSelected());
+                    });
+                }
+            }
+        });
 
         modulBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
-        modulBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
-        modulBestandenColumn.setOnEditCommit(result -> (result.getTableView().getItems().get(
-                result.getTablePosition().getRow())
-        ).setBestanden(result.getNewValue().get()));
+        modulBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
+            @Override
+            public void updateItem(BooleanProperty item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    CheckBox checkBox = (CheckBox) this.getGraphic();
+                    checkBox.setOnAction(e -> {
+                        var modul = getTableView().getItems().get(getIndex());
+                        modul.setBestanden(checkBox.isSelected());
+                    });
+                }
+            }
+        });
 
         tableviewModul.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> updateTableFach(newSelection));
         updateTable();
@@ -335,11 +366,20 @@ public class MainUI extends Application implements Initializable {
         });
 
         fachBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
-        fachBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
-        fachBestandenColumn.setOnEditCommit(event -> {
-            Fach fach = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            fach.setBestanden(event.getNewValue().get());
+        fachBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
+            @Override
+            public void updateItem(BooleanProperty item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    CheckBox checkBox = (CheckBox) this.getGraphic();
+                    checkBox.setOnAction(e -> {
+                        var fach = getTableView().getItems().get(getIndex());
+                        fach.setBestanden(checkBox.isSelected());
+                    });
+                }
+            }
         });
+
 
     }
 }

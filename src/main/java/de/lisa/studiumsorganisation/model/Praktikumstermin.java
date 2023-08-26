@@ -33,6 +33,7 @@ public class Praktikumstermin {
 
     public void setBestanden(boolean bestanden) {
         bestandenProperty.set(bestanden);
+        getPraktikum().isBestanden();
     }
 
     public static int getPraktikumsterminCounter() {

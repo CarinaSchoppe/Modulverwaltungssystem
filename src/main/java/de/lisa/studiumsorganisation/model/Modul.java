@@ -70,19 +70,20 @@ public class Modul {
         praktika.forEach(praktikum -> praktikum.setBestanden(bestanden));
     }
 
-    public void setBestanden(boolean bestanden) {
-        bestandenProperty.set(bestanden);
-        if (bestanden) {
-            setPraktikaBestanden(true);
-            setPrüfungenBestanden(true);
-        }
-    }
-
     public boolean isBestanden() {
         var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
         if (fächer.isEmpty()) return false;
-        bestandenProperty.set(fächer.stream().allMatch(Fach::isBestanden));
+        bestandenProperty.set(fächer.stream().allMatch(it -> it.getBestandenProperty().get()));
         return bestandenProperty.get();
+    }
+
+    public void setBestanden(boolean bestanden) {
+        bestandenProperty.set(bestanden);
+        if (bestanden) {
+            var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+            if (fächer.isEmpty()) return;
+            fächer.forEach(fach -> fach.setBestanden(true));
+        }
     }
 
     @Override

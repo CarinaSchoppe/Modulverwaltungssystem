@@ -31,7 +31,8 @@ public class Praktikum {
     public boolean isBestanden() {
         var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.ID).toList();
         if (praktikumstermine.isEmpty()) return false;
-        bestandenProperty.set(praktikumstermine.stream().allMatch(Praktikumstermin::isBestanden));
+        bestandenProperty.set(praktikumstermine.stream().allMatch(it -> it.getBestandenProperty().get()));
+        getFach().isBestanden();
         return bestandenProperty.get();
     }
 
@@ -41,6 +42,7 @@ public class Praktikum {
         //go through all praktikumstermine and set them as bestanden
         var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.ID).toList();
         praktikumstermine.forEach(praktikumstermin -> praktikumstermin.setBestanden(bestanden));
+        getFach().isBestanden();
     }
 
     public Fach getFach() {

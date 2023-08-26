@@ -26,7 +26,8 @@ public class Prüfung {
         //get all prüfungsversuche to this prüfung and check if all are bestanden
         var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.ID).toList();
         if (versuche.isEmpty()) return false;
-        bestandenProperty.set(versuche.stream().allMatch(Prüfungsversuch::isBestanden));
+        bestandenProperty.set(versuche.stream().allMatch(it -> it.getBestandenProperty().get()));
+        getFach().isBestanden();
         return bestandenProperty.get();
     }
 
@@ -35,15 +36,14 @@ public class Prüfung {
         return prüfungCounter;
     }
 
-    public static void setPrüfungCounter(int prüfungCounter) {
-        Prüfung.prüfungCounter = prüfungCounter;
-    }
+
 
     public void setBestanden(boolean bestanden) {
         bestandenProperty.set(bestanden);
         //go through all Prüfungsversuche and set them as bestanden
         var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.ID).toList();
         versuche.forEach(prüfungsversuch -> prüfungsversuch.setBestanden(bestanden));
+        getFach().isBestanden();
     }
 
     public Fach getFach() {

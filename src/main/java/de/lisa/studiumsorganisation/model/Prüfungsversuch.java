@@ -40,6 +40,7 @@ public class Prüfungsversuch {
 
     public void setBestanden(boolean bestanden) {
         bestandenProperty.set(bestanden);
+        getPrüfung().isBestanden();
     }
 
     public Prüfung getPrüfung() {

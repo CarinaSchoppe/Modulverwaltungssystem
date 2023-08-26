@@ -108,6 +108,7 @@ public class PrüfungsUI implements Initializable {
         Time time = new Time(date.getTime());
         var versuch = new Prüfungsversuch(Prüfungsversuch.getPrüfungsversuchCounter(), date, time, false, 5.0F, prüfung.getID());
         Utility.getInstance().getPrüfungsversuche().add(versuch);
+        prüfung.isBestanden();
         updateTableVersuch(prüfung);
     }
 
@@ -118,6 +119,8 @@ public class PrüfungsUI implements Initializable {
         if (versuch != null) {
             Utility.getInstance().getPrüfungen().remove(versuch);
             //remove from tabeview
+            var prüfung = tableviewPruefung.getSelectionModel().getSelectedItem();
+            if (prüfung != null) prüfung.isBestanden();
             tableviewVersuch.getItems().remove(versuch);
 
         } else {
@@ -142,6 +145,7 @@ public class PrüfungsUI implements Initializable {
     void onAddPruefung(ActionEvent event) {
         var prüfung = new Prüfung(Prüfung.getPrüfungCounter(), Prüfungsform.KLAUSUR, fach.getID(), false);
         Utility.getInstance().getPrüfungen().add(prüfung);
+        fach.isBestanden();
         updateTablePruefung();
     }
 
@@ -157,9 +161,10 @@ public class PrüfungsUI implements Initializable {
         if (item != null) {
             //delete all corresponding Prüfungsversuche
             Utility.getInstance().getPrüfungsversuche().removeIf(prüfungsversuch -> prüfungsversuch.getPrüfungsID() == item.getID());
-            
+
             Utility.getInstance().getPraktika().remove(item);
             tableviewPruefung.getItems().remove(item);
+            fach.isBestanden();
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -238,16 +243,27 @@ public class PrüfungsUI implements Initializable {
     private void initPruefungsTable() {
         numberPruefungColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
         pruefungBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
-        pruefungBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
-        pruefungBestandenColumn.setOnEditCommit(event ->
-                event.getTableView().getItems().get(event.getTablePosition().getRow()).setBestanden(event.getNewValue().get())
-        );
+        pruefungBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
+            @Override
+            public void updateItem(BooleanProperty item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    CheckBox checkBox = (CheckBox) this.getGraphic();
+                    checkBox.setOnAction(e -> {
+                        var prüfung = getTableView().getItems().get(getIndex());
+                        prüfung.setBestanden(checkBox.isSelected());
+                    });
+                }
+            }
+        });
         pruefungsFormColumn.setCellValueFactory(pruefung -> new SimpleObjectProperty<>(pruefung.getValue().getPrüfungsform()));
         pruefungsFormColumn.setCellFactory(ComboBoxTableCell.forTableColumn(Prüfungsform.values()));
         pruefungsFormColumn.setOnEditCommit(event -> {
             var pruefung = event.getRowValue();
             pruefung.setPrüfungsform(event.getNewValue());
         });
+
+
         tableviewPruefung.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> updateTableVersuch(newSelection));
 
         updateTablePruefung();
@@ -256,10 +272,19 @@ public class PrüfungsUI implements Initializable {
     private void initVersucheTable() {
         numberVersuchColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
         pruefungVersuchBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
-        pruefungVersuchBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>());
-        pruefungVersuchBestandenColumn.setOnEditCommit(event ->
-                event.getTableView().getItems().get(event.getTablePosition().getRow()).setBestanden(event.getNewValue().get())
-        );
+        pruefungVersuchBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
+            @Override
+            public void updateItem(BooleanProperty item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    CheckBox checkBox = (CheckBox) this.getGraphic();
+                    checkBox.setOnAction(e -> {
+                        var prüfung = getTableView().getItems().get(getIndex());
+                        prüfung.setBestanden(checkBox.isSelected());
+                    });
+                }
+            }
+        });
         noteColumn.setCellValueFactory(new PropertyValueFactory<>("note"));
         noteColumn.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         noteColumn.setOnEditCommit(event -> {
