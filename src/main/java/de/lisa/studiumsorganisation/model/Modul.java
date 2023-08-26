@@ -81,11 +81,10 @@ public class Modul {
 
     public void setBestanden(boolean bestanden) {
         bestandenProperty.set(bestanden);
-        if (bestanden) {
-            var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
-            if (fächer.isEmpty()) return;
-            fächer.forEach(fach -> fach.setBestanden(true));
-        }
+        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+
+        if (fächer.isEmpty()) return;
+        fächer.forEach(fach -> fach.setBestanden(bestanden));
     }
 
     @Override
