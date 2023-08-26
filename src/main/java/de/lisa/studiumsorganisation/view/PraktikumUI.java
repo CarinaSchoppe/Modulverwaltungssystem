@@ -112,7 +112,7 @@ public class PraktikumUI implements Initializable {
         var versuch = new Praktikumstermin(Praktikumstermin.getPraktikumsterminCounter(), praktikum.getID(), java.sql.Date.valueOf(date), time, false);
         Utility.getInstance().getPraktikumstermine().add(versuch);
         praktikum.isBestanden();
-     
+
         updateTerminTable(praktikum);
     }
 
@@ -260,8 +260,9 @@ public class PraktikumUI implements Initializable {
                 super.updateItem(item, empty);
                 if (!empty) {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
+                    var praktikum = getTableView().getItems().get(getIndex());
+                    checkBox.setSelected(praktikum.isBestanden());
                     checkBox.setOnAction(e -> {
-                        var praktikum = getTableView().getItems().get(getIndex());
                         praktikum.setBestanden(checkBox.isSelected());
                     });
                 }
@@ -280,8 +281,9 @@ public class PraktikumUI implements Initializable {
                 super.updateItem(item, empty);
                 if (!empty) {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
+                    var praktikumstermin = getTableView().getItems().get(getIndex());
+                    checkBox.setSelected(praktikumstermin.isBestanden());
                     checkBox.setOnAction(e -> {
-                        var praktikumstermin = getTableView().getItems().get(getIndex());
                         praktikumstermin.setBestanden(checkBox.isSelected());
                     });
                 }

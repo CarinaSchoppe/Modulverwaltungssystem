@@ -317,8 +317,9 @@ public class MainUI extends Application implements Initializable {
                 super.updateItem(item, empty);
                 if (!empty) {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
+                    var modul = getTableView().getItems().get(getIndex());
+                    checkBox.setSelected(modul.isBestanden());
                     checkBox.setOnAction(e -> {
-                        var modul = getTableView().getItems().get(getIndex());
                         modul.setPraktikaBestanden(checkBox.isSelected());
                     });
                 }
@@ -334,8 +335,6 @@ public class MainUI extends Application implements Initializable {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
                     var modul = getTableView().getItems().get(getIndex());
                     checkBox.setSelected(modul.isBestanden());
-                    System.out.println("testhier");
-                    //TODO das hier funktioniert: überall einfügen
                     checkBox.setOnAction(e -> modul.setBestanden(checkBox.isSelected()));
                 }
             }
