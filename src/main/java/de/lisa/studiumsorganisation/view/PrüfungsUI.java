@@ -1,5 +1,7 @@
 package de.lisa.studiumsorganisation.view;
 
+import de.lisa.studiumsorganisation.Main;
+import de.lisa.studiumsorganisation.controller.Database;
 import de.lisa.studiumsorganisation.model.Fach;
 import de.lisa.studiumsorganisation.model.Prüfung;
 import de.lisa.studiumsorganisation.model.Prüfungsform;
@@ -166,7 +168,13 @@ public class PrüfungsUI implements Initializable {
 
     @FXML
     void onSave(ActionEvent event) {
-//TODO: hier
+
+        if (Main.isDummyLaunch()) {
+            Utility.getInstance().getModule().forEach(modul -> System.out.println(modul.toString()));
+
+        } else {
+            Database.getInstance().saveAllData();
+        }
     }
 
     @FXML

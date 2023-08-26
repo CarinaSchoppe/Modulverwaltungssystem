@@ -1,5 +1,7 @@
 package de.lisa.studiumsorganisation.view;
 
+import de.lisa.studiumsorganisation.Main;
+import de.lisa.studiumsorganisation.controller.Database;
 import de.lisa.studiumsorganisation.model.Fach;
 import de.lisa.studiumsorganisation.model.Modul;
 import de.lisa.studiumsorganisation.util.Utility;
@@ -157,7 +159,12 @@ public class MainUI extends Application implements Initializable {
 
     @FXML
     void onSave(ActionEvent event) {
+        if (Main.isDummyLaunch()) {
+            Utility.getInstance().getModule().forEach(modul -> System.out.println(modul.toString()));
 
+        } else {
+            Database.getInstance().saveAllData();
+        }
     }
 
 
