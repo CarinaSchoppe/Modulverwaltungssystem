@@ -33,9 +33,20 @@ public class Fach {
 
     public boolean isBestanden() {
         var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFach().getID() == this.ID).toList();
-        if (prüfungen.isEmpty()) return false;
         var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFach().getID() == this.ID).toList();
-        if (praktika.isEmpty()) return false;
+
+        if (prüfungen.isEmpty() && praktika.isEmpty()) {
+            getModul().isBestanden();
+            return bestandenProperty.get();
+        } else if (praktika.isEmpty()) {
+            bestandenProperty.set(prüfungen.stream().allMatch(it -> it.getBestandenProperty().get()));
+            getModul().isBestanden();
+            return bestandenProperty.get();
+        } else if (prüfungen.isEmpty()) {
+            bestandenProperty.set(praktika.stream().allMatch(it -> it.getBestandenProperty().get()));
+            getModul().isBestanden();
+            return bestandenProperty.get();
+        }
         bestandenProperty.set(prüfungen.stream().allMatch(it -> it.getBestandenProperty().get()) && praktika.stream().allMatch(it -> it.getBestandenProperty().get()));
         getModul().isBestanden();
         return bestandenProperty.get();

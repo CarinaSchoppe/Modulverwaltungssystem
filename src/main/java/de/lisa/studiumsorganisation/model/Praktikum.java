@@ -30,7 +30,10 @@ public class Praktikum {
 
     public boolean isBestanden() {
         var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.ID).toList();
-        if (praktikumstermine.isEmpty()) return false;
+        if (praktikumstermine.isEmpty()) {
+            getFach().isBestanden();
+            return bestandenProperty.get();
+        }
         bestandenProperty.set(praktikumstermine.stream().allMatch(it -> it.getBestandenProperty().get()));
         getFach().isBestanden();
         return bestandenProperty.get();

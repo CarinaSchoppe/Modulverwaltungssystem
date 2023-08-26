@@ -25,7 +25,10 @@ public class Prüfung {
     public boolean isBestanden() {
         //get all prüfungsversuche to this prüfung and check if all are bestanden
         var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.ID).toList();
-        if (versuche.isEmpty()) return false;
+        if (versuche.isEmpty()) {
+            getFach().isBestanden();
+            return bestandenProperty.get();
+        }
         bestandenProperty.set(versuche.stream().allMatch(it -> it.getBestandenProperty().get()));
         getFach().isBestanden();
         return bestandenProperty.get();
@@ -35,7 +38,6 @@ public class Prüfung {
     public static int getPrüfungCounter() {
         return prüfungCounter;
     }
-
 
 
     public void setBestanden(boolean bestanden) {
