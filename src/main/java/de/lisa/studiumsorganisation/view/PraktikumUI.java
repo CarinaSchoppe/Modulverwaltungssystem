@@ -155,8 +155,10 @@ public class PraktikumUI implements Initializable {
     void onDeletePraktikum(ActionEvent event) {
         var item = tableviewPraktikum.getSelectionModel().getSelectedItem();
         if (item != null) {
+            Utility.getInstance().getPraktikumstermine().removeIf(termin -> termin.getPraktikumID() == item.getID());
             Utility.getInstance().getPraktika().remove(item);
             tableviewPraktikum.getItems().remove(item);
+            //delete all corresponding praktikumstermine
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -226,6 +228,7 @@ public class PraktikumUI implements Initializable {
 
     private void updateTerminTable(Praktikum praktikum) {
         tableviewTermin.getItems().clear();
+        if (praktikum == null) return;
         //update the tableview checkboxes for the praktika and the prüfung
         var items = new HashSet<>(Utility.getInstance().getPraktikumstermine().stream().filter(versuch -> versuch.getPraktikumID() == praktikum.getID()).toList());
         tableviewTermin.getItems().addAll(items);

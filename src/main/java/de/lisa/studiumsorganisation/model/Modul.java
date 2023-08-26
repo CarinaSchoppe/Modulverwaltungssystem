@@ -97,10 +97,12 @@ public class Modul {
         //printe nun alle elemente aus
         var stringBuilder = new StringBuilder();
         stringBuilder.append("Modul: ").append(name).append("\n");
+        stringBuilder.append("ID: ").append(ID).append("\n");
         stringBuilder.append("Bestanden: ").append(bestandenProperty.get()).append("\n");
         stringBuilder.append("Fächer: ").append("\n");
         fächer.forEach(fach -> {
             stringBuilder.append("\t").append(fach.getName()).append("\n");
+            stringBuilder.append("\t").append(fach.getID()).append("\n");
             stringBuilder.append("\t").append("Bestanden: ").append(fach.isBestanden()).append("\n");
             stringBuilder.append("\t").append("Prüfungen: ").append("\n");
             prüfungen.forEach(prüfung -> {

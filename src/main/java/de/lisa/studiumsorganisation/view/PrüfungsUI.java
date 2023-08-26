@@ -155,6 +155,9 @@ public class PrüfungsUI implements Initializable {
     void onDeletePruefung(ActionEvent event) {
         var item = tableviewPruefung.getSelectionModel().getSelectedItem();
         if (item != null) {
+            //delete all corresponding Prüfungsversuche
+            Utility.getInstance().getPrüfungsversuche().removeIf(prüfungsversuch -> prüfungsversuch.getPrüfungsID() == item.getID());
+            
             Utility.getInstance().getPraktika().remove(item);
             tableviewPruefung.getItems().remove(item);
         } else {
@@ -213,6 +216,7 @@ public class PrüfungsUI implements Initializable {
 
     private void updateTableVersuch(Prüfung prüfung) {
         tableviewVersuch.getItems().clear();
+        if (prüfung == null) return;
         //get prüfungen based on ModulID -> FachID -> Prüfungen
         tableviewVersuch.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungsversuche().stream().filter(p -> p.getPrüfungsID() == prüfung.getID()).toList())
         );
@@ -224,6 +228,7 @@ public class PrüfungsUI implements Initializable {
     }
 
     private void updateTablePruefung() {
+        tableviewPruefung.getItems().clear();
         tableviewPruefung.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungen().stream().filter(p -> p.getFach().getID() == fach.getID()).toList()));
         fachNameText.setText(fach.getName());
         tableviewPruefung.refresh();

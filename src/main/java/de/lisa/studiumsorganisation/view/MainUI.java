@@ -109,6 +109,15 @@ public class MainUI extends Application implements Initializable {
     void onDeleteFach(ActionEvent event) {
         var selectedFach = tableviewFach.getSelectionModel().getSelectedItem();
         if (selectedFach != null) {
+            //delete all corresponding praktikumstermine and prüfungsversuche and praktika and prüfungen
+            var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFachID() == selectedFach.getID()).toList();
+            var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFachID() == selectedFach.getID()).toList();
+            var prüfungsversuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungstermin -> prüfungen.stream().anyMatch(prüfung -> prüfung.getID() == prüfungstermin.getPrüfung().getID())).toList();
+            var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktika.stream().anyMatch(praktikum -> praktikum.getID() == praktikumstermin.getPraktikum().getID())).toList();
+            Utility.getInstance().getPraktika().removeAll(praktika);
+            Utility.getInstance().getPrüfungen().removeAll(prüfungen);
+            Utility.getInstance().getPrüfungsversuche().removeAll(prüfungsversuche);
+            Utility.getInstance().getPraktikumstermine().removeAll(praktikumstermine);
             Utility.getInstance().getFächer().remove(selectedFach);
             tableviewFach.getItems().remove(selectedFach);
         } else {
@@ -175,6 +184,7 @@ public class MainUI extends Application implements Initializable {
     private void updateTableFach(Modul modul) {
         tableviewFach.getItems().clear();
         //update the tableview checkboxes for the praktika and the prüfung
+        if (modul == null) return;
         tableviewFach.getItems().addAll(new HashSet<>(Utility.getInstance().getFächer().stream().filter(fach -> fach.getModulID() == modul.getID()).toList()));
         modulNameText.setText(modul.getName());
         tableviewModul.refresh();
@@ -201,6 +211,17 @@ public class MainUI extends Application implements Initializable {
         //delete the selected modul from the tableview
         var selectedModul = tableviewModul.getSelectionModel().getSelectedItem();
         if (selectedModul != null) {
+            var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModulID() == selectedModul.getID()).toList();
+            var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> fächer.stream().anyMatch(fach -> fach.getID() == praktikum.getFachID())).toList();
+            var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> fächer.stream().anyMatch(fach -> fach.getID() == prüfung.getFachID())).toList();
+            var prüfungsversuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungstermin -> prüfungen.stream().anyMatch(prüfung -> prüfung.getID() == prüfungstermin.getPrüfung().getID())).toList();
+            var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktika.stream().anyMatch(praktikum -> praktikum.getID() == praktikumstermin.getPraktikum().getID())).toList();
+
+            Utility.getInstance().getFächer().removeAll(fächer);
+            Utility.getInstance().getPraktika().removeAll(praktika);
+            Utility.getInstance().getPrüfungen().removeAll(prüfungen);
+            Utility.getInstance().getPrüfungsversuche().removeAll(prüfungsversuche);
+            Utility.getInstance().getPraktikumstermine().removeAll(praktikumstermine);
             Utility.getInstance().getModule().remove(selectedModul);
             tableviewModul.getItems().remove(selectedModul);
         } else {
