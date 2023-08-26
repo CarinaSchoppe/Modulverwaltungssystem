@@ -78,9 +78,7 @@ public class Praktikum {
      *
      * @param praktikumCounter The new value for the praktikumCounter variable.
      */
-    public static void setPraktikumCounter(int praktikumCounter) {
-        Praktikum.praktikumCounter = praktikumCounter;
-    }
+ 
 
     /**
      * Checks if the specified Praktikum is passed or not.

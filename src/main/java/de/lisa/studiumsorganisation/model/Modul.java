@@ -5,6 +5,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Represents a module.
  * <p>
@@ -273,5 +275,9 @@ public class Modul {
             });
         });
         return stringBuilder.toString();
+    }
+
+    public List<Fach> getFächer() {
+        return Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
     }
 }

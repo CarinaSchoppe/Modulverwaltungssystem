@@ -51,25 +51,24 @@ public class MainUI extends Application implements Initializable {
     /**
      * The ResourceBundle variable containing the resources for this controller.
      *
-     * <p>ResourceBundle is a class in Java that represents a collection of resources and their localized values. 
-     * It is typically used for internationalization and localization purposes, where different language 
-     * translations or region-specific configurations are required. The resources are organized as key-value 
+     * <p>ResourceBundle is a class in Java that represents a collection of resources and their localized values.
+     * It is typically used for internationalization and localization purposes, where different language
+     * translations or region-specific configurations are required. The resources are organized as key-value
      * pairs and can be accessed using the corresponding key.</p>
      *
-     * <p>FXML is a markup language used to define the user interface components in JavaFX applications. By 
-     * specifying the FXML file location in the @FXML annotation, the JavaFX runtime can load and initialize 
+     * <p>FXML is a markup language used to define the user interface components in JavaFX applications. By
+     * specifying the FXML file location in the @FXML annotation, the JavaFX runtime can load and initialize
      * the user interface components defined in the FXML file.</p>
      *
-     * <p>This variable, annotated with @FXML, is used to inject the ResourceBundle instance containing the 
-     * resources for this controller. It provides access to localized strings, images, or any other resource 
-     * defined in the resource bundle file. The resource bundle file can be configured with translations for 
-     * different languages or alternative resources for different regions. By utilizing the ResourceBundle 
+     * <p>This variable, annotated with @FXML, is used to inject the ResourceBundle instance containing the
+     * resources for this controller. It provides access to localized strings, images, or any other resource
+     * defined in the resource bundle file. The resource bundle file can be configured with translations for
+     * different languages or alternative resources for different regions. By utilizing the ResourceBundle
      * provided through this variable, the user interface components in the FXML file can be dynamically
      * updated to display the appropriate localized content.</p>
      *
      * @see ResourceBundle
      * @see FXMLLoader
-     *
      */
     @FXML
     private ResourceBundle resources;
@@ -114,17 +113,17 @@ public class MainUI extends Application implements Initializable {
     @FXML
     private Button deleteButtonFach;
     /**
-     * The deleteButtonModul variable represents a JavaFX Button instance that is used 
+     * The deleteButtonModul variable represents a JavaFX Button instance that is used
      * for deleting a specific module. This variable is annotated with @FXML indicating
-     * that it is a reference to a Button element defined in an FXML file and it is 
+     * that it is a reference to a Button element defined in an FXML file and it is
      * injected by the JavaFX FXMLLoader.
-     *
+     * <p>
      * Usage:
      * deleteButtonModul.setOnAction(event -> {
-     *     // Code for deleting the module goes here
+     * // Code for deleting the module goes here
      * });
-     *
-     * Note: Make sure to assign an appropriate event handler to the deleteButtonModul 
+     * <p>
+     * Note: Make sure to assign an appropriate event handler to the deleteButtonModul
      * using the setOnAction method in order to handle the delete action.
      */
     @FXML
@@ -147,15 +146,15 @@ public class MainUI extends Application implements Initializable {
 
     /**
      * This variable represents a JavaFX label that is used to display the ECTS (European Credit Transfer and Accumulation System) text.
-     *
+     * <p>
      * The ECTS text is typically used in educational settings to represent the number of credits assigned to a course or module.
-     *
+     * <p>
      * The value of this label can be updated dynamically to reflect the current ECTS value for a specific course or module.
-     *
+     * <p>
      * To update the text displayed by this label, you can use the setText() method of the Label class. For example:
-     *
+     * <p>
      * ectsText.setText("6 ECTS"); // Sets the text to "6 ECTS"
-     *
+     * <p>
      * By default, the label will be initialized with an empty value.
      */
     @FXML
@@ -191,9 +190,9 @@ public class MainUI extends Application implements Initializable {
     private TableColumn<Modul, String> modulNameColumn;
     /**
      * The modulNameText variable represents a JavaFX Label object used in the graphical user interface of the application.
-     *
+     * <p>
      * This variable is annotated with @FXML, which means it is injected and initialized by the JavaFX framework using FXML. It is a private instance variable, accessible only within the class it is defined in.
-     *
+     * <p>
      * The Label class is a part of JavaFX and serves as a control for displaying a short text, typically single line, to the user.
      */
     @FXML
@@ -288,6 +287,9 @@ public class MainUI extends Application implements Initializable {
         }
 
         var fach = new Fach(Fach.getFachCounter(), "Neues Fach", 0, false, 0, modul.getID());
+        var ects = modul.getFächer().stream().mapToInt(Fach::getCredits).sum();
+        var bestanden = modul.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum();
+        ectsText.setText(bestanden + " / " + ects);
         Utility.getInstance().getFächer().add(fach);
         modul.isBestanden();
         updateTableFach(modul);
@@ -312,6 +314,9 @@ public class MainUI extends Application implements Initializable {
             Utility.getInstance().getFächer().remove(selectedFach);
             tableviewFach.getItems().remove(selectedFach);
             var modul = tableviewModul.getSelectionModel().getSelectedItem();
+            var ects = modul.getFächer().stream().mapToInt(Fach::getCredits).sum();
+            var bestanden = modul.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum();
+            ectsText.setText(bestanden + " / " + ects);
             if (modul != null) {
                 modul.isBestanden();
             }
@@ -576,20 +581,25 @@ public class MainUI extends Application implements Initializable {
         fachnameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         fachnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         fachnameColumn.setOnEditCommit(event -> {
-            Fach fach = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            var fach = event.getTableView().getItems().get(event.getTablePosition().getRow());
             fach.setName(event.getNewValue());
         });
         semesterColumn.setCellValueFactory(new PropertyValueFactory<>("semester"));
         semesterColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         semesterColumn.setOnEditCommit(event -> {
-            Fach fach = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            var fach = event.getTableView().getItems().get(event.getTablePosition().getRow());
             fach.setSemester(event.getNewValue());
         });
         ectsColumn.setCellValueFactory(new PropertyValueFactory<>("credits"));
         ectsColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         ectsColumn.setOnEditCommit(event -> {
-            Fach fach = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            var fach = event.getTableView().getItems().get(event.getTablePosition().getRow());
             fach.setCredits(event.getNewValue());
+            var modul = fach.getModul();
+            //get all ectsfor that modul
+            var ects = modul.getFächer().stream().mapToInt(Fach::getCredits).sum();
+            var bestanden = modul.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum();
+            ectsText.setText(bestanden + " / " + ects);
         });
 
         fachBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));

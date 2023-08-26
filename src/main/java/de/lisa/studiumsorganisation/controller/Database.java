@@ -94,7 +94,7 @@ public class Database {
      */
     private Database() {
         instance = this;
-        connection = connect(URL);
+        connection = connect();
     }
 
     /**
@@ -110,7 +110,7 @@ public class Database {
     /**
      *
      */
-    private static Connection connect(String URL) {
+    private static Connection connect() {
         try {
             var connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("Verbindung erfolgreich hergestellt");

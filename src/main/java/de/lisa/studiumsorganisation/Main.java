@@ -8,16 +8,13 @@ import de.lisa.studiumsorganisation.view.MainUI;
  */
 public class Main {
 
-    private static boolean dummyLaunch = true;
+    private static final boolean dummyLaunch = true;
 
     public static boolean isDummyLaunch() {
         return dummyLaunch;
     }
 
-    public static void setDummyLaunch(boolean dummyLaunch) {
-        Main.dummyLaunch = dummyLaunch;
-    }
-
+   
     public static void main(String[] args) {
         //lade Datenbank
         if (dummyLaunch) {
