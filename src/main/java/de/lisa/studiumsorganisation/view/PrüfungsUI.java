@@ -109,7 +109,9 @@ public class PrüfungsUI implements Initializable {
         var versuch = new Prüfungsversuch(Prüfungsversuch.getPrüfungsversuchCounter(), date, time, false, 5.0F, prüfung.getID());
         Utility.getInstance().getPrüfungsversuche().add(versuch);
         prüfung.isBestanden();
-        updateTableVersuch(prüfung);
+
+
+        updateTablePruefung();
     }
 
 
@@ -122,7 +124,7 @@ public class PrüfungsUI implements Initializable {
             var prüfung = tableviewPruefung.getSelectionModel().getSelectedItem();
             if (prüfung != null) prüfung.isBestanden();
             tableviewVersuch.getItems().remove(versuch);
-
+            updateTableVersuch(prüfung);
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -236,6 +238,7 @@ public class PrüfungsUI implements Initializable {
         tableviewPruefung.getItems().clear();
         tableviewPruefung.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungen().stream().filter(p -> p.getFach().getID() == fach.getID()).toList()));
         fachNameText.setText(fach.getName());
+        tableviewVersuch.refresh();
         tableviewPruefung.refresh();
 
     }

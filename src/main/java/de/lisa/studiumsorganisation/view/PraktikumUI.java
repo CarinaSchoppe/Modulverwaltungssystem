@@ -112,6 +112,7 @@ public class PraktikumUI implements Initializable {
         var versuch = new Praktikumstermin(Praktikumstermin.getPraktikumsterminCounter(), praktikum.getID(), java.sql.Date.valueOf(date), time, false);
         Utility.getInstance().getPraktikumstermine().add(versuch);
         praktikum.isBestanden();
+     
         updateTerminTable(praktikum);
     }
 
@@ -126,6 +127,8 @@ public class PraktikumUI implements Initializable {
             if (praktikum != null) {
                 praktikum.isBestanden();
             }
+            tableviewPraktikum.refresh();
+            tableviewTermin.refresh();
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -148,6 +151,7 @@ public class PraktikumUI implements Initializable {
         tableviewPraktikum.getItems().add(praktikum);
         fach.isBestanden();
         tableviewPraktikum.refresh();
+        tableviewTermin.refresh();
         //TODO: das hier überall
     }
 
@@ -165,6 +169,8 @@ public class PraktikumUI implements Initializable {
             Utility.getInstance().getPraktika().remove(item);
             fach.isBestanden();
             tableviewPraktikum.getItems().remove(item);
+            tableviewPraktikum.refresh();
+            tableviewTermin.refresh();
             //delete all corresponding praktikumstermine
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);

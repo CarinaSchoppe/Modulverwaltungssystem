@@ -125,6 +125,7 @@ public class MainUI extends Application implements Initializable {
             if (modul != null) {
                 modul.isBestanden();
             }
+            updateTable();
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -278,6 +279,7 @@ public class MainUI extends Application implements Initializable {
         //update the tableview checkboxes for the praktika and the prüfung
         tableviewModul.getItems().addAll(Utility.getInstance().getModule());
         tableviewModul.refresh();
+        tableviewFach.refresh();
     }
 
     @Override
@@ -301,10 +303,9 @@ public class MainUI extends Application implements Initializable {
                 super.updateItem(item, empty);
                 if (!empty) {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
-                    checkBox.setOnAction(e -> {
-                        var modul = getTableView().getItems().get(getIndex());
-                        modul.setPrüfungenBestanden(checkBox.isSelected());
-                    });
+                    var modul = getTableView().getItems().get(getIndex());
+                    checkBox.setSelected(modul.getPrüfungBestanden());
+                    checkBox.setOnAction(e -> modul.setPrüfungenBestanden(checkBox.isSelected()));
                 }
             }
         });
@@ -331,10 +332,10 @@ public class MainUI extends Application implements Initializable {
                 super.updateItem(item, empty);
                 if (!empty) {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
-                    checkBox.setOnAction(e -> {
-                        var modul = getTableView().getItems().get(getIndex());
-                        modul.setBestanden(checkBox.isSelected());
-                    });
+                    var modul = getTableView().getItems().get(getIndex());
+                    checkBox.setSelected(modul.isBestanden());
+                    System.out.println("testhier");
+                    checkBox.setOnAction(e -> modul.setBestanden(checkBox.isSelected()));
                 }
             }
         });
