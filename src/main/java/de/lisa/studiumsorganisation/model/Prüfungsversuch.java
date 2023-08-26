@@ -8,17 +8,80 @@ import lombok.Data;
 import java.sql.Time;
 import java.util.Date;
 
+/**
+ * The Prüfungsversuch class represents an attempt for an exam.
+ * It stores information about the ID, date, time, result, and associated Prüfung.
+ */
 @Data
 public class Prüfungsversuch {
 
+    /**
+     * Keeps track of the number of attempts made during an exam.
+     * <p>
+     * The `prüfungsversuchCounter` variable is used to store and update the count of attempts made during an exam.
+     * This variable is private and static, which means it is accessible only within its class and there is only one
+     * common instance shared among all objects of the class.
+     */
     private static int prüfungsversuchCounter = 0;
+    /**
+     * This variable represents a Boolean property that indicates whether a file is marked as "bestanden" or not.
+     * The value of this property can be observed and changed.
+     *
+     * @see BooleanProperty
+     * @see javafx.beans.property.Property
+     */
     private final BooleanProperty bestandenProperty;
+    /**
+     * The ID variable represents the unique identifier for an object.
+     * It is a private integer variable that can only be accessed within
+     * the class it is defined in.
+     */
     private int ID;
+    /**
+     * The datum variable represents a specific date in time.
+     * It is a private instance variable of the Date data type.
+     *
+     * Note: This documentation does not include example code snippets.
+     */
     private Date datum;
+    /**
+     * Represents the time of day.
+     */
     private Time uhrzeit;
+    /**
+     * The note variable represents a floating point value that stores the note value.
+     *
+     * <p>
+     * Note: The value stored in the note variable should be between 0.0 and 1.0.
+     * </p>
+     *
+     * @see #getNote()
+     * @see #setNote(float)
+     */
     private float note;
+    /**
+     * The unique identifier for an examination.
+     *
+     * This variable represents the private integer value used to store the identification number
+     * of an examination. Each examination is assigned a unique identifier to differentiate it from
+     * other examinations.
+     *
+     * The value of this variable should only be accessed and modified through the appropriate getter
+     * and setter methods, in order to ensure data encapsulation and maintain the integrity of the
+     * variable's value.
+     */
     private int prüfungsID;
 
+    /**
+     * Initializes a new instance of the Prüfungsversuch class.
+     *
+     * @param ID the ID of the Prüfungsversuch
+     * @param datum the date of the Prüfungsversuch
+     * @param uhrzeit the time of the Prüfungsversuch
+     * @param bestanden true if the Prüfungsversuch is passed, false otherwise
+     * @param note the grade of the Prüfungsversuch
+     * @param prüfungsID the ID of the associated Prüfung
+     */
     public Prüfungsversuch(int ID, Date datum, Time uhrzeit, boolean bestanden, float note, int prüfungsID) {
         this.ID = ID;
         this.datum = datum;
@@ -29,20 +92,40 @@ public class Prüfungsversuch {
         bestandenProperty = new SimpleBooleanProperty(bestanden);
     }
 
-    public boolean isBestanden() {
-        return bestandenProperty.get();
-    }
-
-
+    /**
+     * Returns the value of the PrüfungsversuchCounter.
+     *
+     * @return the value of the PrüfungsversuchCounter
+     */
     public static int getPrüfungsversuchCounter() {
         return prüfungsversuchCounter;
     }
 
+    /**
+     * Returns the value of the "bestanden" property.
+     *
+     * @return the value of the "bestanden" property
+     */
+    public boolean isBestanden() {
+        return bestandenProperty.get();
+    }
+
+    /**
+     * Setter method for the bestanden property.
+     * Updates the bestandenProperty and checks if the Prüfung is bestanden.
+     *
+     * @param bestanden The new value for the bestanden property
+     */
     public void setBestanden(boolean bestanden) {
         bestandenProperty.set(bestanden);
         getPrüfung().isBestanden();
     }
 
+    /**
+     * Retrieves the Prüfung object based on the prüfungsID.
+     *
+     * @return The Prüfung object corresponding to the prüfungsID.
+     */
     public Prüfung getPrüfung() {
         return Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getID() == prüfungsID).findFirst().orElse(null);
     }

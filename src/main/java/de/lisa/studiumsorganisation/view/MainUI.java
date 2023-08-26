@@ -31,61 +31,249 @@ import java.util.ResourceBundle;
  */
 public class MainUI extends Application implements Initializable {
 
+    /**
+     * Represents the instance of the MainUI class.
+     * <p>
+     * This variable is of type MainUI and is used to hold the single instance of the MainUI class.
+     * The variable is declared as private static to ensure that only a single instance of the MainUI class is created.
+     * <p>
+     * Example usage:
+     * <p>
+     * MainUI mainUI = MainUI.getInstance();
+     */
     private static MainUI instance = null;
+    /**
+     *
+     */
     @FXML
     private Button addButtonFach;
 
+    /**
+     * The ResourceBundle variable containing the resources for this controller.
+     *
+     * <p>ResourceBundle is a class in Java that represents a collection of resources and their localized values. 
+     * It is typically used for internationalization and localization purposes, where different language 
+     * translations or region-specific configurations are required. The resources are organized as key-value 
+     * pairs and can be accessed using the corresponding key.</p>
+     *
+     * <p>FXML is a markup language used to define the user interface components in JavaFX applications. By 
+     * specifying the FXML file location in the @FXML annotation, the JavaFX runtime can load and initialize 
+     * the user interface components defined in the FXML file.</p>
+     *
+     * <p>This variable, annotated with @FXML, is used to inject the ResourceBundle instance containing the 
+     * resources for this controller. It provides access to localized strings, images, or any other resource 
+     * defined in the resource bundle file. The resource bundle file can be configured with translations for 
+     * different languages or alternative resources for different regions. By utilizing the ResourceBundle 
+     * provided through this variable, the user interface components in the FXML file can be dynamically
+     * updated to display the appropriate localized content.</p>
+     *
+     * @see ResourceBundle
+     * @see FXMLLoader
+     *
+     */
     @FXML
     private ResourceBundle resources;
 
+    /**
+     * The location of the associated FXML file.
+     * <p>
+     * This variable is annotated with {@literal @FXML} to indicate that it is part of the FXML file
+     * and should be injected by the JavaFX runtime during initialization.
+     * <p>
+     * The {@link URL} type is used to represent the location of a resource, such as an FXML file,
+     * which can be specified as a file path or a URL.
+     * <p>
+     * Usage example:
+     * <pre>
+     *     {@literal @}FXML
+     *     private URL location;
+     * </pre>
+     */
     @FXML
     private URL location;
+    /**
+     * The addButtonModul variable represents a JavaFX Button object for adding a new module.
+     *
+     * <p>The addButtonModul variable is annotated with @FXML, indicating that it is linked to a graphical component
+     * in a FXML file through the JavaFX FXMLLoader.</p>
+     *
+     * <p>The addButtonModul variable is declared as private, meaning it can only be accessed within the class it is declared in.</p>
+     *
+     * <p>Usage:</p>
+     * <pre>{@code
+     * addButtonModul.setOnAction(event -> {
+     *     // Add module functionality here
+     * });
+     * }</pre>
+     */
     @FXML
     private Button addButtonModul;
+    /**
+     *
+     */
     @FXML
     private Button deleteButtonFach;
+    /**
+     * The deleteButtonModul variable represents a JavaFX Button instance that is used 
+     * for deleting a specific module. This variable is annotated with @FXML indicating
+     * that it is a reference to a Button element defined in an FXML file and it is 
+     * injected by the JavaFX FXMLLoader.
+     *
+     * Usage:
+     * deleteButtonModul.setOnAction(event -> {
+     *     // Code for deleting the module goes here
+     * });
+     *
+     * Note: Make sure to assign an appropriate event handler to the deleteButtonModul 
+     * using the setOnAction method in order to handle the delete action.
+     */
     @FXML
     private Button deleteButtonModul;
+    /**
+     * The ectsColumn variable represents the TableColumn for displaying ECTS information for Fach objects.
+     *
+     * <p>It is used in conjunction with JavaFX and the FXML markup to define and display the ECTS column
+     * in a TableView.
+     *
+     * <p>The TableColumn is of type Integer and is assigned to Fach objects.
+     */
     @FXML
     private TableColumn<Fach, Integer> ectsColumn;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Fach, BooleanProperty> fachBestandenColumn;
 
+    /**
+     * This variable represents a JavaFX label that is used to display the ECTS (European Credit Transfer and Accumulation System) text.
+     *
+     * The ECTS text is typically used in educational settings to represent the number of credits assigned to a course or module.
+     *
+     * The value of this label can be updated dynamically to reflect the current ECTS value for a specific course or module.
+     *
+     * To update the text displayed by this label, you can use the setText() method of the Label class. For example:
+     *
+     * ectsText.setText("6 ECTS"); // Sets the text to "6 ECTS"
+     *
+     * By default, the label will be initialized with an empty value.
+     */
     @FXML
     private Label ectsText;
+    /**
+     * The TableColumn that represents the fachname property of the Fach class.
+     * This column is typically used in a TableView to display and edit the fachname values of Fach objects.
+     *
+     * <p>
+     * Example usage:
+     * <pre>{@code
+     * TableView<Fach> tableView = new TableView<>();
+     * TableColumn<Fach, String> fachnameColumn = new TableColumn<>("Fachname");
+     * tableView.getColumns().add(fachnameColumn);
+     * }</pre>
+     * </p>
+     *
+     * @see Fach
+     * @see TableColumn
+     * @see TableView
+     */
     @FXML
     private TableColumn<Fach, String> fachnameColumn;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Modul, BooleanProperty> modulBestandenColumn;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Modul, String> modulNameColumn;
+    /**
+     * The modulNameText variable represents a JavaFX Label object used in the graphical user interface of the application.
+     *
+     * This variable is annotated with @FXML, which means it is injected and initialized by the JavaFX framework using FXML. It is a private instance variable, accessible only within the class it is defined in.
+     *
+     * The Label class is a part of JavaFX and serves as a control for displaying a short text, typically single line, to the user.
+     */
     @FXML
     private Label modulNameText;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Modul, BooleanProperty> praktikaBestandenColumn;
+    /**
+     *
+     */
     @FXML
     private Button praktikumButton;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Modul, BooleanProperty> pruefungBestandenColumn;
+    /**
+     *
+     */
     @FXML
     private Button pruefungButton;
+    /**
+     *
+     */
     @FXML
     private Button saveButton;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Fach, Integer> semesterColumn;
+    /**
+     * The TableView variable tableviewFach is used to display and interact with a collection of objects of type Fach.
+     * It is annotated with @FXML to indicate that it is a JavaFX component that is defined in an FXML file.
+     * The TableView provides a graphical representation of the data and allows the user to perform actions such as sorting
+     * and filtering the data, as well as selecting and editing individual items.
+     *
+     * @see Fach
+     * @see TableView
+     */
     @FXML
     private TableView<Fach> tableviewFach;
 
+    /**
+     *
+     */
     @FXML
     private Label studiengangText;
+    /**
+     *
+     */
     @FXML
     private TableView<Modul> tableviewModul;
 
-    //Getter for the instance
+    /**
+     * Returns the instance of the MainUI class.
+     *
+     * @return the instance of the MainUI class
+     */ //Getter for the instance
     public static MainUI getInstance() {
         return instance;
     }
 
+    /**
+     * Starts the application.
+     *
+     * @param args The command line arguments.
+     */
+    public static void start(String[] args) {
+        launch(args);
+    }
+
+    /**
+     * Handles the event when a user wants to add a Fach to a selected Modul.
+     *
+     * @param event The action event that triggered this method.
+     */
     @FXML
     void onAddFach(ActionEvent event) {
         //get current fach from tableviewModul
@@ -105,7 +293,9 @@ public class MainUI extends Application implements Initializable {
         updateTableFach(modul);
     }
 
-
+    /**
+     *
+     */
     @FXML
     void onDeleteFach(ActionEvent event) {
         var selectedFach = tableviewFach.getSelectionModel().getSelectedItem();
@@ -135,7 +325,9 @@ public class MainUI extends Application implements Initializable {
         }
     }
 
-
+    /**
+     *
+     */
     @FXML
     void onPraktikum(ActionEvent event) throws IOException {
         var selectedFach = tableviewFach.getSelectionModel().getSelectedItem();
@@ -154,6 +346,13 @@ public class MainUI extends Application implements Initializable {
         }
     }
 
+    /**
+     * Open the PrüfungsUI for the selected Fach.
+     * If no Fach is selected, display an error message.
+     *
+     * @param event the event that triggered this method
+     * @throws IOException if there is an error loading the PrüfungsUI
+     */
     @FXML
     void onPruefung(ActionEvent event) throws IOException {
         var selectedFach = tableviewFach.getSelectionModel().getSelectedItem();
@@ -172,6 +371,9 @@ public class MainUI extends Application implements Initializable {
         }
     }
 
+    /**
+     *
+     */
     @FXML
     void onSave(ActionEvent event) {
         if (Main.isDummyLaunch()) {
@@ -186,11 +388,14 @@ public class MainUI extends Application implements Initializable {
         }
     }
 
-
-    public static void start(String[] args) {
-        launch(args);
-    }
-
+    /**
+     * Updates the tableview for the selected Fach with the corresponding Fach information.
+     * Clears the existing items in the tableview and populates it with the Fach items filtered
+     * by the given Modul.
+     * Also updates the modulNameText with the name of the selected Modul.
+     *
+     * @param modul The Modul object to filter the Fach items.
+     */
     private void updateTableFach(Modul modul) {
         tableviewFach.getItems().clear();
         //update the tableview checkboxes for the praktika and the prüfung
@@ -201,6 +406,11 @@ public class MainUI extends Application implements Initializable {
     }
 
 
+    /**
+     * Add a new module to the table view
+     *
+     * @param event The action event that triggers the method
+     */
     @FXML
     void onAddModul(ActionEvent event) {
         //create and add a new modul to the tableview
@@ -210,6 +420,9 @@ public class MainUI extends Application implements Initializable {
     }
 
 
+    /**
+     *
+     */
     @FXML
     void onDeleteModul(ActionEvent event) {
         //delete the selected modul from the tableview
@@ -237,6 +450,9 @@ public class MainUI extends Application implements Initializable {
         }
     }
 
+    /**
+     *
+     */
     @FXML
     void initialize() {
         assert addButtonFach != null : "fx:id=\"addButtonFach\" was not injected: check your FXML file 'MainUI.fxml'.";
@@ -261,6 +477,9 @@ public class MainUI extends Application implements Initializable {
         assert tableviewModul != null : "fx:id=\"tableviewModul\" was not injected: check your FXML file 'MainUI.fxml'.";
     }
 
+    /**
+     *
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         var loader = new FXMLLoader(getClass().getResource("/fxml/MainUI.fxml"));
@@ -273,6 +492,9 @@ public class MainUI extends Application implements Initializable {
     }
 
 
+    /**
+     *
+     */
     private void updateTable() {
         tableviewModul.getItems().clear();
         //update the tableview checkboxes for the praktika and the prüfung
@@ -280,6 +502,9 @@ public class MainUI extends Application implements Initializable {
 
     }
 
+    /**
+     *
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
@@ -287,6 +512,9 @@ public class MainUI extends Application implements Initializable {
         initFachTable();
     }
 
+    /**
+     *
+     */
     private void initModulTable() {
         modulNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         modulNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -341,6 +569,9 @@ public class MainUI extends Application implements Initializable {
     }
 
 
+    /**
+     *
+     */
     private void initFachTable() {
         fachnameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         fachnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());

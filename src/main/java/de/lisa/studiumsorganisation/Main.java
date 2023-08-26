@@ -3,8 +3,9 @@ package de.lisa.studiumsorganisation;
 import de.lisa.studiumsorganisation.controller.Database;
 import de.lisa.studiumsorganisation.view.MainUI;
 
-import java.util.Date;
-
+/**
+ *
+ */
 public class Main {
 
     private static boolean dummyLaunch = true;
@@ -20,7 +21,6 @@ public class Main {
     public static void main(String[] args) {
         //lade Datenbank
         if (dummyLaunch) {
-            dummyData();
             System.out.println("Dummy data loaded");
         }
         else
@@ -31,10 +31,5 @@ public class Main {
         //TODO: boolean sind nicht gespeichert bei der UI
     }
 
-    private static void dummyData() {
 
-        //Create a new date with current date as its value
-        var date = new Date();
-
-    }
 }

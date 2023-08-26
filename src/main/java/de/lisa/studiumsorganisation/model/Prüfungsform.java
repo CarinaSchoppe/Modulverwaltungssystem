@@ -8,7 +8,7 @@ public enum Prüfungsform {
     PROJEKTARBEIT("Projektarbeit"),
     SONSTIGES("Sonstiges");
 
-    
+
     private final String text;
 
     Prüfungsform(String text) {

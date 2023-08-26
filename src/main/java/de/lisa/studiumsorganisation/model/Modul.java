@@ -5,17 +5,111 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Data;
 
+/**
+ * Represents a module.
+ * <p>
+ * A module encapsulates information about a specific subject or topic covered in a study program.
+ * It keeps track of related courses, exams, and practicals.
+ */
 @Data
 public class Modul {
 
-    private final int ID;
+    /**
+     * The modulCounter class keeps track of the count of a particular module.
+     * This variable is private and static, meaning it can only be accessed within the class it is defined in,
+     * and it is shared among all instances of the class.
+     */
     private static int modulCounter = 0;
-    private String name;
-    private int studiengangID;
+    /**
+     * The ID variable represents an integer identifier.
+     *
+     * <p>This variable is used to store a unique identifier for an object.</p>
+     *
+     * <p>It is declared as private final, indicating that it cannot be modified after its initial assignment. The 'final' modifier ensures that the ID remains constant throughout the object's lifespan.</p>
+     *
+     * <p><b>Usage:</b></p>
+     *
+     * <p>The ID variable can be accessed within the class it is declared in. It is commonly used as a unique identifier to distinguish between different objects of the same class.</p>
+     *
+     * <p>Example usage:</p>
+     * <pre>{@code
+     *     public class MyClass {
+     *         private final int ID;
+     *
+     *         public MyClass(int id) {
+     *             this.ID = id;
+     *         }
+     *
+     *         public int getID() {
+     *             return ID;
+     *         }
+     *     }
+     * }</pre>
+     */
+    private final int ID;
+    /**
+     * The bestandenProperty is a private final BooleanProperty.
+     *
+     * <p>
+     * This variable represents a boolean property that determines whether
+     * a file has been successfully loaded or saved.
+     * </p>
+     *
+     * <p>
+     * The variable is declared as private final to ensure immutability.
+     * </p>
+     *
+     * <p>
+     * As a BooleanProperty, it provides bindings and observability features
+     * for other properties or UI elements that depend on its value.
+     * </p>
+     *
+     * <p>
+     * This variable should be used to track the loaded or saved status of a file
+     * in your code. It can be accessed using getter methods or used in bindings
+     * as necessary.
+     * </p>
+     */
     private final BooleanProperty bestandenProperty;
+    /**
+     * A private final BooleanProperty used for indicating whether the praktika
+     * has been completed or not.
+     */
     private final BooleanProperty praktikaBestandenProperty;
+    /**
+     * The private final BooleanProperty pruefungBestandenProperty represents a boolean property indicating whether the pruefung (exam) has been passed or not.
+     *
+     * <p>
+     * The value of pruefungBestandenProperty can be set or retrieved using appropriate getter and setter methods.
+     * </p>
+     *
+     * @since the current version of the software
+     *
+     * @see BooleanProperty
+     */
     private final BooleanProperty pruefungBestandenProperty;
+    /**
+     * The name of the variable.
+     */
+    private String name;
+    /**
+     * Represents the identifier of the academic program of a student.
+     * The studiengangID is a private variable that holds the value of the academic program identifier.
+     * The integer value of the studiengangID can be any non-negative number.
+     *
+     * Usage:
+     * The studiengangID is accessed and modified by getter and setter methods defined in the enclosing class.
+     */
+    private int studiengangID;
 
+    /**
+     * Constructs a new Modul with the specified properties.
+     *
+     * @param ID The ID of the Modul.
+     * @param name The name of the Modul.
+     * @param bestanden Indicates if the Modul is passed.
+     * @param studiengangID The ID of the Studiengang associated with the Modul.
+     */
     public Modul(int ID, String name, boolean bestanden, int studiengangID) {
         this.ID = ID;
         this.name = name;
@@ -26,14 +120,32 @@ public class Modul {
         if (ID >= modulCounter) modulCounter = ID + 1;
     }
 
-    public Studiengang getStudiengang() {
-        return Utility.getInstance().getStudiengänge().stream().filter(studiengang -> studiengang.getID() == studiengangID).findFirst().orElse(null);
-    }
-
+    /**
+     * Returns the value of the modulCounter variable.
+     *
+     * @return the value of the modulCounter
+     */
     public static int getModulCounter() {
         return modulCounter;
     }
 
+    /**
+     * Retrieves the Studiengang associated with this Modul.
+     *
+     * @return The Studiengang object associated with this Modul, or null if no association exists.
+     */
+    public Studiengang getStudiengang() {
+        return Utility.getInstance().getStudiengänge().stream().filter(studiengang -> studiengang.getID() == studiengangID).findFirst().orElse(null);
+    }
+
+    /**
+     * Determines whether the Prüfung (exam) is passed or not.
+     *
+     * It finds all Prüfungen related to this module and checks if all of them are passed.
+     * If no related Prüfungen or all of them are not passed, it returns false.
+     *
+     * @return true if all related Prüfungen are passed, otherwise false.
+     */
     public boolean getPrüfungBestanden() {
         //find all prüfungen related to this module and than check if all of them are true if they exist if not than its false
         var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
@@ -45,6 +157,11 @@ public class Modul {
         return prüfungen.stream().allMatch(Prüfung::isBestanden);
     }
 
+    /**
+     * Sets the "bestanden" status for all related exams.
+     *
+     * @param bestanden the status to set for the exams
+     */
     public void setPrüfungenBestanden(Boolean bestanden) {
         var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
         if (fächer.isEmpty()) return;
@@ -52,6 +169,11 @@ public class Modul {
         prüfungen.forEach(prüfung -> prüfung.setBestanden(bestanden));
     }
 
+    /**
+     * Retrieves the status of whether all praktika related to this module have been passed.
+     *
+     * @return true if all praktika related to this module have been passed, false otherwise
+     */
     public boolean getPraktikaBestanden() {
         //find all prüfungen related to this module and than check if all of them are true if they exist if not than its false
         var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
@@ -63,6 +185,11 @@ public class Modul {
         return praktika.stream().allMatch(Praktikum::isBestanden);
     }
 
+    /**
+     * Sets the "bestanden" status of all Praktikum objects related to this module.
+     *
+     * @param bestanden the new "bestanden" status to be set
+     */
     public void setPraktikaBestanden(Boolean bestanden) {
         var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
         if (fächer.isEmpty()) return;
@@ -70,6 +197,11 @@ public class Modul {
         praktika.forEach(praktikum -> praktikum.setBestanden(bestanden));
     }
 
+    /**
+     * Checks if all associated subjects in the module are passed.
+     *
+     * @return true if all associated subjects are passed, false otherwise.
+     */
     public boolean isBestanden() {
         var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
         if (fächer.isEmpty()) {
@@ -79,6 +211,11 @@ public class Modul {
         return bestandenProperty.get();
     }
 
+    /**
+     * Sets whether the module is passed or not.
+     *
+     * @param bestanden true if the module is passed, false otherwise
+     */
     public void setBestanden(boolean bestanden) {
         bestandenProperty.set(bestanden);
         var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
@@ -87,6 +224,11 @@ public class Modul {
         fächer.forEach(fach -> fach.setBestanden(bestanden));
     }
 
+    /**
+     * Returns a string representation of the Modul object, including all associated Fächer, Prüfungen, Praktika, Prüfungsversuche, and Praktikumstermine.
+     *
+     * @return a string representation of the Modul object and its associated elements.
+     */
     @Override
     public String toString() {
         //gib alle alemente der klasse modul aus sowie alle mit dem modul zusammenhängenden fächer und deren prüfungen und praktika aus sowie deren termine und versuche

@@ -30,67 +30,160 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
+/**
+ *
+ */
 public class PrüfungsUI implements Initializable {
 
+    /**
+     *
+     */
     private static PrüfungsUI instance = null;
+    /**
+     *
+     */
+    private static Fach fach;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Prüfung, Integer> numberPruefungColumn;
-
-    private static Fach fach;
+    /**
+     *
+     */
     @FXML
     private ResourceBundle resources;
 
+    /**
+     *
+     */
     @FXML
     private URL location;
 
+    /**
+     *
+     */
     @FXML
     private Button backButton;
 
+    /**
+     *
+     */
     @FXML
     private Button deleteButton;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Prüfung, BooleanProperty> pruefungBestandenColumn;
+    /**
+     *
+     */
     @FXML
     private Button addPruefungButton;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Prüfungsversuch, Date> datumColumn;
+    /**
+     *
+     */
     @FXML
     private Label pruefungNameText;
 
+    /**
+     *
+     */
     @FXML
     private TableColumn<Prüfung, Prüfungsform> pruefungsFormColumn;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Prüfungsversuch, Float> noteColumn;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Prüfungsversuch, Integer> numberVersuchColumn;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Prüfungsversuch, BooleanProperty> pruefungVersuchBestandenColumn;
+    /**
+     *
+     */
     @FXML
     private TableView<Prüfungsversuch> tableviewVersuch;
+    /**
+     *
+     */
     @FXML
     private TableColumn<Prüfungsversuch, Time> uhrzeitColumn;
+    /**
+     *
+     */
     @FXML
     private TableView<Prüfung> tableviewPruefung;
+    /**
+     *
+     */
     @FXML
     private Button saveButton;
+    /**
+     *
+     */
     @FXML
     private Button addVersuchButton;
+    /**
+     *
+     */
     @FXML
     private Button deletePruefungButton;
+    /**
+     *
+     */
     @FXML
     private Button deleteVersuchButton;
+    /**
+     *
+     */
     @FXML
     private Label fachNameText;
+    /**
+     *
+     */
     @FXML
     private Label pruefungsFormText;
 
-    //Getter for the instance
+    /**
+     *
+     */ //Getter for the instance
     public static PrüfungsUI getInstance() {
         if (instance == null)
             instance = new PrüfungsUI();
         return instance;
     }
 
+    /**
+     *
+     */
+    public static Fach getFach() {
+        return fach;
+    }
+
+    /**
+     *
+     */
+    public static void setFach(Fach fach) {
+        PrüfungsUI.fach = fach;
+    }
+
+    /**
+     *
+     */
     @FXML
     void onAddVersuch(ActionEvent event) {
 
@@ -114,7 +207,9 @@ public class PrüfungsUI implements Initializable {
         updateTablePruefung();
     }
 
-
+    /**
+     *
+     */
     @FXML
     void onDeleteVersuch(ActionEvent event) {
         var versuch = tableviewVersuch.getSelectionModel().getSelectedItem();
@@ -134,15 +229,9 @@ public class PrüfungsUI implements Initializable {
         }
     }
 
-
-    public static Fach getFach() {
-        return fach;
-    }
-
-    public static void setFach(Fach fach) {
-        PrüfungsUI.fach = fach;
-    }
-
+    /**
+     *
+     */
     @FXML
     void onAddPruefung(ActionEvent event) {
         var prüfung = new Prüfung(Prüfung.getPrüfungCounter(), Prüfungsform.KLAUSUR, fach.getID(), false);
@@ -151,12 +240,18 @@ public class PrüfungsUI implements Initializable {
         updateTablePruefung();
     }
 
+    /**
+     *
+     */
     @FXML
     void onBack(ActionEvent event) throws IOException {
         var stage = (Stage) backButton.getScene().getWindow();
         MainUI.getInstance().start(stage);
     }
 
+    /**
+     *
+     */
     @FXML
     void onDeletePruefung(ActionEvent event) {
         var item = tableviewPruefung.getSelectionModel().getSelectedItem();
@@ -176,6 +271,9 @@ public class PrüfungsUI implements Initializable {
         }
     }
 
+    /**
+     *
+     */
     @FXML
     void onSave(ActionEvent event) {
 
@@ -187,6 +285,9 @@ public class PrüfungsUI implements Initializable {
         }
     }
 
+    /**
+     *
+     */
     @FXML
     void initialize() {
         assert addPruefungButton != null : "fx:id=\"addPruefungButton\" was not injected: check your FXML file 'PrüfungsUI.fxml'.";
@@ -211,6 +312,9 @@ public class PrüfungsUI implements Initializable {
 
     }
 
+    /**
+     *
+     */
     public void start(Stage primaryStage) throws IOException {
         var loader = new FXMLLoader(getClass().getResource("/fxml/PrüfungsUI.fxml"));
         var root = (Parent) loader.load();
@@ -221,6 +325,9 @@ public class PrüfungsUI implements Initializable {
         primaryStage.show();
     }
 
+    /**
+     *
+     */
     private void updateTableVersuch(Prüfung prüfung) {
         tableviewVersuch.getItems().clear();
         if (prüfung == null) return;
@@ -233,6 +340,9 @@ public class PrüfungsUI implements Initializable {
 
     }
 
+    /**
+     *
+     */
     private void updateTablePruefung() {
         tableviewPruefung.getItems().clear();
         tableviewPruefung.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungen().stream().filter(p -> p.getFach().getID() == fach.getID()).toList()));
@@ -241,6 +351,9 @@ public class PrüfungsUI implements Initializable {
 
     }
 
+    /**
+     *
+     */
     private void initPruefungsTable() {
         numberPruefungColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
         pruefungBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
@@ -269,6 +382,9 @@ public class PrüfungsUI implements Initializable {
         updateTablePruefung();
     }
 
+    /**
+     *
+     */
     private void initVersucheTable() {
         numberVersuchColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
         pruefungVersuchBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
@@ -308,6 +424,9 @@ public class PrüfungsUI implements Initializable {
 
     }
 
+    /**
+     *
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
