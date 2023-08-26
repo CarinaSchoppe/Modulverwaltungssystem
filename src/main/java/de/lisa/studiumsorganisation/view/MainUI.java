@@ -593,6 +593,14 @@ public class MainUI extends Application implements Initializable {
         ectsColumn.setCellValueFactory(new PropertyValueFactory<>("credits"));
         ectsColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         ectsColumn.setOnEditCommit(event -> {
+            if (event.getNewValue() < 0) {
+                var alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Fehler");
+                alert.setHeaderText("Ungültige ECTS");
+                alert.setContentText("Bitte geben Sie eine positive Zahl ein.");
+                alert.showAndWait();
+                return;
+            }
             var fach = event.getTableView().getItems().get(event.getTablePosition().getRow());
             fach.setCredits(event.getNewValue());
             var modul = fach.getModul();
