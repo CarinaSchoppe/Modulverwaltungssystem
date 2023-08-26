@@ -335,6 +335,7 @@ public class MainUI extends Application implements Initializable {
                     var modul = getTableView().getItems().get(getIndex());
                     checkBox.setSelected(modul.isBestanden());
                     System.out.println("testhier");
+                    //TODO das hier funktioniert: überall einfügen
                     checkBox.setOnAction(e -> modul.setBestanden(checkBox.isSelected()));
                 }
             }
