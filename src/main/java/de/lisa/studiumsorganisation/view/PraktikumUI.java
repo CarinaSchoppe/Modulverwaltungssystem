@@ -206,7 +206,7 @@ public class PraktikumUI implements Initializable {
     void onDeleteTermin(ActionEvent event) {
         var versuch = tableviewTermin.getSelectionModel().getSelectedItem();
         if (versuch != null) {
-            Utility.getInstance().getPrüfungsversuche().remove(versuch);
+            Utility.getInstance().getPraktikumstermine().remove(versuch);
             tableviewTermin.getItems().remove(versuch);
             var praktikum = tableviewPraktikum.getSelectionModel().getSelectedItem();
             if (praktikum != null) {

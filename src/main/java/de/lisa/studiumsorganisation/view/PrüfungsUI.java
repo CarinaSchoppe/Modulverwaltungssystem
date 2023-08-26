@@ -214,7 +214,7 @@ public class PrüfungsUI implements Initializable {
     void onDeleteVersuch(ActionEvent event) {
         var versuch = tableviewVersuch.getSelectionModel().getSelectedItem();
         if (versuch != null) {
-            Utility.getInstance().getPrüfungen().remove(versuch);
+            Utility.getInstance().getPrüfungsversuche().remove(versuch);
             //remove from tabeview
             var prüfung = tableviewPruefung.getSelectionModel().getSelectedItem();
             if (prüfung != null) prüfung.isBestanden();
@@ -259,7 +259,7 @@ public class PrüfungsUI implements Initializable {
             //delete all corresponding Prüfungsversuche
             Utility.getInstance().getPrüfungsversuche().removeIf(prüfungsversuch -> prüfungsversuch.getPrüfungsID() == item.getID());
 
-            Utility.getInstance().getPraktika().remove(item);
+            Utility.getInstance().getPrüfungen().remove(item);
             tableviewPruefung.getItems().remove(item);
             fach.isBestanden();
         } else {

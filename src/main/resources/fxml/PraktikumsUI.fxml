@@ -3,30 +3,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="de.lisa.studiumsorganisation.view.PraktikumUI">
-   <children>
-      <Label layoutX="25.0" layoutY="34.0" text="Fach"/>
-      <Label fx:id="fachNameText" layoutX="87.0" layoutY="34.0" text="Test"/>
-      <TableView fx:id="tableviewPraktikum" editable="true" layoutX="65.0" layoutY="91.0" prefHeight="199.0" prefWidth="492.0">
-         <columns>
-            <TableColumn fx:id="numberColumnPraktikum" editable="false" prefWidth="75.0" text="Nr"/>
-            <TableColumn fx:id="praktikumBestandenColumn" prefWidth="165.0" text="Bestanden"/>
-         </columns>
-      </TableView>
-      <Button fx:id="addButtonPraktikum" layoutX="47.0" layoutY="327.0" mnemonicParsing="false" onAction="#onAddPraktikum" text="Hinzufügen"/>
-      <Button fx:id="saveButton" layoutX="419.0" layoutY="30.0" mnemonicParsing="false" onAction="#onSave" text="Speichern"/>
-      <Button fx:id="backButton" layoutX="510.0" layoutY="30.0" mnemonicParsing="false" onAction="#onBack" text="Zurück"/>
-      <Button fx:id="deleteButtonPraktikum" layoutX="143.0" layoutY="327.0" mnemonicParsing="false" onAction="#onDeletePraktikum" text="Löschen"/>
-      <Label layoutX="25.0" layoutY="374.0" text="Praktikum"/>
-      <Label fx:id="praktikumNameText" layoutX="87.0" layoutY="374.0" text="Test"/>
-      <TableView fx:id="tableviewTermin" editable="true" layoutX="65.0" layoutY="431.0" prefHeight="199.0" prefWidth="492.0">
-         <columns>
-            <TableColumn fx:id="numberColumnTermin" editable="false" prefWidth="75.0" text="Nr"/>
-            <TableColumn fx:id="datumColumn" prefWidth="75.0" text="Datum"/>
-            <TableColumn fx:id="uhrzeitColumn" prefWidth="75.0" text="Uhrzeit"/>
-            <TableColumn fx:id="terminBestandenColumn" prefWidth="165.0" text="Termin Bestanden"/>
-         </columns>
-      </TableView>
-      <Button fx:id="addButtonTermin" layoutX="47.0" layoutY="667.0" mnemonicParsing="false" onAction="#onAddTermin" text="Hinzufügen"/>
-      <Button fx:id="deleteButtonTermin" layoutX="151.0" layoutY="667.0" mnemonicParsing="false" onAction="#onDeleteTermin" text="Löschen"/>
-   </children>
+   <Label layoutX="25.0" layoutY="34.0" text="Fach"/>
+   <Label fx:id="fachNameText" layoutX="87.0" layoutY="34.0" text="Test"/>
+   <TableView fx:id="tableviewPraktikum" editable="true" layoutX="65.0" layoutY="91.0" prefHeight="199.0" prefWidth="492.0">
+      <columns>
+         <TableColumn fx:id="numberColumnPraktikum" editable="false" prefWidth="75.0" text="Nr"/>
+         <TableColumn fx:id="praktikumBestandenColumn" prefWidth="165.0" text="Bestanden"/>
+      </columns>
+   </TableView>
+   <Button fx:id="addButtonPraktikum" layoutX="47.0" layoutY="327.0" mnemonicParsing="false" onAction="#onAddPraktikum" text="Hinzufügen"/>
+   <Button fx:id="saveButton" layoutX="419.0" layoutY="30.0" mnemonicParsing="false" onAction="#onSave" text="Speichern"/>
+   <Button fx:id="backButton" layoutX="510.0" layoutY="30.0" mnemonicParsing="false" onAction="#onBack" text="Zurück"/>
+   <Button fx:id="deleteButtonPraktikum" layoutX="143.0" layoutY="327.0" mnemonicParsing="false" onAction="#onDeletePraktikum" text="Löschen"/>
+   <Label layoutX="25.0" layoutY="374.0" text="Praktikum"/>
+   <Label fx:id="praktikumNameText" layoutX="87.0" layoutY="374.0" text="Test"/>
+   <TableView fx:id="tableviewTermin" editable="true" layoutX="65.0" layoutY="431.0" prefHeight="199.0" prefWidth="492.0">
+      <columns>
+         <TableColumn fx:id="numberColumnTermin" editable="false" prefWidth="75.0" text="Nr"/>
+         <TableColumn fx:id="datumColumn" prefWidth="75.0" text="Datum"/>
+         <TableColumn fx:id="uhrzeitColumn" prefWidth="75.0" text="Uhrzeit"/>
+         <TableColumn fx:id="terminBestandenColumn" prefWidth="165.0" text="Termin Bestanden"/>
+      </columns>
+   </TableView>
+   <Button fx:id="addButtonTermin" layoutX="47.0" layoutY="667.0" mnemonicParsing="false" onAction="#onAddTermin" text="Hinzufügen"/>
+   <Button fx:id="deleteButtonTermin" layoutX="151.0" layoutY="667.0" mnemonicParsing="false" onAction="#onDeleteTermin" text="Löschen"/>
 </AnchorPane>

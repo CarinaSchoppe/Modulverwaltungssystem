@@ -307,19 +307,17 @@ public class MainUI extends Application implements Initializable {
             var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFachID() == selectedFach.getID()).toList();
             var prüfungsversuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungstermin -> prüfungen.stream().anyMatch(prüfung -> prüfung.getID() == prüfungstermin.getPrüfung().getID())).toList();
             var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktika.stream().anyMatch(praktikum -> praktikum.getID() == praktikumstermin.getPraktikum().getID())).toList();
-            Utility.getInstance().getPraktika().removeAll(praktika);
-            Utility.getInstance().getPrüfungen().removeAll(prüfungen);
-            Utility.getInstance().getPrüfungsversuche().removeAll(prüfungsversuche);
-            Utility.getInstance().getPraktikumstermine().removeAll(praktikumstermine);
+            praktika.forEach(Utility.getInstance().getPraktika()::remove);
+            prüfungen.forEach(Utility.getInstance().getPrüfungen()::remove);
+            prüfungsversuche.forEach(Utility.getInstance().getPrüfungsversuche()::remove);
+            praktikumstermine.forEach(Utility.getInstance().getPraktikumstermine()::remove);
             Utility.getInstance().getFächer().remove(selectedFach);
             tableviewFach.getItems().remove(selectedFach);
             var modul = tableviewModul.getSelectionModel().getSelectedItem();
             var ects = modul.getFächer().stream().mapToInt(Fach::getCredits).sum();
             var bestanden = modul.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum();
             ectsText.setText(bestanden + " / " + ects);
-            if (modul != null) {
                 modul.isBestanden();
-            }
             updateTable();
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);

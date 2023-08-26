@@ -3,34 +3,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="825.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="de.lisa.studiumsorganisation.view.PrüfungsUI">
-    <children>
-        <Label layoutX="14.0" layoutY="26.0" text="Fach"/>
-        <Label fx:id="fachNameText" layoutX="73.0" layoutY="26.0" text="Test"/>
-        <TableView fx:id="tableviewPruefung" editable="true" layoutX="24.0" layoutY="84.0" prefHeight="253.0" prefWidth="524.0">
-            <columns>
-                <TableColumn fx:id="numberPruefungColumn" editable="false" prefWidth="75.0" text="Nr"/>
-                <TableColumn fx:id="pruefungBestandenColumn" prefWidth="75.0" text="Prüfung Bestanden"/>
-                <TableColumn fx:id="pruefungsFormColumn" prefWidth="75.0" text="Prüfungsform"/>
-            </columns>
-        </TableView>
-        <Button fx:id="addPruefungButton" layoutX="47.0" layoutY="371.0" mnemonicParsing="false" onAction="#onAddPruefung" text="Hinzufügen"/>
-        <Button fx:id="saveButton" layoutX="445.0" layoutY="31.0" mnemonicParsing="false" onAction="#onSave" text="Speichern"/>
-        <Button fx:id="backButton" layoutX="526.0" layoutY="31.0" mnemonicParsing="false" onAction="#onBack" text="Zurück"/>
-        <Button fx:id="deletePruefungButton" layoutX="154.0" layoutY="371.0" mnemonicParsing="false" onAction="#onDeletePruefung" text="Löschen"/>
-        <Label layoutX="26.0" layoutY="431.0" text="Prüfungsnummer"/>
-        <Label fx:id="pruefungNameText" layoutX="126.0" layoutY="431.0" text="Test"/>
-        <Label layoutX="461.0" layoutY="431.0" text="Prüfungsform:"/>
-        <Label fx:id="pruefungsFormText" layoutX="552.0" layoutY="431.0" text="Test"/>
-        <TableView fx:id="tableviewVersuch" editable="true" layoutX="36.0" layoutY="489.0" prefHeight="253.0" prefWidth="524.0">
-            <columns>
-                <TableColumn fx:id="numberVersuchColumn" editable="false" prefWidth="75.0" text="Nr"/>
-                <TableColumn fx:id="datumColumn" prefWidth="75.0" text="Datum"/>
-                <TableColumn fx:id="uhrzeitColumn" prefWidth="75.0" text="Uhrzeit"/>
-                <TableColumn fx:id="noteColumn" prefWidth="75.0" text="Note"/>
-                <TableColumn fx:id="pruefungVersuchBestandenColumn" prefWidth="75.0" text="Prüfung Bestanden"/>
-            </columns>
-        </TableView>
-        <Button fx:id="addVersuchButton" layoutX="59.0" layoutY="776.0" mnemonicParsing="false" onAction="#onAddVersuch" text="Hinzufügen"/>
-        <Button fx:id="deleteVersuchButton" layoutX="154.0" layoutY="776.0" mnemonicParsing="false" onAction="#onDeleteVersuch" text="Löschen"/>
-    </children>
+    <Label layoutX="14.0" layoutY="26.0" text="Fach"/>
+    <Label fx:id="fachNameText" layoutX="73.0" layoutY="26.0" text="Test"/>
+    <TableView fx:id="tableviewPruefung" editable="true" layoutX="24.0" layoutY="84.0" prefHeight="253.0" prefWidth="524.0">
+        <columns>
+            <TableColumn fx:id="numberPruefungColumn" editable="false" prefWidth="75.0" text="Nr"/>
+            <TableColumn fx:id="pruefungBestandenColumn" prefWidth="75.0" text="Prüfung Bestanden"/>
+            <TableColumn fx:id="pruefungsFormColumn" prefWidth="75.0" text="Prüfungsform"/>
+        </columns>
+    </TableView>
+    <Button fx:id="addPruefungButton" layoutX="47.0" layoutY="371.0" mnemonicParsing="false" onAction="#onAddPruefung" text="Hinzufügen"/>
+    <Button fx:id="saveButton" layoutX="445.0" layoutY="31.0" mnemonicParsing="false" onAction="#onSave" text="Speichern"/>
+    <Button fx:id="backButton" layoutX="526.0" layoutY="31.0" mnemonicParsing="false" onAction="#onBack" text="Zurück"/>
+    <Button fx:id="deletePruefungButton" layoutX="154.0" layoutY="371.0" mnemonicParsing="false" onAction="#onDeletePruefung" text="Löschen"/>
+    <Label layoutX="26.0" layoutY="431.0" text="Prüfungsnummer"/>
+    <Label fx:id="pruefungNameText" layoutX="126.0" layoutY="431.0" text="Test"/>
+    <Label layoutX="461.0" layoutY="431.0" text="Prüfungsform:"/>
+    <Label fx:id="pruefungsFormText" layoutX="552.0" layoutY="431.0" text="Test"/>
+    <TableView fx:id="tableviewVersuch" editable="true" layoutX="36.0" layoutY="489.0" prefHeight="253.0" prefWidth="524.0">
+        <columns>
+            <TableColumn fx:id="numberVersuchColumn" editable="false" prefWidth="75.0" text="Nr"/>
+            <TableColumn fx:id="datumColumn" prefWidth="75.0" text="Datum"/>
+            <TableColumn fx:id="uhrzeitColumn" prefWidth="75.0" text="Uhrzeit"/>
+            <TableColumn fx:id="noteColumn" prefWidth="75.0" text="Note"/>
+            <TableColumn fx:id="pruefungVersuchBestandenColumn" prefWidth="75.0" text="Prüfung Bestanden"/>
+        </columns>
+    </TableView>
+    <Button fx:id="addVersuchButton" layoutX="59.0" layoutY="776.0" mnemonicParsing="false" onAction="#onAddVersuch" text="Hinzufügen"/>
+    <Button fx:id="deleteVersuchButton" layoutX="154.0" layoutY="776.0" mnemonicParsing="false" onAction="#onDeleteVersuch" text="Löschen"/>
 </AnchorPane>
