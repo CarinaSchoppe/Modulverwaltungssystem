@@ -72,7 +72,9 @@ public class Modul {
 
     public boolean isBestanden() {
         var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
-        if (fächer.isEmpty()) return false;
+        if (fächer.isEmpty()) {
+            return bestandenProperty.get();
+        }
         bestandenProperty.set(fächer.stream().allMatch(it -> it.getBestandenProperty().get()));
         return bestandenProperty.get();
     }
