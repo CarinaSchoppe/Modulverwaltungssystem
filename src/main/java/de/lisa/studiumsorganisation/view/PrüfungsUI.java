@@ -230,16 +230,14 @@ public class PrüfungsUI implements Initializable {
         //update the tableview checkboxes for the praktika and the prüfung
         pruefungNameText.setText(prüfung.getFach().getName());
         pruefungsFormText.setText(prüfung.getPrüfungsform().getText());
-        tableviewPruefung.refresh();
-        tableviewVersuch.refresh();
+
     }
 
     private void updateTablePruefung() {
         tableviewPruefung.getItems().clear();
         tableviewPruefung.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungen().stream().filter(p -> p.getFach().getID() == fach.getID()).toList()));
         fachNameText.setText(fach.getName());
-        tableviewVersuch.refresh();
-        tableviewPruefung.refresh();
+
 
     }
 

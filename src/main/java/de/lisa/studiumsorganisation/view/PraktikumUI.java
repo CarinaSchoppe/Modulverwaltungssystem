@@ -127,8 +127,7 @@ public class PraktikumUI implements Initializable {
             if (praktikum != null) {
                 praktikum.isBestanden();
             }
-            tableviewPraktikum.refresh();
-            tableviewTermin.refresh();
+
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -150,9 +149,7 @@ public class PraktikumUI implements Initializable {
         Utility.getInstance().getPraktika().add(praktikum);
         tableviewPraktikum.getItems().add(praktikum);
         fach.isBestanden();
-        tableviewPraktikum.refresh();
-        tableviewTermin.refresh();
-        //TODO: das hier überall
+
     }
 
     @FXML
@@ -169,8 +166,7 @@ public class PraktikumUI implements Initializable {
             Utility.getInstance().getPraktika().remove(item);
             fach.isBestanden();
             tableviewPraktikum.getItems().remove(item);
-            tableviewPraktikum.refresh();
-            tableviewTermin.refresh();
+
             //delete all corresponding praktikumstermine
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
@@ -229,7 +225,7 @@ public class PraktikumUI implements Initializable {
         //update the tableview checkboxes for the praktika and the prüfung
         tableviewPraktikum.getItems().addAll(new HashSet<>(Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFachID() == fach.getID()).toList()));
         fachNameText.setText(fach.getName());
-        tableviewPraktikum.refresh();
+
     }
 
     @Override
@@ -246,8 +242,7 @@ public class PraktikumUI implements Initializable {
         var items = new HashSet<>(Utility.getInstance().getPraktikumstermine().stream().filter(versuch -> versuch.getPraktikumID() == praktikum.getID()).toList());
         tableviewTermin.getItems().addAll(items);
         praktikumNameText.setText(praktikum.getFach().getName());
-        tableviewPraktikum.refresh();
-        tableviewTermin.refresh();
+
 
     }
 

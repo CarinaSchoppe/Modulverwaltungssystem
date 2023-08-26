@@ -197,8 +197,7 @@ public class MainUI extends Application implements Initializable {
         if (modul == null) return;
         tableviewFach.getItems().addAll(new HashSet<>(Utility.getInstance().getFächer().stream().filter(fach -> fach.getModulID() == modul.getID()).toList()));
         modulNameText.setText(modul.getName());
-        tableviewModul.refresh();
-        tableviewFach.refresh();
+
     }
 
 
@@ -278,8 +277,7 @@ public class MainUI extends Application implements Initializable {
         tableviewModul.getItems().clear();
         //update the tableview checkboxes for the praktika and the prüfung
         tableviewModul.getItems().addAll(Utility.getInstance().getModule());
-        tableviewModul.refresh();
-        tableviewFach.refresh();
+
     }
 
     @Override
@@ -318,10 +316,8 @@ public class MainUI extends Application implements Initializable {
                 if (!empty) {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
                     var modul = getTableView().getItems().get(getIndex());
-                    checkBox.setSelected(modul.isBestanden());
-                    checkBox.setOnAction(e -> {
-                        modul.setPraktikaBestanden(checkBox.isSelected());
-                    });
+                    checkBox.setSelected(modul.getPraktikaBestanden());
+                    checkBox.setOnAction(e -> modul.setPraktikaBestanden(checkBox.isSelected()));
                 }
             }
         });
@@ -370,12 +366,12 @@ public class MainUI extends Application implements Initializable {
             @Override
             public void updateItem(BooleanProperty item, boolean empty) {
                 super.updateItem(item, empty);
+
                 if (!empty) {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
-                    checkBox.setOnAction(e -> {
-                        var fach = getTableView().getItems().get(getIndex());
-                        fach.setBestanden(checkBox.isSelected());
-                    });
+                    var fach = getTableView().getItems().get(getIndex());
+                    checkBox.setSelected(fach.isBestanden());
+                    checkBox.setOnAction(e -> fach.setBestanden(checkBox.isSelected()));
                 }
             }
         });
