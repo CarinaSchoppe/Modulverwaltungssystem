@@ -19,8 +19,10 @@ public class Main {
 
     public static void main(String[] args) {
         //lade Datenbank
-        if (dummyLaunch)
+        if (dummyLaunch) {
             dummyData();
+            System.out.println("Dummy data loaded");
+        }
         else
             Database.getInstance().loadAllData();
         //starte UI

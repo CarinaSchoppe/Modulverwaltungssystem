@@ -104,10 +104,12 @@ public class Modul {
             stringBuilder.append("\t").append("Bestanden: ").append(fach.isBestanden()).append("\n");
             stringBuilder.append("\t").append("Prüfungen: ").append("\n");
             prüfungen.forEach(prüfung -> {
+                stringBuilder.append("\t\t").append(prüfung.getID()).append("\n");
                 stringBuilder.append("\t\t").append(prüfung.getPrüfungsform().getText()).append("\n");
                 stringBuilder.append("\t\t").append("Bestanden: ").append(prüfung.isBestanden()).append("\n");
                 stringBuilder.append("\t\t").append("Prüfungsversuche: ").append("\n");
                 prüfungsversuche.forEach(prüfungsversuch -> {
+                    stringBuilder.append("\t\t\t").append(prüfungsversuch.getID()).append("\n");
                     stringBuilder.append("\t\t\t").append(prüfungsversuch.getDatum()).append("\n");
                     stringBuilder.append("\t\t\t").append("Bestanden: ").append(prüfungsversuch.isBestanden()).append("\n");
                 });
@@ -118,6 +120,7 @@ public class Modul {
                 stringBuilder.append("\t\t").append("Bestanden: ").append(praktikum.isBestanden()).append("\n");
                 stringBuilder.append("\t\t").append("Praktikumstermine: ").append("\n");
                 praktikumstermine.forEach(praktikumstermin -> {
+                    stringBuilder.append("\t\t\t").append(praktikumstermin.getID()).append("\n");
                     stringBuilder.append("\t\t\t").append(praktikumstermin.getDatum()).append("\n");
                     stringBuilder.append("\t\t\t").append("Bestanden: ").append(praktikumstermin.isBestanden()).append("\n");
                 });

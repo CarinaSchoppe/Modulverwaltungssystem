@@ -202,7 +202,7 @@ public class PrüfungsUI implements Initializable {
     }
 
     public void start(Stage primaryStage) throws IOException {
-        var loader = new FXMLLoader(getClass().getResource("/fxml/PraktikumsUI.fxml"));
+        var loader = new FXMLLoader(getClass().getResource("/fxml/PrüfungsUI.fxml"));
         var root = (Parent) loader.load();
         primaryStage.setResizable(false);
         primaryStage.setTitle("Studiumsorganisation");
@@ -281,8 +281,8 @@ public class PrüfungsUI implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        instance = this;
         initPruefungsTable();
         initVersucheTable();
-        instance = this;
     }
 }

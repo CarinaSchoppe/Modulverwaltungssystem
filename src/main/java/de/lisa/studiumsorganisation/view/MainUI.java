@@ -144,10 +144,10 @@ public class MainUI extends Application implements Initializable {
         var selectedFach = tableviewFach.getSelectionModel().getSelectedItem();
         if (selectedFach != null) {
             PrüfungsUI.setFach(selectedFach);
-            var prüfungUI = PrüfungsUI.getInstance();
+            var prüfungsUI = PrüfungsUI.getInstance();
             //get current stage based on the event
             var stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            prüfungUI.start(stage);
+            prüfungsUI.start(stage);
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");

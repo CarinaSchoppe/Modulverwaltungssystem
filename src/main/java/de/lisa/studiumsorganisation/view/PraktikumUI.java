@@ -219,9 +219,9 @@ public class PraktikumUI implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        instance = this;
         initPraktikumTable();
         initPraktikumsterminTable();
-        instance = this;
     }
 
     private void updateTerminTable(Praktikum praktikum) {
