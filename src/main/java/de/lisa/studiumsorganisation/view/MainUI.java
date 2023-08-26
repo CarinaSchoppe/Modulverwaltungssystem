@@ -175,9 +175,13 @@ public class MainUI extends Application implements Initializable {
     void onSave(ActionEvent event) {
         if (Main.isDummyLaunch()) {
             Utility.getInstance().getModule().forEach(modul -> System.out.println(modul.toString()));
-
         } else {
             Database.getInstance().saveAllData();
+            var alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Erfolg");
+            alert.setHeaderText("Daten gespeichert");
+            alert.setContentText("Die Daten wurden erfolgreich gespeichert.");
+            alert.showAndWait();
         }
     }
 
@@ -205,11 +209,6 @@ public class MainUI extends Application implements Initializable {
         updateTable();
     }
 
-
-    @FXML
-    void onSpeichern(ActionEvent event) {
-
-    }
 
     @FXML
     void onDeleteModul(ActionEvent event) {
