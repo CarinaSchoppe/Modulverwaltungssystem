@@ -252,9 +252,7 @@ public class PrüfungsUI implements Initializable {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
                     var prüfung = getTableView().getItems().get(getIndex());
                     checkBox.setSelected(prüfung.isBestanden());
-                    checkBox.setOnAction(e -> {
-                        prüfung.setBestanden(checkBox.isSelected());
-                    });
+                    checkBox.setOnAction(e -> prüfung.setBestanden(checkBox.isSelected()));
                 }
             }
         });
@@ -282,9 +280,7 @@ public class PrüfungsUI implements Initializable {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
                     var prüfung = getTableView().getItems().get(getIndex());
                     checkBox.setSelected(prüfung.isBestanden());
-                    checkBox.setOnAction(e -> {
-                        prüfung.setBestanden(checkBox.isSelected());
-                    });
+                    checkBox.setOnAction(e -> prüfung.setBestanden(checkBox.isSelected()));
                 }
             }
         });

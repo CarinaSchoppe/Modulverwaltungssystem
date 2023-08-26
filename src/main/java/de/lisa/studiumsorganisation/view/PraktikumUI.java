@@ -257,9 +257,7 @@ public class PraktikumUI implements Initializable {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
                     var praktikum = getTableView().getItems().get(getIndex());
                     checkBox.setSelected(praktikum.isBestanden());
-                    checkBox.setOnAction(e -> {
-                        praktikum.setBestanden(checkBox.isSelected());
-                    });
+                    checkBox.setOnAction(e -> praktikum.setBestanden(checkBox.isSelected()));
                 }
             }
         });
@@ -278,9 +276,7 @@ public class PraktikumUI implements Initializable {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
                     var praktikumstermin = getTableView().getItems().get(getIndex());
                     checkBox.setSelected(praktikumstermin.isBestanden());
-                    checkBox.setOnAction(e -> {
-                        praktikumstermin.setBestanden(checkBox.isSelected());
-                    });
+                    checkBox.setOnAction(e -> praktikumstermin.setBestanden(checkBox.isSelected()));
                 }
             }
         });
