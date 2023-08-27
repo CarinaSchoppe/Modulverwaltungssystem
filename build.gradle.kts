@@ -4,6 +4,7 @@ plugins{
     id("com.github.johnrengelman.shadow") version "+"
     id("org.openjfx.javafxplugin") version "+"
     id("application")
+    id("idea")
 }
 
 dependencies{
