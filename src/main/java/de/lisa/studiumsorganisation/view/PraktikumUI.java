@@ -207,6 +207,9 @@ public class PraktikumUI implements Initializable {
         var versuch = tableviewTermin.getSelectionModel().getSelectedItem();
         if (versuch != null) {
             Utility.getInstance().getPraktikumstermine().remove(versuch);
+            if (!Main.isDummyLaunch()) {
+                Database.getInstance().deleteElement(versuch);
+            }
             tableviewTermin.getItems().remove(versuch);
             var praktikum = tableviewPraktikum.getSelectionModel().getSelectedItem();
             if (praktikum != null) {
@@ -250,7 +253,12 @@ public class PraktikumUI implements Initializable {
     void onDeletePraktikum(ActionEvent event) {
         var item = tableviewPraktikum.getSelectionModel().getSelectedItem();
         if (item != null) {
-            Utility.getInstance().getPraktikumstermine().removeIf(termin -> termin.getPraktikumID() == item.getID());
+            var termine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikumID() == item.getID()).toList();
+            termine.forEach(Utility.getInstance().getPraktikumstermine()::remove);
+            if (!Main.isDummyLaunch()) {
+                Database.getInstance().deleteElement(item);
+                termine.forEach(Database.getInstance()::deleteElement);
+            }
             Utility.getInstance().getPraktika().remove(item);
             fach.isBestanden();
             tableviewPraktikum.getItems().remove(item);

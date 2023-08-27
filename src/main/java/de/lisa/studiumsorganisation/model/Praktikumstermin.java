@@ -3,7 +3,9 @@ package de.lisa.studiumsorganisation.model;
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Time;
 import java.util.Date;
@@ -13,17 +15,16 @@ import java.util.Date;
  * It stores information about the ID, practical session ID, date, time, and
  * completion status of the appointment.
  */
-@Data
-public class Praktikumstermin {
+@Getter
+@Setter
+@EqualsAndHashCode
+public class Praktikumstermin extends Basemodel {
 
     /**
      * Keeps track of the number of praktikumstermin instances created.
      */
     private static int praktikumsterminCounter = 0;
-    /**
-     * Represents a unique identifier for an object.
-     */
-    private final int ID;
+
     /**
      * Represents a BooleanProperty for keeping track of the "bestanden" property.
      */
@@ -53,7 +54,7 @@ public class Praktikumstermin {
      * @param bestanden   true if the Praktikumstermin has been passed, false otherwise
      */
     public Praktikumstermin(int ID, int praktikumID, Date datum, Time uhrzeit, boolean bestanden) {
-        this.ID = ID;
+        super(ID);
         this.praktikumID = praktikumID;
         this.datum = datum;
         this.uhrzeit = uhrzeit;

@@ -3,7 +3,9 @@ package de.lisa.studiumsorganisation.model;
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * This class represents a Prüfung (examination).
@@ -28,8 +30,10 @@ import lombok.Data;
  * The setter method allows updating the bestandenProperty of the Prüfung:
  * - setBestanden: Sets the bestandenProperty of the Prüfung and updates the bestandenProperty of all associated Prüfungsversuche.
  */
-@Data
-public class Prüfung {
+@Getter
+@Setter
+@EqualsAndHashCode
+public class Prüfung extends Basemodel {
 
     /**
      * Counter variable to keep track of the number of checks performed.
@@ -39,22 +43,7 @@ public class Prüfung {
      * accessed using the methods provided.
      */
     private static int prüfungCounter = 0;
-    /**
-     * The ID variable represents a unique identifier for an object. 
-     * It is a private final int variable, meaning its value cannot be modified once initialized and it can only be accessed from within the class it is declared in.
-     *
-     * Usage example:
-     *
-     * MyClass obj = new MyClass();
-     * int id = obj.getID();
-     *
-     * The ID value should be set during object instantiation and remains constant throughout the object's lifecycle.
-     *
-     * It is recommended to always use the getter method to retrieve the ID value instead of accessing the variable directly.
-     *
-     * Note: The ID variable should only be modified by the class itself, if necessary, and not by external classes.
-     */
-    private final int ID;
+
     /**
      * The bestandenProperty represents a boolean property that is used to indicate whether a certain bestanden state is true or false.
      *
@@ -105,7 +94,7 @@ public class Prüfung {
      * @param bestanden    the bestanden status of the Prüfung
      */
     public Prüfung(int ID, Prüfungsform prüfungsform, int fachID, boolean bestanden) {
-        this.ID = ID;
+        super(ID);
         this.prüfungsform = prüfungsform;
         this.fachID = fachID;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
@@ -133,7 +122,7 @@ public class Prüfung {
      */
     public boolean isBestanden() {
         //get all prüfungsversuche to this prüfung and check if all are bestanden
-        var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.ID).toList();
+        var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.getID()).toList();
         if (versuche.isEmpty()) {
             getFach().isBestanden();
             return bestandenProperty.get();
@@ -153,7 +142,7 @@ public class Prüfung {
     public void setBestanden(boolean bestanden) {
         bestandenProperty.set(bestanden);
         //go through all Prüfungsversuche and set them as bestanden
-        var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.ID).toList();
+        var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfung().getID() == this.getID()).toList();
         versuche.forEach(prüfungsversuch -> prüfungsversuch.setBestanden(bestanden));
         getFach().isBestanden();
     }

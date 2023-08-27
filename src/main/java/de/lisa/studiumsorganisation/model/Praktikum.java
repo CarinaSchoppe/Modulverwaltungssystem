@@ -3,13 +3,17 @@ package de.lisa.studiumsorganisation.model;
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a Praktikum.
  */
-@Data
-public class Praktikum {
+@Getter
+@Setter
+@EqualsAndHashCode
+public class Praktikum extends Basemodel {
 
     /**
      * Variable to keep track of the number of praktikums.
@@ -21,15 +25,7 @@ public class Praktikum {
      * @see #resetPraktikumCounter()
      */
     private static int praktikumCounter = 0;
-    /**
-     * Represents a unique identifier.
-     * <p>
-     * This variable is used to store a unique identifier for an object. Once the identifier is assigned, it cannot be modified.
-     * <p>
-     * The variable is declared as private to encapsulate the implementation details and ensure that only the class it belongs
-     * to can modify its value. It is also marked as final to prevent any modifications after the initial assignment.
-     */
-    private final int ID;
+
     /**
      * A boolean property representing the status of whether the file has been processed successfully.
      *
@@ -56,7 +52,7 @@ public class Praktikum {
      * @param fachID     the ID of the Fach associated with the Praktikum
      */
     public Praktikum(int ID, boolean bestanden, int fachID) {
-        this.ID = ID;
+        super(ID);
         this.fachID = fachID;
         this.bestandenProperty = new SimpleBooleanProperty(bestanden);
         if (ID >= praktikumCounter) praktikumCounter = ID + 1;
@@ -86,7 +82,7 @@ public class Praktikum {
      * @return true if the Praktikum is passed, false otherwise.
      */
     public boolean isBestanden() {
-        var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.ID).toList();
+        var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.getID()).toList();
         if (praktikumstermine.isEmpty()) {
             getFach().isBestanden();
             return bestandenProperty.get();
@@ -105,7 +101,7 @@ public class Praktikum {
     public void setBestanden(boolean bestanden) {
         bestandenProperty.set(bestanden);
         //go through all praktikumstermine and set them as bestanden
-        var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.ID).toList();
+        var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikum().getID() == this.getID()).toList();
         praktikumstermine.forEach(praktikumstermin -> praktikumstermin.setBestanden(bestanden));
         getFach().isBestanden();
     }

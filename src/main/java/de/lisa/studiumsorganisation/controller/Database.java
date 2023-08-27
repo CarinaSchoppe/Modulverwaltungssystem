@@ -338,17 +338,85 @@ public class Database {
     /**
      * Updates the "bestanden" attribute of all "Fächer" (subjects), "Praktika" (internships),
      * "Module" (modules), and "Prüfungen" (exams) based on the underlying elements.
-     *
+     * <p>
      * This method iterates over all "Fächer" objects in the Utility class and sets
      * their "bestanden" attribute to the result of the "isBestanden" method. This
      * ensures that the "bestanden" attribute reflects the current status of each element.
-     *
+     * <p>
      * Note: The "bestanden" attribute represents whether the corresponding element has been passed.
      * If an element has been passed, its "bestanden" attribute is true. Otherwise, it is false.
      */
     private void updateBestandenAttributes() {
         //update the bestanden attributes of all fächer, praktika, module and prüfungen based on the unterlaying element 
         Utility.getInstance().getFächer().forEach(fach -> fach.setBestanden(fach.isBestanden()));
+    }
+
+    public void deleteElement(Basemodel element) {
+        if (element instanceof Fach fach) {
+            var query = "DELETE FROM fach WHERE FachID = ?";
+            try {
+                var statement = connection.prepareStatement(query);
+                statement.setInt(1, fach.getID());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if (element instanceof Modul modul) {
+            var query = "DELETE FROM modul WHERE ModulID = ?";
+            try {
+                var statement = connection.prepareStatement(query);
+                statement.setInt(1, modul.getID());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if (element instanceof Praktikum praktikum) {
+            var query = "DELETE FROM praktikum WHERE PraktID = ?";
+            try {
+                var statement = connection.prepareStatement(query);
+                statement.setInt(1, praktikum.getID());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if (element instanceof Praktikumstermin praktikumstermin) {
+            var query = "DELETE FROM praktikumstermin WHERE PraktTerminID = ?";
+            try {
+                var statement = connection.prepareStatement(query);
+                statement.setInt(1, praktikumstermin.getID());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } else if (element instanceof Prüfung prüfung) {
+            var query = "DELETE FROM pruefung WHERE PruefID = ?";
+            try {
+                var statement = connection.prepareStatement(query);
+                statement.setInt(1, prüfung.getID());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if (element instanceof Prüfungsversuch prüfungsversuch) {
+            var query = "DELETE FROM pruefungsversuch WHERE PruefVersuchID = ?";
+            try {
+                var statement = connection.prepareStatement(query);
+                statement.setInt(1, prüfungsversuch.getID());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if (element instanceof Studiengang studiengang) {
+            var query = "DELETE FROM studiengang WHERE StudID = ?";
+            try {
+                var statement = connection.prepareStatement(query);
+                statement.setInt(1, studiengang.getID());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -413,7 +481,7 @@ public class Database {
 
     /**
      * Load all Prüfungen from the database.
-     *
+     * <p>
      * This method retrieves all Prüfungen stored in the database table "pruefung" and populates the Prüfungen collection
      * in the Utility class.
      *

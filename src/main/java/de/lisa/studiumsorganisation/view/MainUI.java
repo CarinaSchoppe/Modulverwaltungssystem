@@ -317,7 +317,15 @@ public class MainUI extends Application implements Initializable {
             var ects = modul.getFächer().stream().mapToInt(Fach::getCredits).sum();
             var bestanden = modul.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum();
             ectsText.setText(bestanden + " / " + ects);
-                modul.isBestanden();
+            modul.isBestanden();
+
+            if (!Main.isDummyLaunch()) {
+                Database.getInstance().deleteElement(selectedFach);
+                praktika.forEach(Database.getInstance()::deleteElement);
+                prüfungen.forEach(Database.getInstance()::deleteElement);
+                prüfungsversuche.forEach(Database.getInstance()::deleteElement);
+                praktikumstermine.forEach(Database.getInstance()::deleteElement);
+            }
             updateTable();
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
@@ -437,6 +445,14 @@ public class MainUI extends Application implements Initializable {
             var prüfungsversuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungstermin -> prüfungen.stream().anyMatch(prüfung -> prüfung.getID() == prüfungstermin.getPrüfung().getID())).toList();
             var praktikumstermine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktika.stream().anyMatch(praktikum -> praktikum.getID() == praktikumstermin.getPraktikum().getID())).toList();
 
+            if (!Main.isDummyLaunch()) {
+                Database.getInstance().deleteElement(selectedModul);
+                fächer.forEach(Database.getInstance()::deleteElement);
+                praktika.forEach(Database.getInstance()::deleteElement);
+                prüfungen.forEach(Database.getInstance()::deleteElement);
+                prüfungsversuche.forEach(Database.getInstance()::deleteElement);
+                praktikumstermine.forEach(Database.getInstance()::deleteElement);
+            }
             Utility.getInstance().getFächer().removeAll(fächer);
             Utility.getInstance().getPraktika().removeAll(praktika);
             Utility.getInstance().getPrüfungen().removeAll(prüfungen);

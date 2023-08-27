@@ -219,6 +219,9 @@ public class PrüfungsUI implements Initializable {
             var prüfung = tableviewPruefung.getSelectionModel().getSelectedItem();
             if (prüfung != null) prüfung.isBestanden();
             tableviewVersuch.getItems().remove(versuch);
+            if (!Main.isDummyLaunch()) {
+                Database.getInstance().deleteElement(versuch);
+            }
             updateTableVersuch(prüfung);
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
@@ -254,13 +257,18 @@ public class PrüfungsUI implements Initializable {
      */
     @FXML
     void onDeletePruefung(ActionEvent event) {
-        var item = tableviewPruefung.getSelectionModel().getSelectedItem();
-        if (item != null) {
+        var prüfung = tableviewPruefung.getSelectionModel().getSelectedItem();
+        if (prüfung != null) {
             //delete all corresponding Prüfungsversuche
-            Utility.getInstance().getPrüfungsversuche().removeIf(prüfungsversuch -> prüfungsversuch.getPrüfungsID() == item.getID());
+            var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(versuch -> versuch.getPrüfung().getID() == prüfung.getID()).toList();
+            versuche.forEach(Utility.getInstance().getPrüfungsversuche()::remove);
+            if (!Main.isDummyLaunch()) {
+                versuche.forEach(Database.getInstance()::deleteElement);
+                Database.getInstance().deleteElement(prüfung);
+            }
 
-            Utility.getInstance().getPrüfungen().remove(item);
-            tableviewPruefung.getItems().remove(item);
+            Utility.getInstance().getPrüfungen().remove(prüfung);
+            tableviewPruefung.getItems().remove(prüfung);
             fach.isBestanden();
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
@@ -275,8 +283,7 @@ public class PrüfungsUI implements Initializable {
      *
      */
     @FXML
-    void onSave(ActionEvent event) {
-
+    void onSave() {
         if (Main.isDummyLaunch()) {
             Utility.getInstance().getModule().forEach(modul -> System.out.println(modul.toString()));
 

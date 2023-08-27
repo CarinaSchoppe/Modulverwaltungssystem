@@ -3,7 +3,9 @@ package de.lisa.studiumsorganisation.model;
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -13,8 +15,10 @@ import java.util.List;
  * A module encapsulates information about a specific subject or topic covered in a study program.
  * It keeps track of related courses, exams, and practicals.
  */
-@Data
-public class Modul {
+@Getter
+@Setter
+@EqualsAndHashCode
+public class Modul extends Basemodel {
 
     /**
      * The modulCounter class keeps track of the count of a particular module.
@@ -22,33 +26,7 @@ public class Modul {
      * and it is shared among all instances of the class.
      */
     private static int modulCounter = 0;
-    /**
-     * The ID variable represents an integer identifier.
-     *
-     * <p>This variable is used to store a unique identifier for an object.</p>
-     *
-     * <p>It is declared as private final, indicating that it cannot be modified after its initial assignment. The 'final' modifier ensures that the ID remains constant throughout the object's lifespan.</p>
-     *
-     * <p><b>Usage:</b></p>
-     *
-     * <p>The ID variable can be accessed within the class it is declared in. It is commonly used as a unique identifier to distinguish between different objects of the same class.</p>
-     *
-     * <p>Example usage:</p>
-     * <pre>{@code
-     *     public class MyClass {
-     *         private final int ID;
-     *
-     *         public MyClass(int id) {
-     *             this.ID = id;
-     *         }
-     *
-     *         public int getID() {
-     *             return ID;
-     *         }
-     *     }
-     * }</pre>
-     */
-    private final int ID;
+
     /**
      * The bestandenProperty is a private final BooleanProperty.
      *
@@ -113,7 +91,7 @@ public class Modul {
      * @param studiengangID The ID of the Studiengang associated with the Modul.
      */
     public Modul(int ID, String name, boolean bestanden, int studiengangID) {
-        this.ID = ID;
+        super(ID);
         this.name = name;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
         praktikaBestandenProperty = new SimpleBooleanProperty(getPraktikaBestanden());
@@ -150,7 +128,7 @@ public class Modul {
      */
     public boolean getPrüfungBestanden() {
         //find all prüfungen related to this module and than check if all of them are true if they exist if not than its false
-        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.getID()).toList();
         if (fächer.isEmpty()) return false;
 
         var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> fächer.stream().anyMatch(fach -> fach.getID() == prüfung.getFachID())).toList();
@@ -165,7 +143,7 @@ public class Modul {
      * @param bestanden the status to set for the exams
      */
     public void setPrüfungenBestanden(Boolean bestanden) {
-        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.getID()).toList();
         if (fächer.isEmpty()) return;
         var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> fächer.stream().anyMatch(fach -> fach.getID() == prüfung.getFachID())).toList();
         prüfungen.forEach(prüfung -> prüfung.setBestanden(bestanden));
@@ -178,7 +156,7 @@ public class Modul {
      */
     public boolean getPraktikaBestanden() {
         //find all prüfungen related to this module and than check if all of them are true if they exist if not than its false
-        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.getID()).toList();
         if (fächer.isEmpty()) return false;
 
         var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> fächer.stream().anyMatch(fach -> fach.getID() == praktikum.getFachID())).toList();
@@ -193,7 +171,7 @@ public class Modul {
      * @param bestanden the new "bestanden" status to be set
      */
     public void setPraktikaBestanden(Boolean bestanden) {
-        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.getID()).toList();
         if (fächer.isEmpty()) return;
         var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> fächer.stream().anyMatch(fach -> fach.getID() == praktikum.getFachID())).toList();
         praktika.forEach(praktikum -> praktikum.setBestanden(bestanden));
@@ -205,7 +183,7 @@ public class Modul {
      * @return true if all associated subjects are passed, false otherwise.
      */
     public boolean isBestanden() {
-        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.getID()).toList();
         if (fächer.isEmpty()) {
             return bestandenProperty.get();
         }
@@ -220,7 +198,7 @@ public class Modul {
      */
     public void setBestanden(boolean bestanden) {
         bestandenProperty.set(bestanden);
-        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.getID()).toList();
 
         if (fächer.isEmpty()) return;
         fächer.forEach(fach -> fach.setBestanden(bestanden));
@@ -234,7 +212,7 @@ public class Modul {
     @Override
     public String toString() {
         //gib alle alemente der klasse modul aus sowie alle mit dem modul zusammenhängenden fächer und deren prüfungen und praktika aus sowie deren termine und versuche
-        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+        var fächer = Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.getID()).toList();
         var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> fächer.stream().anyMatch(fach -> fach.getID() == prüfung.getFachID())).toList();
         var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> fächer.stream().anyMatch(fach -> fach.getID() == praktikum.getFachID())).toList();
         var prüfungsversuche = Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungstermin -> prüfungen.stream().anyMatch(prüfung -> prüfung.getID() == prüfungstermin.getPrüfung().getID())).toList();
@@ -243,7 +221,7 @@ public class Modul {
         //printe nun alle elemente aus
         var stringBuilder = new StringBuilder();
         stringBuilder.append("Modul: ").append(name).append("\n");
-        stringBuilder.append("ID: ").append(ID).append("\n");
+        stringBuilder.append("ID: ").append(getID()).append("\n");
         stringBuilder.append("Bestanden: ").append(bestandenProperty.get()).append("\n");
         stringBuilder.append("Fächer: ").append("\n");
         fächer.forEach(fach -> {
@@ -278,6 +256,6 @@ public class Modul {
     }
 
     public List<Fach> getFächer() {
-        return Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.ID).toList();
+        return Utility.getInstance().getFächer().stream().filter(fach -> fach.getModul().getID() == this.getID()).toList();
     }
 }

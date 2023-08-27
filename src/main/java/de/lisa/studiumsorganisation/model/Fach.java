@@ -4,14 +4,17 @@ package de.lisa.studiumsorganisation.model;
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a course, or "Fach" in German.
  */
-@Data
-public class Fach {
+@Getter
+@Setter
+@EqualsAndHashCode
+public class Fach extends Basemodel {
 
     /**
      * The fachCounter variable is an integer that represents the counter of fach objects.
@@ -30,7 +33,6 @@ public class Fach {
     /**
      * Represents a unique identifier.
      */
-    private final int ID;
     /**
      * Represents a BooleanProperty indicating whether the file has been bestanden.
      *
@@ -120,7 +122,7 @@ public class Fach {
      * @param modulID the module ID of the Fach
      */
     public Fach(int ID, String name, int semester, boolean bestanden, int credits, int modulID) {
-        this.ID = ID;
+        super(ID);
         this.name = name;
         this.semester = semester;
         this.bestanden = bestanden;
@@ -137,8 +139,8 @@ public class Fach {
      * @return true if the Fach is passed, false otherwise.
      */
     public boolean isBestanden() {
-        var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFach().getID() == this.ID).toList();
-        var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFach().getID() == this.ID).toList();
+        var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFach().getID() == this.getID()).toList();
+        var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFach().getID() == this.getID()).toList();
 
         if (prüfungen.isEmpty() && praktika.isEmpty()) {
             getModul().isBestanden();
@@ -164,10 +166,10 @@ public class Fach {
      */
     public void setBestanden(boolean bestanden) {
         //get all prüfungen to this fach and set them as bestanden
-        var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFach().getID() == this.ID).toList();
+        var prüfungen = Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFach().getID() == this.getID()).toList();
         prüfungen.forEach(prüfung -> prüfung.setBestanden(bestanden));
         //get all praktika to this fach and set them as bestanden
-        var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFach().getID() == this.ID).toList();
+        var praktika = Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFach().getID() == this.getID()).toList();
         praktika.forEach(praktikum -> praktikum.setBestanden(bestanden));
         this.bestanden = bestanden;
         bestandenProperty.set(bestanden);

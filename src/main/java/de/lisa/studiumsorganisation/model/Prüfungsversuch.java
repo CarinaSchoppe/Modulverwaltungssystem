@@ -3,7 +3,9 @@ package de.lisa.studiumsorganisation.model;
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Time;
 import java.util.Date;
@@ -12,8 +14,10 @@ import java.util.Date;
  * The Prüfungsversuch class represents an attempt for an exam.
  * It stores information about the ID, date, time, result, and associated Prüfung.
  */
-@Data
-public class Prüfungsversuch {
+@Getter
+@Setter
+@EqualsAndHashCode
+public class Prüfungsversuch extends Basemodel {
 
     /**
      * Keeps track of the number of attempts made during an exam.
@@ -83,7 +87,7 @@ public class Prüfungsversuch {
      * @param prüfungsID the ID of the associated Prüfung
      */
     public Prüfungsversuch(int ID, Date datum, Time uhrzeit, boolean bestanden, float note, int prüfungsID) {
-        this.ID = ID;
+        super(ID);
         this.datum = datum;
         this.uhrzeit = uhrzeit;
         this.note = note;

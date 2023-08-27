@@ -2,14 +2,18 @@ package de.lisa.studiumsorganisation.model;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a study program.
  */
 @AllArgsConstructor
-@Data
-public class Studiengang {
+@Getter
+@Setter
+@EqualsAndHashCode
+public class Studiengang extends Basemodel {
 
     /**
      * Represents the counter for the number of studiengangs.
@@ -28,14 +32,7 @@ public class Studiengang {
      * @since 1.0
      */
     private static int studiengangCounter = 0;
-    /**
-     * Represents the identifier.
-     *
-     * <p>
-     * The ID is used to uniquely identify an object or entity. It is an integer value.
-     * </p>
-     */
-    private int ID;
+
     /**
      * The studienverlaufsplan represents the string variable that holds the study plan information.
      * It is a private variable that is accessible only within the class it is declared in.
@@ -59,5 +56,9 @@ public class Studiengang {
      */
     private String studienverlaufsplan;
 
-
+    public Studiengang(int ID, String studienverlaufsplan) {
+        super(ID);
+        this.studienverlaufsplan = studienverlaufsplan;
+        if (ID >= studiengangCounter) studiengangCounter = ID + 1;
+    }
 }
