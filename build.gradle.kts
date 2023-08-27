@@ -45,5 +45,5 @@ java {
 }
 
 application {
-    mainClass.set("de.lisa.studiumsorganisation")
+    mainClass.set("de.lisa.studiumsorganisation.Main")
 }
