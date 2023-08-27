@@ -312,13 +312,12 @@ public class MainUI extends Application implements Initializable {
             prüfungsversuche.forEach(Utility.getInstance().getPrüfungsversuche()::remove);
             praktikumstermine.forEach(Utility.getInstance().getPraktikumstermine()::remove);
             Utility.getInstance().getFächer().remove(selectedFach);
-            tableviewFach.getItems().remove(selectedFach);
             var modul = tableviewModul.getSelectionModel().getSelectedItem();
+            if (modul == null) return;
             var ects = modul.getFächer().stream().mapToInt(Fach::getCredits).sum();
             var bestanden = modul.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum();
             ectsText.setText(bestanden + " / " + ects);
             modul.isBestanden();
-
             if (!Main.isDummyLaunch()) {
                 Database.getInstance().deleteElement(selectedFach);
                 praktika.forEach(Database.getInstance()::deleteElement);
@@ -621,8 +620,12 @@ public class MainUI extends Application implements Initializable {
             fach.setCredits(event.getNewValue());
             var modul = fach.getModul();
             //get all ectsfor that modul
-            var ects = modul.getFächer().stream().mapToInt(Fach::getCredits).sum();
-            var bestanden = modul.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum();
+            var module = Utility.getInstance().getModule();
+            //get ects of all module and all fächer
+            var ects = module.stream().mapToInt(modul1 -> modul1.getFächer().stream().mapToInt(Fach::getCredits).sum()).sum();
+            //get ects of all module and all fächer that are bestanden
+            var bestanden = module.stream().mapToInt(modul1 -> modul1.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum()).sum();
+
             ectsText.setText(bestanden + " / " + ects);
         });
 

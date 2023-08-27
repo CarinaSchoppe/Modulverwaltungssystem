@@ -44,7 +44,7 @@ public class Prüfungsversuch extends Basemodel {
     /**
      * The datum variable represents a specific date in time.
      * It is a private instance variable of the Date data type.
-     *
+     * <p>
      * Note: This documentation does not include example code snippets.
      */
     private Date datum;
@@ -65,11 +65,11 @@ public class Prüfungsversuch extends Basemodel {
     private float note;
     /**
      * The unique identifier for an examination.
-     *
+     * <p>
      * This variable represents the private integer value used to store the identification number
      * of an examination. Each examination is assigned a unique identifier to differentiate it from
      * other examinations.
-     *
+     * <p>
      * The value of this variable should only be accessed and modified through the appropriate getter
      * and setter methods, in order to ensure data encapsulation and maintain the integrity of the
      * variable's value.
@@ -79,11 +79,11 @@ public class Prüfungsversuch extends Basemodel {
     /**
      * Initializes a new instance of the Prüfungsversuch class.
      *
-     * @param ID the ID of the Prüfungsversuch
-     * @param datum the date of the Prüfungsversuch
-     * @param uhrzeit the time of the Prüfungsversuch
-     * @param bestanden true if the Prüfungsversuch is passed, false otherwise
-     * @param note the grade of the Prüfungsversuch
+     * @param ID         the ID of the Prüfungsversuch
+     * @param datum      the date of the Prüfungsversuch
+     * @param uhrzeit    the time of the Prüfungsversuch
+     * @param bestanden  true if the Prüfungsversuch is passed, false otherwise
+     * @param note       the grade of the Prüfungsversuch
      * @param prüfungsID the ID of the associated Prüfung
      */
     public Prüfungsversuch(int ID, Date datum, Time uhrzeit, boolean bestanden, float note, int prüfungsID) {
@@ -132,5 +132,16 @@ public class Prüfungsversuch extends Basemodel {
      */
     public Prüfung getPrüfung() {
         return Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getID() == prüfungsID).findFirst().orElse(null);
+    }
+
+    public void setNote(float note) {
+        if (note >= 5.0) {
+            this.note = 5.0f;
+        } else if (note <= 1.0) {
+            this.note = 1.0f;
+        } else
+            this.note = note;
+        setBestanden(!(this.note >= 4.0));
+
     }
 }

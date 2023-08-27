@@ -209,7 +209,7 @@ public class PrüfungsUI implements Initializable {
      *
      */
     @FXML
-    void onDeleteVersuch(ActionEvent event) {
+    void onDeleteVersuch() {
         var versuch = tableviewVersuch.getSelectionModel().getSelectedItem();
         if (versuch != null) {
             Utility.getInstance().getPrüfungsversuche().remove(versuch);
@@ -256,17 +256,19 @@ public class PrüfungsUI implements Initializable {
      *
      */
     @FXML
-    void onDeletePruefung(ActionEvent event) {
+    void onDeletePruefung() {
         var prüfung = tableviewPruefung.getSelectionModel().getSelectedItem();
         if (prüfung != null) {
             //delete all corresponding Prüfungsversuche
-            var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(versuch -> versuch.getPrüfung().getID() == prüfung.getID()).toList();
+            var versuche = Utility.getInstance().getPrüfungsversuche().stream().filter(versuch -> versuch.getPrüfungsID() == prüfung.getID()).toList();
             versuche.forEach(Utility.getInstance().getPrüfungsversuche()::remove);
             if (!Main.isDummyLaunch()) {
                 versuche.forEach(Database.getInstance()::deleteElement);
                 Database.getInstance().deleteElement(prüfung);
+                Utility.getInstance().getPrüfungen().remove(prüfung);
+                fach.isBestanden();
+                updateTablePruefung();
             }
-
             Utility.getInstance().getPrüfungen().remove(prüfung);
             fach.isBestanden();
             updateTablePruefung();
@@ -339,7 +341,7 @@ public class PrüfungsUI implements Initializable {
         tableviewVersuch.getItems().clear();
         if (prüfung == null) return;
         //get prüfungen based on ModulID -> FachID -> Prüfungen
-        tableviewVersuch.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungsversuche().stream().filter(p -> p.getPrüfungsID() == prüfung.getID()).toList())
+        tableviewVersuch.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungsversuche().stream().filter(prüfungsversuch -> prüfungsversuch.getPrüfungsID() == prüfung.getID()).toList())
         );
         //update the tableview checkboxes for the praktika and the prüfung
         pruefungNameText.setText(prüfung.getFach().getName());
@@ -354,7 +356,7 @@ public class PrüfungsUI implements Initializable {
      */
     private void updateTablePruefung() {
         tableviewPruefung.getItems().clear();
-        tableviewPruefung.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungen().stream().filter(p -> p.getFach().getID() == fach.getID()).toList()));
+        tableviewPruefung.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungen().stream().filter(prüfung -> prüfung.getFachID() == fach.getID()).toList()));
         fachNameText.setText(fach.getName());
         tableviewPruefung.refresh();
         tableviewVersuch.refresh();
@@ -415,6 +417,13 @@ public class PrüfungsUI implements Initializable {
         noteColumn.setOnEditCommit(event -> {
             var versuch = event.getRowValue();
             versuch.setNote(event.getNewValue());
+            //get current prüfungsversuch
+            var prüfung = tableviewPruefung.getSelectionModel().getSelectedItem();
+            versuch.isBestanden();
+            if (prüfung != null) {
+                prüfung.isBestanden();
+                updateTableVersuch(prüfung);
+            }
         });
 
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("datum"));
