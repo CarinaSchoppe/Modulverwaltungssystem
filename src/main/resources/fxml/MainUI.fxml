@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="de.lisa.studiumsorganisation.view.MainUI">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/19" fx:controller="de.lisa.studiumsorganisation.view.MainUI">
     <TableView fx:id="tableviewModul" editable="true" layoutX="31.0" layoutY="58.0" prefHeight="200.0" prefWidth="539.0">
         <columns>
             <TableColumn fx:id="modulNameColumn" prefWidth="75.0" text="ModulName"/>
@@ -15,7 +15,7 @@
     <Label layoutX="31.0" layoutY="23.0" text="Studiengang"/>
     <Label fx:id="studiengangText" layoutX="115.0" layoutY="23.0" text="test"/>
     <Label layoutX="407.0" layoutY="275.0" text="Gesamt ECTS: "/>
-    <Label fx:id="ectsText" layoutX="507.0" layoutY="275.0" text="40 / 210"/>
+    <Label fx:id="ectsText" layoutX="507.0" layoutY="275.0" text="0 / 0"/>
     <Button fx:id="deleteButtonModul" layoutX="165.0" layoutY="271.0" mnemonicParsing="false" onAction="#onDeleteModul" text="Löschen"/>
     <TableView fx:id="tableviewFach" editable="true" layoutX="29.0" layoutY="356.0" prefHeight="213.0" prefWidth="544.0">
         <columns>
