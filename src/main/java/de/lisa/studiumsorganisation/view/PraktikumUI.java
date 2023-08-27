@@ -195,7 +195,6 @@ public class PraktikumUI implements Initializable {
         var versuch = new Praktikumstermin(Praktikumstermin.getPraktikumsterminCounter(), praktikum.getID(), java.sql.Date.valueOf(date), time, false);
         Utility.getInstance().getPraktikumstermine().add(versuch);
         praktikum.isBestanden();
-
         updateTerminTable(praktikum);
     }
 
@@ -210,10 +209,10 @@ public class PraktikumUI implements Initializable {
             if (!Main.isDummyLaunch()) {
                 Database.getInstance().deleteElement(versuch);
             }
-            tableviewTermin.getItems().remove(versuch);
             var praktikum = tableviewPraktikum.getSelectionModel().getSelectedItem();
             if (praktikum != null) {
                 praktikum.isBestanden();
+                updateTerminTable(praktikum);
             }
 
         } else {
@@ -232,9 +231,8 @@ public class PraktikumUI implements Initializable {
     void onAddPraktikum(ActionEvent event) {
         var praktikum = new Praktikum(Praktikum.getPraktikumCounter(), false, fach.getID());
         Utility.getInstance().getPraktika().add(praktikum);
-        tableviewPraktikum.getItems().add(praktikum);
         fach.isBestanden();
-
+        updateTable();
     }
 
     /**
@@ -250,18 +248,18 @@ public class PraktikumUI implements Initializable {
      *
      */
     @FXML
-    void onDeletePraktikum(ActionEvent event) {
-        var item = tableviewPraktikum.getSelectionModel().getSelectedItem();
-        if (item != null) {
-            var termine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikumID() == item.getID()).toList();
+    void onDeletePraktikum() {
+        var praktikum = tableviewPraktikum.getSelectionModel().getSelectedItem();
+        if (praktikum != null) {
+            var termine = Utility.getInstance().getPraktikumstermine().stream().filter(praktikumstermin -> praktikumstermin.getPraktikumID() == praktikum.getID()).toList();
             termine.forEach(Utility.getInstance().getPraktikumstermine()::remove);
             if (!Main.isDummyLaunch()) {
-                Database.getInstance().deleteElement(item);
+                Database.getInstance().deleteElement(praktikum);
                 termine.forEach(Database.getInstance()::deleteElement);
             }
-            Utility.getInstance().getPraktika().remove(item);
+            Utility.getInstance().getPraktika().remove(praktikum);
             fach.isBestanden();
-            tableviewPraktikum.getItems().remove(item);
+            updateTable();
 
             //delete all corresponding praktikumstermine
         } else {
@@ -333,7 +331,8 @@ public class PraktikumUI implements Initializable {
         //update the tableview checkboxes for the praktika and the prüfung
         tableviewPraktikum.getItems().addAll(new HashSet<>(Utility.getInstance().getPraktika().stream().filter(praktikum -> praktikum.getFachID() == fach.getID()).toList()));
         fachNameText.setText(fach.getName());
-
+        tableviewTermin.refresh();
+        tableviewPraktikum.refresh();
     }
 
     /**
@@ -356,7 +355,8 @@ public class PraktikumUI implements Initializable {
         var items = new HashSet<>(Utility.getInstance().getPraktikumstermine().stream().filter(versuch -> versuch.getPraktikumID() == praktikum.getID()).toList());
         tableviewTermin.getItems().addAll(items);
         praktikumNameText.setText(praktikum.getFach().getName());
-
+        tableviewTermin.refresh();
+        tableviewPraktikum.refresh();
 
     }
 

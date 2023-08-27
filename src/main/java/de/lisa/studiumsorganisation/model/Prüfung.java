@@ -32,7 +32,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Prüfung extends Basemodel {
 
     /**

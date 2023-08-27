@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Praktikum extends Basemodel {
 
     /**

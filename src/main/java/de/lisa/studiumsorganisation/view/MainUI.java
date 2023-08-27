@@ -326,7 +326,7 @@ public class MainUI extends Application implements Initializable {
                 prüfungsversuche.forEach(Database.getInstance()::deleteElement);
                 praktikumstermine.forEach(Database.getInstance()::deleteElement);
             }
-            updateTable();
+            updateTableFach(modul);
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -413,7 +413,8 @@ public class MainUI extends Application implements Initializable {
         if (modul == null) return;
         tableviewFach.getItems().addAll(new HashSet<>(Utility.getInstance().getFächer().stream().filter(fach -> fach.getModulID() == modul.getID()).toList()));
         modulNameText.setText(modul.getName());
-
+        tableviewModul.refresh();
+        tableviewFach.refresh();
     }
 
 
@@ -459,7 +460,7 @@ public class MainUI extends Application implements Initializable {
             Utility.getInstance().getPrüfungsversuche().removeAll(prüfungsversuche);
             Utility.getInstance().getPraktikumstermine().removeAll(praktikumstermine);
             Utility.getInstance().getModule().remove(selectedModul);
-            tableviewModul.getItems().remove(selectedModul);
+            updateTable();
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -518,7 +519,8 @@ public class MainUI extends Application implements Initializable {
         tableviewModul.getItems().clear();
         //update the tableview checkboxes for the praktika and the prüfung
         tableviewModul.getItems().addAll(Utility.getInstance().getModule());
-
+        tableviewModul.refresh();
+        tableviewFach.refresh();
     }
 
     /**

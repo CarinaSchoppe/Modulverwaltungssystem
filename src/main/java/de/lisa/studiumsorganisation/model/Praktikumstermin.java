@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Praktikumstermin extends Basemodel {
 
     /**

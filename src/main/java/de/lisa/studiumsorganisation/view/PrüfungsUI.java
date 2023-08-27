@@ -202,9 +202,7 @@ public class PrüfungsUI implements Initializable {
         var versuch = new Prüfungsversuch(Prüfungsversuch.getPrüfungsversuchCounter(), date, time, false, 5.0F, prüfung.getID());
         Utility.getInstance().getPrüfungsversuche().add(versuch);
         prüfung.isBestanden();
-
-
-        updateTablePruefung();
+        updateTableVersuch(prüfung);
     }
 
     /**
@@ -217,12 +215,14 @@ public class PrüfungsUI implements Initializable {
             Utility.getInstance().getPrüfungsversuche().remove(versuch);
             //remove from tabeview
             var prüfung = tableviewPruefung.getSelectionModel().getSelectedItem();
-            if (prüfung != null) prüfung.isBestanden();
-            tableviewVersuch.getItems().remove(versuch);
+            if (prüfung != null) {
+                prüfung.isBestanden();
+                updateTableVersuch(prüfung);
+            }
             if (!Main.isDummyLaunch()) {
                 Database.getInstance().deleteElement(versuch);
             }
-            updateTableVersuch(prüfung);
+
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -268,8 +268,8 @@ public class PrüfungsUI implements Initializable {
             }
 
             Utility.getInstance().getPrüfungen().remove(prüfung);
-            tableviewPruefung.getItems().remove(prüfung);
             fach.isBestanden();
+            updateTablePruefung();
         } else {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -345,6 +345,8 @@ public class PrüfungsUI implements Initializable {
         pruefungNameText.setText(prüfung.getFach().getName());
         pruefungsFormText.setText(prüfung.getPrüfungsform().getText());
 
+        tableviewPruefung.refresh();
+        tableviewVersuch.refresh();
     }
 
     /**
@@ -354,7 +356,8 @@ public class PrüfungsUI implements Initializable {
         tableviewPruefung.getItems().clear();
         tableviewPruefung.getItems().addAll(new HashSet<>(Utility.getInstance().getPrüfungen().stream().filter(p -> p.getFach().getID() == fach.getID()).toList()));
         fachNameText.setText(fach.getName());
-
+        tableviewPruefung.refresh();
+        tableviewVersuch.refresh();
 
     }
 

@@ -1,7 +1,6 @@
 package de.lisa.studiumsorganisation.model;
 
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,10 +8,9 @@ import lombok.Setter;
 /**
  * Represents a study program.
  */
-@AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Studiengang extends Basemodel {
 
     /**

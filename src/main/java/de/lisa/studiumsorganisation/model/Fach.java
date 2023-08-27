@@ -4,7 +4,6 @@ package de.lisa.studiumsorganisation.model;
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
 public class Fach extends Basemodel {
 
     /**

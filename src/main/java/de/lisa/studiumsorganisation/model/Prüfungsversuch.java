@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Prüfungsversuch extends Basemodel {
 
     /**
