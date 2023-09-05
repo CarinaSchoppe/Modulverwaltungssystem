@@ -177,8 +177,12 @@ public class Database {
     private void saveAllFächer() {
         //create an SQL query that updates all prüfung or creates new ones based on the ID from Utility.getInstance()
         //execute the query
-        //            var fach = new Fach(result.getInt("FachID"), result.getString("FachName"), result.getInt("FachSemester"), result.getBoolean("FachBestanden"), result.getInt("ECTS"), result.getInt("ModulID"));
-        var query = "INSERT INTO fach(FachID, FachName, FachSemester, ECTS, ModulID)        VALUES (?,  ?, ?, ?, ?, ?)        ON DUPLICATE KEY UPDATE                   FachName = VALUES(FachName),                   FachSemester = VALUES(FachSemester),                 ECTS = VALUES(ECTS),                   ModulID = VALUES(ModulID);";
+        //        `FachID`        int(11)     NOT NULL,
+        //    `FachName`      varchar(50) NOT NULL,
+        //    `Semester`      int(11)   DEFAULT 0,
+        //    `ECTS`          int(11)   DEFAULT NULL,
+        //    `ModulID`       int(11)     NOT NULL,
+        var query = "INSERT INTO fach(FachID, FachName, Semester, ECTS, ModulID)        VALUES (?,  ?, ?, ?, ?, ?)        ON DUPLICATE KEY UPDATE                   FachName = VALUES(FachName),                   Semester = VALUES(FachSemester),                 ECTS = VALUES(ECTS),                   ModulID = VALUES(ModulID);";
         Utility.getInstance().getFächer().forEach(fach -> {
             try {
                 var statement = connection.prepareStatement(query);
@@ -277,7 +281,6 @@ public class Database {
     private void saveAllModule() {
         //create an SQL query that updates all module or creates new ones based on the ID from Utility.getInstance().getModule()
         //execute the query
-        //            var modul = new Modul(result.getInt("ModulID"), result.getString("ModulName"), false, result.getInt("StudID"));
         var query = "INSERT INTO modul(ModulID, ModulName, StudID)        VALUES (?,  ?, ?)        ON DUPLICATE KEY UPDATE                   ModulName = VALUES(ModulName),                   StudID = VALUES(StudID);";
         Utility.getInstance().getModule().forEach(modul -> {
             try {
@@ -287,7 +290,6 @@ public class Database {
                 statement.setInt(3, modul.getStudiengangID());
                 statement.executeUpdate();
                 System.out.println("Modul mit ID:" + modul.getID() + " wurde gespeichert");
-                
             } catch (SQLException e) {
                 e.printStackTrace();
             }
