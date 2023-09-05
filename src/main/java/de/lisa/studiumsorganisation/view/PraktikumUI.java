@@ -18,6 +18,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -367,7 +368,7 @@ public class PraktikumUI implements Initializable {
      * It is used in the controller class to define and manipulate the corresponding column in the UI.
      */
     @FXML
-    private TableColumn<Praktikum, Integer> numberColumnTermin;
+    private TableColumn<Praktikumstermin, Integer> numberColumnTermin;
 
     /**
      * Retrieves the Fach object that is currently set.
@@ -660,6 +661,11 @@ public class PraktikumUI implements Initializable {
      */
     private void initPraktikumsterminTable() {
         numberColumnTermin.setCellValueFactory(new PropertyValueFactory<>("terminnummer"));
+        numberColumnTermin.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        numberColumnTermin.setOnEditCommit(event -> {
+            var termin = event.getRowValue();
+            termin.setTerminnummer(event.getNewValue());
+        });
         terminBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
         terminBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
             @Override

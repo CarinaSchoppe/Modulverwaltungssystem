@@ -22,7 +22,7 @@
     <Label fx:id="pruefungsFormText" layoutX="552.0" layoutY="431.0" text="Test"/>
     <TableView fx:id="tableviewVersuch" editable="true" layoutX="36.0" layoutY="489.0" prefHeight="253.0" prefWidth="524.0">
         <columns>
-            <TableColumn fx:id="numberVersuchColumn" editable="false" prefWidth="75.0" text="Nr"/>
+            <TableColumn fx:id="numberVersuchColumn" prefWidth="75.0" text="Nr"/>
             <TableColumn fx:id="datumColumn" prefWidth="75.0" text="Datum"/>
             <TableColumn fx:id="uhrzeitColumn" prefWidth="75.0" text="Uhrzeit"/>
             <TableColumn fx:id="noteColumn" prefWidth="75.0" text="Note"/>

@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.FloatStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,14 +38,14 @@ public class PrüfungsUI implements Initializable {
 
     /**
      * This class represents an instance of the PrüfungsUI class, which is used to handle the user interface for a specific examination.
-     *
+     * <p>
      * The instance variable, named "instance", is of type PrüfungsUI and is declared as private and static.
      * It is used to keep track of the single instance of the PrüfungsUI class that should exist.
      * The instance variable is initially set to null and can be accessed through static methods to either get the existing instance or create a new one if it doesn't exist.
-     *
+     * <p>
      * Only one instance of the PrüfungsUI class should exist at a time, so the use of a singleton pattern is recommended.
      * This ensures that the class can be accessed globally and that a new instance is only created if necessary.
-     *
+     * <p>
      * Example usage:
      * PrüfungsUI ui = PrüfungsUI.getInstance();
      *
@@ -67,13 +68,13 @@ public class PrüfungsUI implements Initializable {
      * The ResourceBundle variable is used to store localized resources for the application.
      * It provides a way to access resources, such as strings, images, and other data, that can be localized for different languages or regions.
      * The resources are typically stored in property files where each key-value pair represents a resource.
-     *
+     * <p>
      * The resources variable is mainly used in JavaFX applications for internationalization purposes.
      * It is automatically injected by the JavaFX FXMLLoader when loading FXML files that contain resource bindings.
-     *
+     * <p>
      * Example usage:
      * ResourceBundle bundle = ResourceBundle.getBundle("myapp.resources.Bundle", Locale.getDefault());
-     *
+     * <p>
      * bundle.getString("welcome.message"); // returns the localized string for the "welcome.message" key
      *
      * @since 1.0
@@ -84,19 +85,18 @@ public class PrüfungsUI implements Initializable {
     /**
      * The location variable represents the location of the FXML file associated with the current controller.
      * It is used by FXMLLoader to load the FXML file and set up the controller's UI components.
-     *
+     * <p>
      * The value of this variable is automatically injected by the JavaFX runtime whenever the FXML file is loaded.
-     *
+     * <p>
      * This variable is annotated with @FXML to indicate that it is a field that is injected by FXMLLoader
      * as part of the JavaFX scene graph initialization process.
-     *
      */
     @FXML
     private URL location;
 
     /**
      * Represents a button used for navigating back.
-     *
+     * <p>
      * This button is typically used in graphical user interfaces to allow the user to navigate back to a previous screen or view.
      * It is implemented using JavaFX FXML.
      */
@@ -105,21 +105,21 @@ public class PrüfungsUI implements Initializable {
 
     /**
      * The deleteButton is a JavaFX Button object that represents a button used to delete an item or perform a delete action.
-     *
+     * <p>
      * This button is typically used in a graphical user interface (GUI) to allow users to delete or remove an item from a list, table, or any other data structure.
-     *
+     * <p>
      * It is recommended to set an event handler or action listener on this button to define the behavior that should be executed upon clicking or activating the delete button.
-     *
+     * <p>
      * Example usage:
-     *
+     * <p>
      * // Create a deleteButton object
      * Button deleteButton = new Button("Delete");
-     *
+     * <p>
      * // Add an event handler to deleteButton
      * deleteButton.setOnAction(event -> {
-     *     // Delete the selected item from the list or perform the delete action
+     * // Delete the selected item from the list or perform the delete action
      * });
-     *
+     * <p>
      * Note: This documentation assumes that the deleteButton variable is properly initialized and connected to a Button object in the FXML file or through code.
      *
      * @see Button
@@ -129,13 +129,13 @@ public class PrüfungsUI implements Initializable {
     /**
      * TableColumn for displaying the "Bestanden" property of a Prüfung object.
      * The property represents whether or not the examination is passed.
-     *
+     * <p>
      * The column is of type BooleanProperty to display a checkbox in the table cell,
      * indicating whether the examination is passed or not.
-     *
+     * <p>
      * Usage:
      * pruefungBestandenColumn.setCellValueFactory(cellData -> cellData.getValue().bestandenProperty());
-     *
+     * <p>
      * Example:
      * Prüfung pruefung = new Prüfung();
      * pruefung.setBestanden(true);
@@ -146,25 +146,26 @@ public class PrüfungsUI implements Initializable {
     private TableColumn<Prüfung, BooleanProperty> pruefungBestandenColumn;
     /**
      * The addPruefungButton is a JavaFX Button object that represents a button for adding a new Pruefung.
-     *
-     * Usage: 
-     *
+     * <p>
+     * Usage:
+     * <p>
      * To use the addPruefungButton, you can attach an event handler to it using the setOnAction method.
      * This event handler will be triggered when the button is clicked.
-     *
+     * <p>
      * Example:
-     *
+     * <p>
      * // Create a new addPruefungButton
      * Button addPruefungButton = new Button("Add Pruefung");
-     *
+     * <p>
      * // Attach an event handler to the addPruefungButton
      * addPruefungButton.setOnAction(e -> {
-     *     // Code to be executed when the button is clicked
+     * // Code to be executed when the button is clicked
      * });
-     *
+     * <p>
      * Note:
-     *
-     * This object is defined*/
+     * <p>
+     * This object is defined
+     */
     @FXML
     private Button addPruefungButton;
     /**
@@ -189,10 +190,10 @@ public class PrüfungsUI implements Initializable {
      * The pruefungNameText variable is an instance of the Label class. It is used to display the name of a specific exam.
      * This variable is annotated with the @FXML annotation, indicating that it is associated with an element defined in an FXML file.
      * The Label class is a part of the JavaFX library and is responsible for displaying text or an image that the user can interact with.
-     *
+     * <p>
      * Usage:
      * pruefungNameText.setText("Name of the exam");
-     *
+     * <p>
      * Note: This variable should only be accessed after it has been initialized through an FXML loader or a manual instantiation.
      */
     @FXML
@@ -200,14 +201,14 @@ public class PrüfungsUI implements Initializable {
 
     /**
      * TableColumn for displaying and editing the Prüfungsform field of Prüfung object.
-     *
+     * <p>
      * This TableColumn is used in a JavaFX FXML file and is associated with the pruefungsFormColumn
      * element in that file. It is used to display the Prüfungsform field in a TableView and supports
      * editing of the field.
-     *
+     * <p>
      * The TableColumn is of type Prüfungsform and the TableView it is associated with contains
      * items of type Prüfung.
-     *
+     * <p>
      * Usage example:
      * <pre>{@code
      * TableView<Prüfung> tableView = new TableView<>();
@@ -221,16 +222,16 @@ public class PrüfungsUI implements Initializable {
     /**
      * The noteColumn variable represents a TableColumn used in an FXML file.
      * It represents the column in a table that displays the "note" data of type Float.
-     *
+     * <p>
      * The TableColumn class is a part of JavaFX and is used to define columns in a TableView.
      * In this case, the noteColumn is used in conjunction with the Prüfungsversuch class.
-     *
+     * <p>
      * The generic type <Prüfungsversuch, Float> indicates that the column will display Float values,
      * specifically from the Prüfungsversuch objects.
-     *
+     * <p>
      * This variable is annotated with @FXML, which means that it is injected from an FXML file.
      * This allows the variable to be referenced and manipulated in the corresponding controller class.
-     *
+     * <p>
      * Note: This documentation does not include example code or author and version tags, as requested.
      */
     @FXML
@@ -272,34 +273,34 @@ public class PrüfungsUI implements Initializable {
      * The data type of the column is Time.
      * It is annotated with @FXML to indicate that it is associated with a graphical component defined in an FXML file.
      * This variable is a private member of the class and can only be accessed within the class it is defined in.
-     *
+     * <p>
      * Example usage:
-     *   uhrzeitColumn.setCellValueFactory(new PropertyValueFactory<>("uhrzeit"));
-     *   uhrzeitColumn.setCellFactory(column -> {
-     *       TableCell<Prüfungsversuch, Time> cell = new TableCell<Prüfungsversuch, Time>() {
-     *           @Override
-     *           protected void updateItem(Time item, boolean empty) {
-     *               super.updateItem(item, empty);
-     *               if (item == null || empty) {
-     *                   setText(null);
-     *               } else {
-     *                   setText(item.toString());
-     *               }
-     *           }
-     *       };
-     *       return cell;
-     *   });
+     * uhrzeitColumn.setCellValueFactory(new PropertyValueFactory<>("uhrzeit"));
+     * uhrzeitColumn.setCellFactory(column -> {
+     * TableCell<Prüfungsversuch, Time> cell = new TableCell<Prüfungsversuch, Time>() {
+     *
+     * @Override protected void updateItem(Time item, boolean empty) {
+     * super.updateItem(item, empty);
+     * if (item == null || empty) {
+     * setText(null);
+     * } else {
+     * setText(item.toString());
+     * }
+     * }
+     * };
+     * return cell;
+     * });
      */
     @FXML
     private TableColumn<Prüfungsversuch, Time> uhrzeitColumn;
     /**
      * TableView representing a list of Prüfung objects.
-     *
+     * <p>
      * The TableView tableviewPruefung is an FXML element used to display a list of Prüfung objects in a tabular format.
      * It provides various features such as sorting, filtering, and selection of rows.
-     *
+     * <p>
      * The type parameter <Prüfung> specifies the type of the items in the TableView, which must be a subclass of Prüfung.
-     *
+     * <p>
      * Example usage:
      * ```
      * TableView<Prüfung> tableView = new TableView<>();
@@ -314,18 +315,18 @@ public class PrüfungsUI implements Initializable {
      * Represents the "Save" button in the graphical user interface.
      * The button is used to trigger the save action and save the current state or changes made in the application.
      * In the corresponding FXML file, this button is defined with the id "saveButton" and associated with this variable.
-     *
+     * <p>
      * Usage:
      * - To set an event handler for the save button, use the setOnAction() method.
      * - To retrieve the current text or label of the save button, use the getText() method.
      * - To change the text or label of the save button, use the setText() method.
      * - To disable or enable the save button, use the setDisable() method.
-     *
+     * <p>
      * Example:
      * Button saveButton = new Button();
      * saveButton.setId("saveButton");
      * saveButton.setOnAction(e -> {
-     *     // Perform save operation
+     * // Perform save operation
      * });
      * saveButton.setText("Save");
      * saveButton.setDisable(false);
@@ -334,31 +335,32 @@ public class PrüfungsUI implements Initializable {
     private Button saveButton;
     /**
      * The addVersuchButton variable represents the button used to add a new Versuch (experiment).
-     *
+     * <p>
      * It is an FXML variable, which means that it is automatically injected by the JavaFX framework
      * when the corresponding FXML file is loaded.
-     *
+     * <p>
      * This button is typically used in a graphical user interface to allow the user to initiate
      * the process of adding a new Versuch.
-     *
+     * <p>
      * To add an event handler to this button, use the setOnAction() method and provide the desired
      * code or method reference as the argument. The event handler will be triggered when the button
      * is clicked.
-     *
+     * <p>
      * Example usage:
-     *
+     * <p>
      * addVersuchButton.setOnAction(e -> {
-     *     // Code for adding a new Versuch goes here
+     * // Code for adding a new Versuch goes here
      * });
-     *
-     * Note: This documentation does not include example code.*/
+     * <p>
+     * Note: This documentation does not include example code.
+     */
     @FXML
     private Button addVersuchButton;
     /**
      * The deletePruefungButton variable represents the button used to delete a Pruefung object.
      * This variable is annotated with @FXML to indicate that it is a reference to a UI element defined in an FXML file.
      * The UI element associated with this variable can be accessed and manipulated using this variable in the corresponding controller class.
-     *
+     * <p>
      * This variable should be initialized in the FXML file by assigning it an ID and connecting it to a button UI element.
      */
     @FXML
@@ -366,20 +368,20 @@ public class PrüfungsUI implements Initializable {
     /**
      * The deleteVersuchButton variable is a JavaFX Button element that is used to trigger the deletion of a specific attempt in a system.
      * It is annotated with @FXML to indicate that it is a reference to an element defined in the associated FXML file.
-     *
+     * <p>
      * This button can be used by attaching an event handler to its action property and defining the necessary logic to handle the delete attempt action.
-     *
+     * <p>
      * Example usage:
-     *
+     * <p>
      * // Assigning the button reference to a variable
      * Button deleteVersuchButton = new Button();
-     *
+     * <p>
      * // Attaching an event handler to the button
      * deleteVersuchButton.setOnAction(event -> {
-     *     // Code logic for deleting the attempt
-     *     // ...
+     * // Code logic for deleting the attempt
+     * // ...
      * });
-     *
+     * <p>
      * The deleteVersuchButton should be initialized and attached to a parent container before interacting with it.
      */
     @FXML
@@ -391,9 +393,9 @@ public class PrüfungsUI implements Initializable {
     private Label fachNameText;
     /**
      * This variable represents a JavaFX label used to display the text of an examination form.
-     *
-     * The label is annotated with the @FXML annotation, indicating that it is defined in the associated FXML file and 
-     * will be automatically injected by the FXMLLoader. The label can be accessed and modified through this variable 
+     * <p>
+     * The label is annotated with the @FXML annotation, indicating that it is defined in the associated FXML file and
+     * will be automatically injected by the FXMLLoader. The label can be accessed and modified through this variable
      * within the associated controller class.
      */
     @FXML
@@ -411,7 +413,7 @@ public class PrüfungsUI implements Initializable {
     }
 
     /**
-     * Returns the current Fach object. 
+     * Returns the current Fach object.
      *
      * @return The Fach object.
      */
@@ -564,7 +566,7 @@ public class PrüfungsUI implements Initializable {
     }
 
     /**
-     * This method is called to initialize the controller after its 
+     * This method is called to initialize the controller after its
      * root element has been completely processed.
      * It is responsible for initializing the injected FXML objects.
      */
@@ -629,12 +631,11 @@ public class PrüfungsUI implements Initializable {
 
     /**
      * Updates the tableview with the list of Prüfungen.
-     *
+     * <p>
      * The method clears the items in the tableview and then adds the Prüfungen
      * that belong to the specified Fach. It also sets the Fach name in the
-     * corresponding text field. Finally, it refreshes the tableview and the 
+     * corresponding text field. Finally, it refreshes the tableview and the
      * versuch tableview.
-     *
      */
     private void updateTablePruefung() {
         tableviewPruefung.getItems().clear();
@@ -686,6 +687,11 @@ public class PrüfungsUI implements Initializable {
      */
     private void initVersucheTable() {
         numberVersuchColumn.setCellValueFactory(new PropertyValueFactory<>("versuchsnummer"));
+        numberVersuchColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        numberVersuchColumn.setOnEditCommit(event -> {
+            var versuch = event.getRowValue();
+            versuch.setVersuchsnummer(event.getNewValue());
+        });
         pruefungVersuchBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
         pruefungVersuchBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
             @Override
@@ -699,6 +705,7 @@ public class PrüfungsUI implements Initializable {
                 }
             }
         });
+
         noteColumn.setCellValueFactory(new PropertyValueFactory<>("note"));
         noteColumn.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         noteColumn.setOnEditCommit(event -> {
@@ -712,7 +719,6 @@ public class PrüfungsUI implements Initializable {
                 updateTableVersuch(prüfung);
             }
         });
-
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("datum"));
         datumColumn.setCellFactory(column -> new TextFieldTableCell<>(Utility.DATE_FORMATTER));
         datumColumn.setOnEditCommit(event -> {
@@ -733,7 +739,7 @@ public class PrüfungsUI implements Initializable {
     /**
      * Initializes the controller.
      *
-     * @param location the location used to resolve relative paths for the root object, or null if the location is not known
+     * @param location  the location used to resolve relative paths for the root object, or null if the location is not known
      * @param resources the resources used to localize the root object, or null if the root object was not localized
      */
     @Override
