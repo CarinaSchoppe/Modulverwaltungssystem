@@ -126,13 +126,13 @@ public class Database {
      *
      */
     public void saveAllData() {
-        saveAllPraktika();
-        saveAllModule();
-        saveAllPrüfungen();
+        saveStudiengänge();
         saveAllPraktikumstermine();
         saveAllPrüfungsversuche();
+        saveAllPrüfungen();
+        saveAllPraktika();
         saveAllFächer();
-        saveStudiengänge();
+        saveAllModule();
     }
 
     /**

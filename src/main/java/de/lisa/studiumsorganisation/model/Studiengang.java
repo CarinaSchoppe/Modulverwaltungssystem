@@ -59,4 +59,8 @@ public class Studiengang extends Basemodel {
         this.studienverlaufsplan = studienverlaufsplan;
         if (ID >= studiengangCounter) studiengangCounter = ID + 1;
     }
+
+    public static int getStudiengangCounter() {
+        return studiengangCounter;
+    }
 }

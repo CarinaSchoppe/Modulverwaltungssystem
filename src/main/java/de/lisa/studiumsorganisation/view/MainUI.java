@@ -4,6 +4,7 @@ import de.lisa.studiumsorganisation.Main;
 import de.lisa.studiumsorganisation.controller.Database;
 import de.lisa.studiumsorganisation.model.Fach;
 import de.lisa.studiumsorganisation.model.Modul;
+import de.lisa.studiumsorganisation.model.Studiengang;
 import de.lisa.studiumsorganisation.util.Utility;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
@@ -688,6 +689,23 @@ public class MainUI extends Application implements Initializable {
         primaryStage.setScene(new Scene(root));
         initialize();
         primaryStage.show();
+
+        //starte eine popup mit texteingabe und einem okay feld 
+        //wenn okay gedrückt wird, wird ein neues modul erstellt und der name wird auf den text gesetzt
+        //wenn abbrechen gedrückt wird, wird nichts gemacht
+
+        var alert = new TextInputDialog();
+        alert.setTitle("Neuer Studiengang");
+        alert.setHeaderText("Bitte geben Sie den Namen des Studiengangs ein.");
+        alert.setContentText("Name:");
+        var result = alert.showAndWait();
+
+        if (result.isPresent()) {
+            //erstelle einen neuen studiengang und speichere diesen in der datenbank
+            var studiengang = new Studiengang(Studiengang.getStudiengangCounter(), result.get());
+            Database.getInstance().saveAllData();
+
+        }
     }
 
 
