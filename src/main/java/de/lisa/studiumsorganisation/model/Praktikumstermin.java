@@ -44,6 +44,7 @@ public class Praktikumstermin extends Basemodel {
      */
     private Time uhrzeit;
 
+    private int terminnummer;
     /**
      * Creates a new instance of Praktikumstermin with the given parameters.
      *
@@ -53,11 +54,12 @@ public class Praktikumstermin extends Basemodel {
      * @param uhrzeit     the time of the Praktikumstermin
      * @param bestanden   true if the Praktikumstermin has been passed, false otherwise
      */
-    public Praktikumstermin(int ID, int praktikumID, Date datum, Time uhrzeit, boolean bestanden) {
+    public Praktikumstermin(int ID, int praktikumID, Date datum, Time uhrzeit, boolean bestanden, int terminnummer) {
         super(ID);
         this.praktikumID = praktikumID;
         this.datum = datum;
         this.uhrzeit = uhrzeit;
+        this.terminnummer = terminnummer;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
         if (ID >= praktikumsterminCounter) praktikumsterminCounter = ID + 1;
     }

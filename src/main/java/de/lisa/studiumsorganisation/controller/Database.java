@@ -207,7 +207,7 @@ public class Database {
         //create an SQL query that updates all prüfung or creates new ones based on the ID from Utility.getInstance()
         //execute the query
         //            var prüfungsversuch = new Prüfungsversuch(result.getInt("PruefVersuchID"), result.getDate("PruefDatum"), result.getTime("PruefUhrzeit"), result.getBoolean("PruefBestanden"), result.getFloat("PruefNote"), result.getInt("PruefID"));
-        var query = "INSERT INTO pruefungsversuch(PruefVersuchID, PruefDatum, PruefUhrzeit, PruefBestanden, PruefNote, PruefID)        VALUES (?,  ?, ?, ?, ?, ?)        ON DUPLICATE KEY UPDATE                   PruefDatum = VALUES(PruefDatum),                   PruefUhrzeit = VALUES(PruefUhrzeit),                   PruefBestanden = VALUES(PruefBestanden),                   PruefNote = VALUES(PruefNote),                   PruefID = VALUES(PruefID);";
+        var query = "INSERT INTO pruefungsversuch(PruefVersuchID, PruefDatum, PruefUhrzeit, PruefBestanden, PruefNote, PruefID, PruefVersuchNr)        VALUES (?,  ?, ?, ?, ?, ?,?)        ON DUPLICATE KEY UPDATE                   PruefDatum = VALUES(PruefDatum),                   PruefUhrzeit = VALUES(PruefUhrzeit),                   PruefBestanden = VALUES(PruefBestanden),                   PruefNote = VALUES(PruefNote),                   PruefID = VALUES(PruefID), PruefVersuchNr=VALUES(PruefVersuchNr);";
         Utility.getInstance().getPrüfungsversuche().forEach(prüfungsversuch -> {
             try {
                 var statement = connection.prepareStatement(query);
@@ -218,6 +218,7 @@ public class Database {
                 statement.setBoolean(4, prüfungsversuch.isBestanden());
                 statement.setFloat(5, prüfungsversuch.getNote());
                 statement.setInt(6, prüfungsversuch.getPrüfungsID());
+                statement.setInt(7, prüfungsversuch.getVersuchsnummer());
                 statement.executeUpdate();
                 System.out.println("Prüfungsversuch mit ID:" + prüfungsversuch.getID() + " wurde gespeichert");
             } catch (SQLException e) {
@@ -235,7 +236,7 @@ public class Database {
         //create an SQL query that updates all prüfung or creates new ones based on the ID from Utility.getInstance()
         //execute the query
         //            var praktikumstermin = new Praktikumstermin(result.getInt("PraktTerminID"), result.getInt("PraktID"), result.getDate("PraktDatum"), result.getTime("PraktUhrzeit"), result.getBoolean("TerminBestanden"));
-        var query = "INSERT INTO praktikumstermin(PraktTerminID, PraktID, PraktDatum, PraktUhrzeit, TerminBestanden)        VALUES (?,  ?, ?, ?, ?)        ON DUPLICATE KEY UPDATE                   PraktID = VALUES(PraktID),                   PraktDatum = VALUES(PraktDatum),                   PraktUhrzeit = VALUES(PraktUhrzeit),                   TerminBestanden = VALUES(TerminBestanden);";
+        var query = "INSERT INTO praktikumstermin(PraktTerminID, PraktID, PraktDatum, PraktUhrzeit, TerminBestanden,PraktTerminNr)        VALUES (?,  ?, ?, ?, ?,?)        ON DUPLICATE KEY UPDATE                   PraktID = VALUES(PraktID),                   PraktDatum = VALUES(PraktDatum),                   PraktUhrzeit = VALUES(PraktUhrzeit),                   TerminBestanden = VALUES(TerminBestanden),PraktTerminNr = VALUES(PraktTerminNr);";
         Utility.getInstance().getPraktikumstermine().forEach(praktikumstermin -> {
             try {
                 var statement = connection.prepareStatement(query);
@@ -245,6 +246,7 @@ public class Database {
                 statement.setDate(3, new Date(praktikumstermin.getDatum().getTime()));
                 statement.setTime(4, praktikumstermin.getUhrzeit());
                 statement.setBoolean(5, praktikumstermin.isBestanden());
+                statement.setInt(6, praktikumstermin.getTerminnummer());
                 statement.executeUpdate();
                 System.out.println("Praktikumstermin mit ID:" + praktikumstermin.getID() + " wurde gespeichert");
             } catch (SQLException e) {
@@ -465,7 +467,7 @@ public class Database {
         var statement = connection.createStatement();
         var result = statement.executeQuery(query);
         while (result.next()) {
-            var prüfungsversuch = new Prüfungsversuch(result.getInt("PruefVersuchID"), result.getDate("PruefDatum"), result.getTime("PruefUhrzeit"), result.getBoolean("PruefBestanden"), result.getFloat("PruefNote"), result.getInt("PruefID"));
+            var prüfungsversuch = new Prüfungsversuch(result.getInt("PruefVersuchID"), result.getDate("PruefDatum"), result.getTime("PruefUhrzeit"), result.getBoolean("PruefBestanden"), result.getFloat("PruefNote"), result.getInt("PruefID"), result.getInt("PruefVersuchNr"));
             Utility.getInstance().getPrüfungsversuche().add(prüfungsversuch);
         }
         System.out.println("Prüfungsversuche geladen!");
@@ -481,7 +483,7 @@ public class Database {
         var statement = connection.createStatement();
         var result = statement.executeQuery(query);
         while (result.next()) {
-            var praktikumstermin = new Praktikumstermin(result.getInt("PraktTerminID"), result.getInt("PraktID"), result.getDate("PraktDatum"), result.getTime("PraktUhrzeit"), result.getBoolean("TerminBestanden"));
+            var praktikumstermin = new Praktikumstermin(result.getInt("PraktTerminID"), result.getInt("PraktID"), result.getDate("PraktDatum"), result.getTime("PraktUhrzeit"), result.getBoolean("TerminBestanden"), result.getInt("PraktTerminNr"));
             Utility.getInstance().getPraktikumstermine().add(praktikumstermin);
         }
         System.out.println("Praktikumstermine geladen!");

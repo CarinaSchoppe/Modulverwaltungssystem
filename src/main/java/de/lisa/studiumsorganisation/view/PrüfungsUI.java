@@ -451,7 +451,7 @@ public class PrüfungsUI implements Initializable {
         }
         var date = new Date();
         Time time = new Time(date.getTime());
-        var versuch = new Prüfungsversuch(Prüfungsversuch.getPrüfungsversuchCounter(), date, time, false, 5.0F, prüfung.getID());
+        var versuch = new Prüfungsversuch(Prüfungsversuch.getPrüfungsversuchCounter(), date, time, false, 5.0F, prüfung.getID(), 0);
         Utility.getInstance().getPrüfungsversuche().add(versuch);
         prüfung.isBestanden();
         updateTableVersuch(prüfung);
@@ -635,7 +635,6 @@ public class PrüfungsUI implements Initializable {
      * corresponding text field. Finally, it refreshes the tableview and the 
      * versuch tableview.
      *
-     * @param prüfung The Prüfung object to update the table with
      */
     private void updateTablePruefung() {
         tableviewPruefung.getItems().clear();
@@ -686,7 +685,7 @@ public class PrüfungsUI implements Initializable {
      * Also configures edit operations for note, datum, and uhrzeit columns.
      */
     private void initVersucheTable() {
-        numberVersuchColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        numberVersuchColumn.setCellValueFactory(new PropertyValueFactory<>("versuchsnummer"));
         pruefungVersuchBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
         pruefungVersuchBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
             @Override

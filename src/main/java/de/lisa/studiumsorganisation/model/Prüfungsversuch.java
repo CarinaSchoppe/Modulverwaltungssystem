@@ -77,6 +77,23 @@ public class Prüfungsversuch extends Basemodel {
     private int prüfungsID;
 
     /**
+     * Represents the experiment number.
+     * <p>
+     * The versuchsnummer variable stores the experiment number as an integer value. It is used to uniquely identify a particular experiment.
+     * The variable is private and can only be accessed within the class that declares it.
+     * <p>
+     * Usage:
+     * To set the experiment number, use the setter method setVersuchsnummer(int versuchsnummer).
+     * To get the experiment number, use the getter method getVersuchsnummer().
+     * <p>
+     * Example:
+     * <p>
+     * Experiment experiment = new Experiment();
+     * experiment.setVers
+     */
+    private int versuchsnummer;
+
+    /**
      * Initializes a new instance of the Prüfungsversuch class.
      *
      * @param ID         the ID of the Prüfungsversuch
@@ -86,12 +103,13 @@ public class Prüfungsversuch extends Basemodel {
      * @param note       the grade of the Prüfungsversuch
      * @param prüfungsID the ID of the associated Prüfung
      */
-    public Prüfungsversuch(int ID, Date datum, Time uhrzeit, boolean bestanden, float note, int prüfungsID) {
+    public Prüfungsversuch(int ID, Date datum, Time uhrzeit, boolean bestanden, float note, int prüfungsID, int versuchsnummer) {
         super(ID);
         this.datum = datum;
         this.uhrzeit = uhrzeit;
         this.note = note;
         this.prüfungsID = prüfungsID;
+        this.versuchsnummer = versuchsnummer;
         if (ID >= prüfungsversuchCounter) prüfungsversuchCounter = ID + 1;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
     }

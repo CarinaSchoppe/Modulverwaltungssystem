@@ -422,7 +422,7 @@ public class PraktikumUI implements Initializable {
         var date = LocalDate.now();
         //convert date to a Date.class object
         var time = Time.valueOf("00:00:00");
-        var versuch = new Praktikumstermin(Praktikumstermin.getPraktikumsterminCounter(), praktikum.getID(), java.sql.Date.valueOf(date), time, false);
+        var versuch = new Praktikumstermin(Praktikumstermin.getPraktikumsterminCounter(), praktikum.getID(), java.sql.Date.valueOf(date), time, false, 0);
         Utility.getInstance().getPraktikumstermine().add(versuch);
         praktikum.isBestanden();
         updateTerminTable(praktikum);
@@ -659,7 +659,7 @@ public class PraktikumUI implements Initializable {
      * The updateTable() method is called to populate the praktikumsterminTable with data.
      */
     private void initPraktikumsterminTable() {
-        numberColumnTermin.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        numberColumnTermin.setCellValueFactory(new PropertyValueFactory<>("terminnummer"));
         terminBestandenColumn.setCellValueFactory(new PropertyValueFactory<>("bestandenProperty"));
         terminBestandenColumn.setCellFactory(tc -> new CheckBoxTableCell<>() {
             @Override
