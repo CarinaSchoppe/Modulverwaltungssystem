@@ -503,7 +503,7 @@ public class Database {
         var result = statement.executeQuery(query);
         while (result.next()) {
             var formString = result.getString("PruefForm");
-            var form = Prüfungsform.valueOf(formString.toUpperCase());
+            var form = Prüfungsform.getType(formString);
             var prüfung = new Prüfung(result.getInt("PruefID"), form, result.getInt("FachID"), false);
             Utility.getInstance().getPrüfungen().add(prüfung);
         }

@@ -1,7 +1,7 @@
 package de.lisa.studiumsorganisation.model;
 
 public enum Prüfungsform {
-    
+
     KLAUSUR("Schriftliche Klausur"),
     HAUSARBEIT("Hausarbeit"),
     PRAESENTATION("Praesentation"),
@@ -13,6 +13,15 @@ public enum Prüfungsform {
 
     Prüfungsform(String text) {
         this.text = text;
+    }
+
+    public static Prüfungsform getType(String formString) {
+        for (Prüfungsform form : Prüfungsform.values()) {
+            if (form.getText().equals(formString)) {
+                return form;
+            }
+        }
+        return null;
     }
 
     public String getText() {
