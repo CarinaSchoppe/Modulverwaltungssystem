@@ -207,7 +207,7 @@ public class Database {
         //create an SQL query that updates all prüfung or creates new ones based on the ID from Utility.getInstance()
         //execute the query
         //            var prüfungsversuch = new Prüfungsversuch(result.getInt("PruefVersuchID"), result.getDate("PruefDatum"), result.getTime("PruefUhrzeit"), result.getBoolean("PruefBestanden"), result.getFloat("PruefNote"), result.getInt("PruefID"));
-        var query = "INSERT INTO pruefungsversuch(PruefVersuchID, PruefDatum, PruefUhrzeit, PruefBestanden, PruefNote, PruefID, PruefVersuchNr)        VALUES (?,  ?, ?, ?, ?, ?,?)        ON DUPLICATE KEY UPDATE                   PruefDatum = VALUES(PruefDatum),                   PruefUhrzeit = VALUES(PruefUhrzeit),                   PruefBestanden = VALUES(PruefBestanden),                   PruefNote = VALUES(PruefNote),                   PruefID = VALUES(PruefID), PruefVersuchNr=VALUES(PruefVersuchNr);";
+        var query = "INSERT INTO pruefungsversuch(PruefVersuchID, PruefDatum, PruefUhrzeit, PruefBestanden, Note, PruefID, PruefVersuchNr)        VALUES (?,  ?, ?, ?, ?, ?,?)        ON DUPLICATE KEY UPDATE                   PruefDatum = VALUES(PruefDatum),                   PruefUhrzeit = VALUES(PruefUhrzeit),                   PruefBestanden = VALUES(PruefBestanden),                   Note = VALUES(Note),                   PruefID = VALUES(PruefID), PruefVersuchNr=VALUES(PruefVersuchNr);";
         Utility.getInstance().getPrüfungsversuche().forEach(prüfungsversuch -> {
             try {
                 var statement = connection.prepareStatement(query);
@@ -467,7 +467,7 @@ public class Database {
         var statement = connection.createStatement();
         var result = statement.executeQuery(query);
         while (result.next()) {
-            var prüfungsversuch = new Prüfungsversuch(result.getInt("PruefVersuchID"), result.getDate("PruefDatum"), result.getTime("PruefUhrzeit"), result.getBoolean("PruefBestanden"), result.getFloat("PruefNote"), result.getInt("PruefID"), result.getInt("PruefVersuchNr"));
+            var prüfungsversuch = new Prüfungsversuch(result.getInt("PruefVersuchID"), result.getDate("PruefDatum"), result.getTime("PruefUhrzeit"), result.getBoolean("PruefBestanden"), result.getFloat("Note"), result.getInt("PruefID"), result.getInt("PruefVersuchNr"));
             Utility.getInstance().getPrüfungsversuche().add(prüfungsversuch);
         }
         System.out.println("Prüfungsversuche geladen!");
