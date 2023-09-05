@@ -703,6 +703,7 @@ public class MainUI extends Application implements Initializable {
         if (result.isPresent()) {
             //erstelle einen neuen studiengang und speichere diesen in der datenbank
             var studiengang = new Studiengang(Studiengang.getStudiengangCounter(), result.get());
+            Utility.getInstance().getStudiengänge().add(studiengang);
             Database.getInstance().saveAllData();
 
         }

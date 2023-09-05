@@ -152,6 +152,7 @@ public class Database {
                 statement.setInt(1, studiengang.getID());
                 statement.setString(2, studiengang.getStudienverlaufsplan());
                 statement.executeUpdate();
+                System.out.println("Studiengang mit ID:" + studiengang.getID() + " wurde gespeichert");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -187,6 +188,7 @@ public class Database {
                 statement.setInt(4, fach.getCredits());
                 statement.setInt(5, fach.getModulID());
                 statement.executeUpdate();
+                System.out.println("Fach mit ID:" + fach.getID() + " wurde gespeichert");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -213,6 +215,7 @@ public class Database {
                 statement.setFloat(5, prüfungsversuch.getNote());
                 statement.setInt(6, prüfungsversuch.getPrüfungsID());
                 statement.executeUpdate();
+                System.out.println("Prüfungsversuch mit ID:" + prüfungsversuch.getID() + " wurde gespeichert");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -222,7 +225,6 @@ public class Database {
     /**
      * Saves all praktikumstermine to the database. It creates a new praktikumstermin if it doesn't exist in the database, or updates the existing one based on its ID.
      *
-     * @param None
      * @return None
      */
     private void saveAllPraktikumstermine() {
@@ -240,6 +242,7 @@ public class Database {
                 statement.setTime(4, praktikumstermin.getUhrzeit());
                 statement.setBoolean(5, praktikumstermin.isBestanden());
                 statement.executeUpdate();
+                System.out.println("Praktikumstermin mit ID:" + praktikumstermin.getID() + " wurde gespeichert");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -261,6 +264,7 @@ public class Database {
                 statement.setString(2, prüfung.getPrüfungsform().getText());
                 statement.setInt(3, prüfung.getFachID());
                 statement.executeUpdate();
+                System.out.println("Prüfung mit ID:" + prüfung.getID() + " wurde gespeichert");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -282,11 +286,12 @@ public class Database {
                 statement.setString(2, modul.getName());
                 statement.setInt(3, modul.getStudiengangID());
                 statement.executeUpdate();
+                System.out.println("Modul mit ID:" + modul.getID() + " wurde gespeichert");
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
-
     }
 
     /**
@@ -302,6 +307,7 @@ public class Database {
                 statement.setInt(1, praktikum.getID());
                 statement.setInt(3, praktikum.getFachID());
                 statement.executeUpdate();
+                System.out.println("Praktikum mit ID:" + praktikum.getID() + " wurde gespeichert");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
