@@ -182,7 +182,7 @@ public class Database {
         //    `Semester`      int(11)   DEFAULT 0,
         //    `ECTS`          int(11)   DEFAULT NULL,
         //    `ModulID`       int(11)     NOT NULL,
-        var query = "INSERT INTO fach(FachID, FachName, Semester, ECTS, ModulID)        VALUES (?,  ?, ?, ?, ?, ?)        ON DUPLICATE KEY UPDATE                   FachName = VALUES(FachName),                   Semester = VALUES(FachSemester),                 ECTS = VALUES(ECTS),                   ModulID = VALUES(ModulID);";
+        var query = "INSERT INTO fach(FachID, FachName, Semester, ECTS, ModulID)        VALUES (?,  ?, ?, ?, ?)        ON DUPLICATE KEY UPDATE                   FachName = VALUES(FachName),                   Semester = VALUES(Semester),                 ECTS = VALUES(ECTS),                   ModulID = VALUES(ModulID);";
         Utility.getInstance().getFächer().forEach(fach -> {
             try {
                 var statement = connection.prepareStatement(query);
