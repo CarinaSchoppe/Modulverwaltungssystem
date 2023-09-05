@@ -453,7 +453,7 @@ public class Database {
         var statement = connection.createStatement();
         var result = statement.executeQuery(query);
         while (result.next()) {
-            var fach = new Fach(result.getInt("FachID"), result.getString("FachName"), result.getInt("FachSemester"), false, result.getInt("ECTS"), result.getInt("ModulID"));
+            var fach = new Fach(result.getInt("FachID"), result.getString("FachName"), result.getInt("Semester"), false, result.getInt("ECTS"), result.getInt("ModulID"));
             Utility.getInstance().getFächer().add(fach);
         }
         System.out.println("Fächer geladen!");
