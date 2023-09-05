@@ -45,9 +45,9 @@ public class MainUI extends Application implements Initializable {
     private static MainUI instance = null;
     /**
      * The addButtonFach variable represents a JavaFX Button object that is used to add a new Fach (subject) to the application.
-     *
+     * <p>
      * When this button is clicked, it triggers an action that allows the user to add a new Fach to the application.
-     *
+     * <p>
      * To use this variable, make sure to initialize it in the JavaFX controller class and connect it to the corresponding button in the UI.
      */
     @FXML
@@ -115,15 +115,15 @@ public class MainUI extends Application implements Initializable {
     /**
      * The deleteButtonFach variable represents the delete button for a specific Fach (subject).
      * This button can be used to delete the selected Fach from a list or perform any other related actions.
-     *
+     * <p>
      * Note: This is an FXML variable, which means it is associated with a UI element defined in an FXML file.
-     *       It should be injected using the @FXML annotation before accessing it.
-     *       For example: @FXML private Button deleteButtonFach;
-     *
+     * It should be injected using the @FXML annotation before accessing it.
+     * For example: @FXML private Button deleteButtonFach;
+     * <p>
      * Usage:
-     *  - Assign an event handler to this button to define what should happen when it is clicked.
-     *  - Update the button's label or icon to provide meaningful user interaction.
-     *  - Use this button's properties (e.g., disabled, visible) to control its behavior in the UI.
+     * - Assign an event handler to this button to define what should happen when it is clicked.
+     * - Update the button's label or icon to provide meaningful user interaction.
+     * - Use this button's properties (e.g., disabled, visible) to control its behavior in the UI.
      */
     @FXML
     private Button deleteButtonFach;
@@ -155,7 +155,7 @@ public class MainUI extends Application implements Initializable {
     private TableColumn<Fach, Integer> ectsColumn;
     /**
      * TableColumn representing the "Bestanden" field of a "Fach" object.
-     *
+     * <p>
      * The "Bestanden" field is represented as a BooleanProperty, indicating whether the "Fach" has been passed or not.
      * This TableColumn is used in JavaFX for displaying and editing the "Bestanden" field of "Fach" objects in a TableView.
      */
@@ -197,28 +197,28 @@ public class MainUI extends Application implements Initializable {
     @FXML
     private TableColumn<Fach, String> fachnameColumn;
     /**
-     * The modulBestandenColumn is a private TableColumn object used in an FXML file. 
+     * The modulBestandenColumn is a private TableColumn object used in an FXML file.
      * It is used to display a BooleanProperty of a Modul object in a table view.
-     *
-     * The modulBestandenColumn is not intended to be accessed directly from outside the class 
-     * where it is defined. It is only used within the FXML file for displaying the data in the 
+     * <p>
+     * The modulBestandenColumn is not intended to be accessed directly from outside the class
+     * where it is defined. It is only used within the FXML file for displaying the data in the
      * table view.
-     *
-     * The column displays the BooleanProperty value as a checkbox in the table view. The checkbox 
+     * <p>
+     * The column displays the BooleanProperty value as a checkbox in the table view. The checkbox
      * represents whether the Modul object is marked as "bestanden" (passed) or not.
-     *
+     * <p>
      * To define the modulBestandenColumn in FXML, use the following syntax:
-     *
-     *   <TableColumn fx:id="modulBestandenColumn" prefWidth="100">
-     *       <cellValueFactory>
-     *           <PropertyValueFactory property="bestanden" />
-     *       </cellValueFactory>
-     *       <cellFactory>
-     *           <CheckBoxTableCell fx:converter="com.example.BooleanPropertyStringConverter" />
-     *       </cellFactory>
-     *   </TableColumn>
-     *
-     * Note that the fx:id attribute must be set to "modulBestandenColumn" to link it with the 
+     * <p>
+     * <TableColumn fx:id="modulBestandenColumn" prefWidth="100">
+     * <cellValueFactory>
+     * <PropertyValueFactory property="bestanden" />
+     * </cellValueFactory>
+     * <cellFactory>
+     * <CheckBoxTableCell fx:converter="com.example.BooleanPropertyStringConverter" />
+     * </cellFactory>
+     * </TableColumn>
+     * <p>
+     * Note that the fx:id attribute must be set to "modulBestandenColumn" to link it with the
      * corresponding variable in the controller class.
      */
     @FXML
@@ -227,15 +227,15 @@ public class MainUI extends Application implements Initializable {
      * The modulNameColumn variable is a TableColumn that is used to display the name of a module.
      * It is defined with a generic type of Modul, which represents the data type of the cells in the column.
      * The cells in this column will display string values.
-     *
+     * <p>
      * This variable is annotated with @FXML, indicating that it is associated with a JavaFX FXML file.
      * It should be set to private to encapsulate the internal state of the class.
-     *
+     * <p>
      * Example Usage:
-     *
+     * <p>
      * // Create a new TableColumn
      * TableColumn<Modul, String> modulNameColumn = new TableColumn<>("Module Name");
-     *
+     * <p>
      * // Set the cell value factory to display the name of the module
      * modulNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
      */
@@ -263,10 +263,10 @@ public class MainUI extends Application implements Initializable {
     private Button praktikumButton;
     /**
      * The TableColumn representing the "Pruefung Bestanden" column in a TableView of Modul objects.
-     *
+     * <p>
      * This column displays whether the Pruefung (exam) for a Modul has been passed or not. The column uses a
      * BooleanProperty to represent the state of this property for each Modul.
-     *
+     * <p>
      * This TableColumn is part of a JavaFX FXML file and is annotated with @FXML to be accessible in the
      * associated controller class.
      *
@@ -279,32 +279,32 @@ public class MainUI extends Application implements Initializable {
     /**
      * The pruefungButton variable represents a button used for initiating an examination or test.
      * It is part of a graphical user interface (GUI).
-     *
+     * <p>
      * This variable is annotated with @FXML, indicating that it is associated with a specific
      * element in a JavaFX FXML file.
-     *
+     * <p>
      * To use this variable, first, it needs to be initialized properly by loading the FXML file
      * where it is defined and injecting it into the corresponding controller. Then, it can be
      * accessed using the appropriate getter or setter methods provided by the GUI framework
      * being used.
-     *
+     * <p>
      * Example usage:
-     *
+     * <p>
      * // Load the FXML file and initialize the controller
      * FXMLLoader loader = new FXMLLoader(getClass().getResource("gui.fxml"));
      * Parent root = loader.load();
      * GuiController controller = loader.getController();
-     *
+     * <p>
      * // Access the pruefungButton and set its text
      * Button pruefungButton = controller.getPruefungButton();
      * pruefungButton.setText("Start Examination");
-     *
+     * <p>
      * // Attach an event handler to the pruefungButton
      * pruefungButton.setOnAction(event -> {
-     *     // Code to handle button click event
-     *     // ...
+     * // Code to handle button click event
+     * // ...
      * });
-     *
+     * <p>
      * Note: The above example assumes that the FXML file defines a button with the id "pruefungButton".
      * The actual FXML file contents may vary depending on the specific UI design and layout.
      */
@@ -314,41 +314,41 @@ public class MainUI extends Application implements Initializable {
      * The saveButton is a JavaFX Button object used for saving data or triggering a save operation.
      * This variable is annotated with @FXML to indicate that it is defined in the FXML file and
      * injected by the JavaFX framework.
-     *
+     * <p>
      * Use the saveButton to set an event handler or perform any necessary actions when the button
      * is clicked. This can include saving form data, updating database records, or triggering any
      * other save-related functionality in your application.
-     *
+     * <p>
      * Example usage:
-     *     saveButton.setOnAction(event -> {
-     *         // Perform save operation
-     *         saveData();
-     *     });
-     *
-     *     private void saveData() {
-     *         // Implement save logic here
-     *     }
+     * saveButton.setOnAction(event -> {
+     * // Perform save operation
+     * saveData();
+     * });
+     * <p>
+     * private void saveData() {
+     * // Implement save logic here
+     * }
      */
     @FXML
     private Button saveButton;
     /**
-     * The semesterColumn variable represents a table column for displaying the semester of a Fach object. 
+     * The semesterColumn variable represents a table column for displaying the semester of a Fach object.
      * It is an instance of the TableColumn class with a generic type of Integer.
-     *
+     * <p>
      * This variable is annotated with @FXML, indicating that it is used in conjunction with JavaFX's FXML markup language
      * for defining user interfaces. It is typically associated with a column element in an FXML file.
-     *
+     * <p>
      * This TableColumn is used to display the semester value of Fach objects in a TableView. The column will
      * render the Integer value as text in the table cells.
-     *
+     * <p>
      * Example usage:
-     *
+     * <p>
      * // Create the TableColumn
      * TableColumn<Fach, Integer> semesterColumn = new TableColumn<>("Semester");
-     *
+     * <p>
      * // Set the cell value factory to retrieve the semester property from the Fach object
      * semesterColumn.setCellValueFactory(new PropertyValueFactory<>("semester"));
-     *
+     * <p>
      * // Add the column to a TableView
      * tableView.getColumns().add(semesterColumn);
      */
@@ -369,22 +369,22 @@ public class MainUI extends Application implements Initializable {
     /**
      * The studiengangText represents a JavaFX Label element used to display the name of a study program.
      * It is annotated with @FXML to indicate that it is an element of the user interface defined in an FXML file.
-     *
+     * <p>
      * This variable is private to ensure encapsulation and should only be accessed and modified by the associated controller class.
-     *
+     * <p>
      * Usage Example:
-     *
+     * <p>
      * In the associated controller class, you can access and modify the text of the studiengangText label as follows:
-     *
+     * <p>
      * // Accessing the label
      * Label label = studiengangText;
-     *
+     * <p>
      * // Setting the text of the label
      * label.setText("Computer Science");
-     *
+     * <p>
      * // Retrieving the text of the label
      * String labelText = label.getText();
-     *
+     * <p>
      * Note: The actual behavior of the studiengangText label may depend on the specific implementation in the associated FXML file and controller class.
      *
      * @see Label
@@ -395,15 +395,15 @@ public class MainUI extends Application implements Initializable {
     /**
      * The tableviewModul variable represents a JavaFX TableView control that is used to display and interact with a collection of Modul objects.
      * It is annotated with @FXML to indicate that it is injected from the FXML file.
-     *
+     * <p>
      * The TableView is a UI control used to display tabular data in a flexible and customizable way.
      * In this case, the tableviewModul variable is specifically designed to display Modul objects, which may contain different properties or attributes that can be shown in columns of the table.
-     *
+     * <p>
      * Modul is the generic type parameter provided to the TableView, indicating that this tableview will display and work with Modul objects.
      * The TableView will automatically extract the necessary data from the Modul objects using JavaFX property accessors like get methods or JavaFX properties.
-     *
+     * <p>
      * This variable allows accessing and manipulating the TableView and its associated data programmatically. It can be used to add or remove Modul objects from the table, modify their data, control the table's appearance and behavior, and register event handlers to respond to user actions or selection events.
-     *
+     * <p>
      * Note that this documentation does not include example code or use any @author and @version tags as specified in the requirements.
      *
      * @see TableView
@@ -644,7 +644,7 @@ public class MainUI extends Application implements Initializable {
 
     /**
      * Initializes the controller.
-     *
+     * <p>
      * This method is automatically called during the loading of the FXML file MainUI.fxml.
      * It verifies that all @FXML annotated fields are properly injected and throws an AssertionError if any of them is null.
      *
@@ -677,6 +677,7 @@ public class MainUI extends Application implements Initializable {
     /**
      * Starts the application by loading the main UI from the FXML file,
      * setting up the stage, and displaying the UI.
+     *
      * @param primaryStage the primary stage for the application
      * @throws IOException if an error occurs while loading the FXML file
      */
@@ -694,18 +695,20 @@ public class MainUI extends Application implements Initializable {
         //wenn okay gedrückt wird, wird ein neues modul erstellt und der name wird auf den text gesetzt
         //wenn abbrechen gedrückt wird, wird nichts gemacht
 
-        var alert = new TextInputDialog();
-        alert.setTitle("Neuer Studiengang");
-        alert.setHeaderText("Bitte geben Sie den Namen des Studiengangs ein.");
-        alert.setContentText("Name:");
-        var result = alert.showAndWait();
+        if (Utility.getInstance().getStudiengänge().isEmpty()) {
+            var alert = new TextInputDialog();
+            alert.setTitle("Neuer Studiengang");
+            alert.setHeaderText("Bitte geben Sie den Namen des Studiengangs ein.");
+            alert.setContentText("Name:");
+            var result = alert.showAndWait();
 
-        if (result.isPresent()) {
-            //erstelle einen neuen studiengang und speichere diesen in der datenbank
-            var studiengang = new Studiengang(Studiengang.getStudiengangCounter(), result.get());
-            Utility.getInstance().getStudiengänge().add(studiengang);
-            Database.getInstance().saveAllData();
+            if (result.isPresent()) {
+                //erstelle einen neuen studiengang und speichere diesen in der datenbank
+                var studiengang = new Studiengang(Studiengang.getStudiengangCounter(), result.get());
+                Utility.getInstance().getStudiengänge().add(studiengang);
+                Database.getInstance().saveAllData();
 
+            }
         }
     }
 
@@ -726,8 +729,8 @@ public class MainUI extends Application implements Initializable {
      * The initialize method is called during the view's initialization process.
      * It initializes the view by setting up the module and subject tables.
      *
-     * @param location   The location used to resolve relative paths for the root object, or null if the location is not known.
-     * @param resources  The resources used to localize the root object, or null if the root object was not localized.
+     * @param location  The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
