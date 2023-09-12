@@ -701,7 +701,11 @@ public class MainUI extends Application implements Initializable {
     private void updateTable() {
         tableviewModul.getItems().clear();
         //update the tableview checkboxes for the praktika and the prüfung
-        tableviewModul.getItems().addAll(Utility.getInstance().getModule());
+
+        //check if selected studiengang is Informatik Bsc
+        if (studiengangSelector.getSelectionModel().getSelectedItem() != null && studiengangSelector.getSelectionModel().getSelectedItem().getStudienverlaufsplan().equalsIgnoreCase("Informatik B.Sc.")) {
+            tableviewModul.getItems().addAll(Utility.getInstance().getModule());
+        }
         tableviewModul.refresh();
         tableviewFach.refresh();
     }
@@ -719,7 +723,7 @@ public class MainUI extends Application implements Initializable {
 
 
         // Text field for input
-        var alert = new TextInputDialog();
+     /*   var alert = new TextInputDialog();
         alert.setTitle("Neuer Studiengang");
         alert.setHeaderText("Bitte geben Sie den Namen des Studiengangs ein.");
         alert.setContentText("Name:");
@@ -734,7 +738,7 @@ public class MainUI extends Application implements Initializable {
             Utility.getInstance().getStudiengänge().add(studiengang);
             if (!Main.isDummyLaunch())
                 Database.getInstance().saveAllData();
-        }
+        }*/
         initModulTable();
         initFachTable();
 
@@ -780,6 +784,15 @@ public class MainUI extends Application implements Initializable {
                 return cell;
             }
         });
+        studiengangSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                // This is where your updateTable method is called
+                updateTable();
+                System.out.println("testing");
+            }
+        });
+        
+        
         modulNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         modulNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         modulNameColumn.setOnEditCommit(element -> (element.getTableView().getItems().get(
