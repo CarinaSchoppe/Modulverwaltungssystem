@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/19" fx:controller="de.lisa.studiumsorganisation.view.MainUI">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="de.lisa.studiumsorganisation.view.MainUI">
     <TableView fx:id="tableviewModul" editable="true" layoutX="31.0" layoutY="58.0" prefHeight="200.0" prefWidth="539.0">
         <columns>
             <TableColumn fx:id="modulNameColumn" prefWidth="75.0" text="ModulName"/>

@@ -27,6 +27,7 @@ import javafx.util.converter.IntegerStringConverter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -185,7 +186,7 @@ public class PrüfungsUI implements Initializable {
      * @see FXML
      */
     @FXML
-    private TableColumn<Prüfungsversuch, Date> datumColumn;
+    private TableColumn<Prüfungsversuch, LocalDate> datumColumn;
     /**
      * The pruefungNameText variable is an instance of the Label class. It is used to display the name of a specific exam.
      * This variable is annotated with the @FXML annotation, indicating that it is associated with an element defined in an FXML file.
@@ -719,20 +720,62 @@ public class PrüfungsUI implements Initializable {
                 updateTableVersuch(prüfung);
             }
         });
-        datumColumn.setCellValueFactory(new PropertyValueFactory<>("datum"));
-        datumColumn.setCellFactory(column -> new TextFieldTableCell<>(Utility.DATE_FORMATTER));
-        datumColumn.setOnEditCommit(event -> {
-            var versuch = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            versuch.setDatum(event.getNewValue());
-        });
 
-        // Configure uhrzeitColumn
-        uhrzeitColumn.setCellValueFactory(new PropertyValueFactory<>("uhrzeit"));
-        uhrzeitColumn.setCellFactory(column -> new TextFieldTableCell<>(Utility.TIME_FORMATTER));
-        uhrzeitColumn.setOnEditCommit(event -> {
-            var versuch = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            versuch.setUhrzeit(event.getNewValue());
-        });
+
+        datumColumn.setCellValueFactory(new PropertyValueFactory<>("datum"));
+        datumColumn.setCellFactory(
+                column -> new TableCell<>() {
+                    private final DatePicker datePicker = new DatePicker();
+
+                    private boolean inUpdate = false;
+
+                    {
+                        datePicker.converterProperty().set(Utility.DATE_FORMATTER);
+
+                        datePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+                            if (!inUpdate && newValue != null) {
+                                System.out.println("Selected Date: " + newValue);
+
+                                if (isEditing()) {
+                                    commitEdit(newValue);
+                                } else {
+                                    startEdit();
+                                    commitEdit(newValue);
+                                    cancelEdit();
+                                }
+                            }
+                        });
+                        datumColumn.setOnEditCommit(event -> {
+                            try {
+                                var tableView = this.getTableView(); // Tabelle holen
+                                var versuch = tableView.getSelectionModel().getSelectedItem();
+                                versuch.setDatum(event.getNewValue());
+                            } catch (NullPointerException e) {
+                                var alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Fehler");
+                                alert.setHeaderText("Kein Prüfungsversuch ausgewählt");
+                                alert.setContentText("Bitte wählen Sie einen Prüfungsversuch aus");
+                                alert.showAndWait();
+                            }
+                        });
+                        setGraphic(datePicker);
+                    }
+
+                    @Override
+                    protected void updateItem(LocalDate date, boolean empty) {
+                        inUpdate = true;
+                        super.updateItem(date, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            datePicker.setValue(date);
+                            setGraphic(datePicker);
+                        }
+                        inUpdate = false;
+                    }
+                }
+        );
+
 
     }
 

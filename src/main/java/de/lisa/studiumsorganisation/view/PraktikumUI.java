@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
@@ -287,7 +286,7 @@ public class PraktikumUI implements Initializable {
      * tableView.getColumns().add(datumColumn);
      */
     @FXML
-    private TableColumn<Praktikumstermin, Date> datumColumn;
+    private TableColumn<Praktikumstermin, LocalDate> datumColumn;
     /**
      * The TableColumn for the "terminBestanden" property of the Praktikumstermin class.
      * It represents whether the practical session is completed or not.
@@ -681,11 +680,58 @@ public class PraktikumUI implements Initializable {
         });
 
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("datum"));
-        datumColumn.setCellFactory(column -> new TextFieldTableCell<>(Utility.DATE_FORMATTER));
-        datumColumn.setOnEditCommit(event -> {
-            var praktikumsTermin = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            praktikumsTermin.setDatum(event.getNewValue());
-        });
+        datumColumn.setCellFactory(
+                column -> new TableCell<>() {
+                    private final DatePicker datePicker = new DatePicker();
+
+                    private boolean inUpdate = false;
+
+                    {
+                        datePicker.converterProperty().set(Utility.DATE_FORMATTER);
+
+                        datePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+                            if (!inUpdate && newValue != null) {
+                                System.out.println("Selected Date: " + newValue);
+
+                                if (isEditing()) {
+                                    commitEdit(newValue);
+                                } else {
+                                    startEdit();
+                                    commitEdit(newValue);
+                                    cancelEdit();
+                                }
+                            }
+                        });
+                        datumColumn.setOnEditCommit(event -> {
+                            try {
+                                var tableView = this.getTableView(); // Tabelle holen
+                                var versuch = tableView.getSelectionModel().getSelectedItem();
+                                versuch.setDatum(event.getNewValue());
+                            } catch (NullPointerException e) {
+                                var alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Fehler");
+                                alert.setHeaderText("Kein Praktikumstermin ausgewählt");
+                                alert.setContentText("Bitte wählen Sie einen Praktikumstermin aus, dessen Datum Sie ändern möchten.");
+                                alert.showAndWait();
+                            }
+                        });
+                        setGraphic(datePicker);
+                    }
+
+                    @Override
+                    protected void updateItem(LocalDate date, boolean empty) {
+                        inUpdate = true;
+                        super.updateItem(date, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            datePicker.setValue(date);
+                            setGraphic(datePicker);
+                        }
+                        inUpdate = false;
+                    }
+                }
+        );
 
         // Configure uhrzeitColumn
         uhrzeitColumn.setCellValueFactory(new PropertyValueFactory<>("uhrzeit"));

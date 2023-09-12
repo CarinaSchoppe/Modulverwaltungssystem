@@ -212,8 +212,8 @@ public class Database {
             try {
                 var statement = connection.prepareStatement(query);
                 statement.setInt(1, prüfungsversuch.getID());
-                //convert java.util.date new Date(prüfungsversuch.getDatum()) to java.sql.date
-                statement.setDate(2, new Date(prüfungsversuch.getDatum().getTime()));
+                //convert LocalDate to SQLDate
+                statement.setDate(2, Date.valueOf(prüfungsversuch.getDatum()));
                 statement.setTime(3, prüfungsversuch.getUhrzeit());
                 statement.setBoolean(4, prüfungsversuch.isBestanden());
                 statement.setFloat(5, prüfungsversuch.getNote());
@@ -242,8 +242,8 @@ public class Database {
                 var statement = connection.prepareStatement(query);
                 statement.setInt(1, praktikumstermin.getID());
                 statement.setInt(2, praktikumstermin.getPraktikumID());
-                //convert java.util.date new Date(praktikumstermin.getDatum()) to java.sql.date
-                statement.setDate(3, new Date(praktikumstermin.getDatum().getTime()));
+                //convert java.util.LocalDate to java.sql.date
+                statement.setDate(3, Date.valueOf(praktikumstermin.getDatum()));
                 statement.setTime(4, praktikumstermin.getUhrzeit());
                 statement.setBoolean(5, praktikumstermin.isBestanden());
                 statement.setInt(6, praktikumstermin.getTerminnummer());

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -38,7 +39,7 @@ public class Praktikumstermin extends Basemodel {
      * This variable is intended to store and manipulate dates.
      * It is recommended to use this variable with care and ensure that its value is always up-to-date.
      */
-    private Date datum;
+    private LocalDate datum;
     /**
      * Represents the time.
      */
@@ -57,7 +58,7 @@ public class Praktikumstermin extends Basemodel {
     public Praktikumstermin(int ID, int praktikumID, Date datum, Time uhrzeit, boolean bestanden, int terminnummer) {
         super(ID);
         this.praktikumID = praktikumID;
-        this.datum = datum;
+        this.datum = Utility.getInstance().convertDateToLocalDate(datum);
         this.uhrzeit = uhrzeit;
         this.terminnummer = terminnummer;
         bestandenProperty = new SimpleBooleanProperty(bestanden);

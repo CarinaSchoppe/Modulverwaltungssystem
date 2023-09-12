@@ -28,7 +28,7 @@ public class Main {
      * ...
      * }
      */
-    private static final boolean dummyLaunch = false;
+    private static final boolean dummyLaunch = true;
 
     /**
      * Checks if the current launch is a dummy launch.

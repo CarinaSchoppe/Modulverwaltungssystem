@@ -5,6 +5,7 @@ import javafx.util.StringConverter;
 import lombok.Getter;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -30,17 +31,20 @@ public class Utility {
      *     Date date = DATE_FORMATTER.fromString(dateStr);
      * }</pre>
      */
-    public static final StringConverter<Date> DATE_FORMATTER = new StringConverter<>() {
+    public static final StringConverter<LocalDate> DATE_FORMATTER = new StringConverter<>() {
         @Override
-        public String toString(Date object) {
+        public String toString(LocalDate object) {
             //erhält ein Date Objekt und gibt es als String zurück im format dd.MM.yyyy
             return object.toString().substring(0, 10);
         }
 
         @Override
-        public Date fromString(String string) {
+        public LocalDate fromString(String string) {
             //bekommt einen string im format dd.MM.yyyy und gibt ein Date Objekt zurück
-            return new Date(string);
+            var d = Integer.parseInt(string.substring(0, 2));
+            var m = Integer.parseInt(string.substring(3, 5));
+            var y = Integer.parseInt(string.substring(6, 10));
+            return LocalDate.of(y, m, d);
         }
     };
     /**
@@ -150,14 +154,14 @@ public class Utility {
     private final HashSet<Prüfung> prüfungen;
     /**
      * A private final HashSet that stores Praktikum objects.
-     *
+     * <p>
      * Praktika represents a collection of Praktikum objects.
      */
     private final HashSet<Praktikum> praktika;
     /**
      * Represents a set of academic subjects.
-     *
-     * This class encapsulates a set of subjects, represented as a HashSet of type Fach. 
+     * <p>
+     * This class encapsulates a set of subjects, represented as a HashSet of type Fach.
      * It provides operations to manipulate and access the set of subjects.
      */
     private final HashSet<Fach> fächer;
@@ -178,7 +182,7 @@ public class Utility {
 
     /**
      * Private constructor for the Utility class.
-     *
+     * <p>
      * This constructor initializes various sets used by the utility class,
      * including module, prüfungen, praktika, fächer, praktikumstermine,
      * prüfungsversuche, and studiengänge. It also sets the instance variable to
@@ -197,7 +201,7 @@ public class Utility {
 
     /**
      * Returns the instance of the Utility class.
-     *
+     * <p>
      * If the instance is not already created, a new instance is created and returned.
      * Otherwise, the existing instance is returned.
      *
@@ -211,4 +215,7 @@ public class Utility {
     }
 
 
+    public LocalDate convertDateToLocalDate(Date datum) {
+        return datum.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+    }
 }

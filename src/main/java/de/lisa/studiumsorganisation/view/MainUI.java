@@ -598,6 +598,9 @@ public class MainUI extends Application implements Initializable {
         //create and add a new modul to the tableview
         var modul = new Modul(Modul.getModulCounter(), "Neues Modul", false, 0);
         Utility.getInstance().getModule().add(modul);
+        //add a fach with the same name as the modul
+        var fach = new Fach(Fach.getFachCounter(), modul.getName(), 0, false, 0, modul.getID());
+        Utility.getInstance().getFächer().add(fach);
         updateTable();
     }
 
@@ -676,11 +679,7 @@ public class MainUI extends Application implements Initializable {
 
     /**
      * Starts the application by loading the main UI from the FXML file,
-     * setting up the stage, and displaying the UI.
-     *
-     * @param primaryStage the primary stage for the application
-     * @throws IOException if an error occurs while loading the FXML file
-     */
+     **/
     @Override
     public void start(Stage primaryStage) throws IOException {
         var loader = new FXMLLoader(getClass().getResource("/fxml/MainUI.fxml"));
@@ -691,25 +690,7 @@ public class MainUI extends Application implements Initializable {
         initialize();
         primaryStage.show();
 
-        //starte eine popup mit texteingabe und einem okay feld 
-        //wenn okay gedrückt wird, wird ein neues modul erstellt und der name wird auf den text gesetzt
-        //wenn abbrechen gedrückt wird, wird nichts gemacht
 
-        if (Utility.getInstance().getStudiengänge().isEmpty()) {
-            var alert = new TextInputDialog();
-            alert.setTitle("Neuer Studiengang");
-            alert.setHeaderText("Bitte geben Sie den Namen des Studiengangs ein.");
-            alert.setContentText("Name:");
-            var result = alert.showAndWait();
-
-            if (result.isPresent()) {
-                //erstelle einen neuen studiengang und speichere diesen in der datenbank
-                var studiengang = new Studiengang(Studiengang.getStudiengangCounter(), result.get());
-                Utility.getInstance().getStudiengänge().add(studiengang);
-                Database.getInstance().saveAllData();
-
-            }
-        }
     }
 
 
@@ -737,6 +718,28 @@ public class MainUI extends Application implements Initializable {
         instance = this;
         initModulTable();
         initFachTable();
+
+        //starte eine popup mit texteingabe und einem okay feld 
+        //wenn okay gedrückt wird, wird ein neues modul erstellt und der name wird auf den text gesetzt
+        //wenn abbrechen gedrückt wird, wird nichts gemacht
+
+        if (Utility.getInstance().getStudiengänge().isEmpty()) {
+            var alert = new TextInputDialog();
+            alert.setTitle("Neuer Studiengang");
+            alert.setHeaderText("Bitte geben Sie den Namen des Studiengangs ein.");
+            alert.setContentText("Name:");
+            var result = alert.showAndWait();
+
+            if (result.isPresent()) {
+                //erstelle einen neuen studiengang und speichere diesen in der datenbank
+                var studiengang = new Studiengang(Studiengang.getStudiengangCounter(), result.get());
+                Utility.getInstance().getStudiengänge().add(studiengang);
+                //set the text in the label
+                studiengangText.setText(studiengang.getStudienverlaufsplan());
+                if (!Main.isDummyLaunch())
+                    Database.getInstance().saveAllData();
+            }
+        }
     }
 
     /**
