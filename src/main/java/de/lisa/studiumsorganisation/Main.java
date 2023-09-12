@@ -2,6 +2,7 @@ package de.lisa.studiumsorganisation;
 
 import de.lisa.studiumsorganisation.controller.Database;
 import de.lisa.studiumsorganisation.view.MainUI;
+import de.lisa.studiumsorganisation.webscraper.PDFReader;
 
 /**
  * The Main class is responsible for launching the application.
@@ -49,7 +50,12 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+/*        Webscraper.scrapeWebPage("https://www.hochschule-bochum.de/studium-lehre/studienangebote/masterstudiengaenge/");
+        Webscraper.scrapeWebPage("https://www.hochschule-bochum.de/ba-studium/");*/
+        PDFReader.analysePDFFiles();
+        System.out.println(PDFReader.allModules.size());
         //lade Datenbank
+
         if (dummyLaunch) {
             System.out.println("Dummy data loaded");
         }
@@ -58,7 +64,6 @@ public class Main {
         //starte UI
         MainUI.start(args);
 
-        //TODO: boolean sind nicht gespeichert bei der UI
     }
 
 

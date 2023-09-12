@@ -19,6 +19,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
@@ -366,32 +367,7 @@ public class MainUI extends Application implements Initializable {
     @FXML
     private TableView<Fach> tableviewFach;
 
-    /**
-     * The studiengangText represents a JavaFX Label element used to display the name of a study program.
-     * It is annotated with @FXML to indicate that it is an element of the user interface defined in an FXML file.
-     * <p>
-     * This variable is private to ensure encapsulation and should only be accessed and modified by the associated controller class.
-     * <p>
-     * Usage Example:
-     * <p>
-     * In the associated controller class, you can access and modify the text of the studiengangText label as follows:
-     * <p>
-     * // Accessing the label
-     * Label label = studiengangText;
-     * <p>
-     * // Setting the text of the label
-     * label.setText("Computer Science");
-     * <p>
-     * // Retrieving the text of the label
-     * String labelText = label.getText();
-     * <p>
-     * Note: The actual behavior of the studiengangText label may depend on the specific implementation in the associated FXML file and controller class.
-     *
-     * @see Label
-     * @see FXML
-     */
-    @FXML
-    private Label studiengangText;
+
     /**
      * The tableviewModul variable represents a JavaFX TableView control that is used to display and interact with a collection of Modul objects.
      * It is annotated with @FXML to indicate that it is injected from the FXML file.
@@ -421,6 +397,30 @@ public class MainUI extends Application implements Initializable {
         return instance;
     }
 
+
+    /**
+     * The studiengangSelector variable is a JavaFX ComboBox used for selecting a Studiengang object.
+     * <p>
+     * The ComboBox allows the user to choose from a list of available Studiengang options.
+     * The selected Studiengang object can be retrieved using the getValue() method of the ComboBox.
+     * <p>
+     * Example usage:
+     * <p>
+     * // Initialize the studiengangSelector ComboBox
+     * studiengangSelector = new ComboBox<>();
+     * <p>
+     * // Add Studiengang options to the ComboBox
+     * studiengangSelector.getItems().addAll(studiengang1, studiengang2, studiengang3);
+     * <p>
+     * // Retrieve the selected Studiengang object
+     * Studiengang selectedStudiengang = studiengangSelector.getValue();
+     * <p>
+     * Note:
+     * - The ComboBox must be properly populated with Studiengang options before using getValue() method.
+     * - If no Studiengang option is selected, the getValue() method will return null.
+     */
+    @FXML
+    private ComboBox<Studiengang> studiengangSelector;
     /**
      * Starts the application.
      *
@@ -672,9 +672,9 @@ public class MainUI extends Application implements Initializable {
         assert pruefungButton != null : "fx:id=\"pruefungButton\" was not injected: check your FXML file 'MainUI.fxml'.";
         assert saveButton != null : "fx:id=\"saveButton\" was not injected: check your FXML file 'MainUI.fxml'.";
         assert semesterColumn != null : "fx:id=\"semesterColumn\" was not injected: check your FXML file 'MainUI.fxml'.";
-        assert studiengangText != null : "fx:id=\"studiengangText\" was not injected: check your FXML file 'MainUI.fxml'.";
         assert tableviewFach != null : "fx:id=\"tableviewFach\" was not injected: check your FXML file 'MainUI.fxml'.";
         assert tableviewModul != null : "fx:id=\"tableviewModul\" was not injected: check your FXML file 'MainUI.fxml'.";
+        assert studiengangSelector != null : "fx:id=\"studiengangSelector\" was not injected: check your FXML file 'MainUI.fxml'.";
     }
 
     /**
@@ -716,30 +716,28 @@ public class MainUI extends Application implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
+
+
+        // Text field for input
+        var alert = new TextInputDialog();
+        alert.setTitle("Neuer Studiengang");
+        alert.setHeaderText("Bitte geben Sie den Namen des Studiengangs ein.");
+        alert.setContentText("Name:");
+        alert.showAndWait();
+
+        var result = alert.getResult();
+        if (!result.isEmpty()) {
+            // Check if the input field is empty
+            // If input is not empty, use the input from the dialog
+
+            var studiengang = new Studiengang(Studiengang.getStudiengangCounter(), result);
+            Utility.getInstance().getStudiengänge().add(studiengang);
+            if (!Main.isDummyLaunch())
+                Database.getInstance().saveAllData();
+        }
         initModulTable();
         initFachTable();
 
-        //starte eine popup mit texteingabe und einem okay feld 
-        //wenn okay gedrückt wird, wird ein neues modul erstellt und der name wird auf den text gesetzt
-        //wenn abbrechen gedrückt wird, wird nichts gemacht
-
-        if (Utility.getInstance().getStudiengänge().isEmpty()) {
-            var alert = new TextInputDialog();
-            alert.setTitle("Neuer Studiengang");
-            alert.setHeaderText("Bitte geben Sie den Namen des Studiengangs ein.");
-            alert.setContentText("Name:");
-            var result = alert.showAndWait();
-
-            if (result.isPresent()) {
-                //erstelle einen neuen studiengang und speichere diesen in der datenbank
-                var studiengang = new Studiengang(Studiengang.getStudiengangCounter(), result.get());
-                Utility.getInstance().getStudiengänge().add(studiengang);
-                //set the text in the label
-                studiengangText.setText(studiengang.getStudienverlaufsplan());
-                if (!Main.isDummyLaunch())
-                    Database.getInstance().saveAllData();
-            }
-        }
     }
 
     /**
@@ -755,6 +753,33 @@ public class MainUI extends Application implements Initializable {
      * Finally, the method calls the updateTable method.
      */
     private void initModulTable() {
+
+
+        //in the studiengangSelector should be the name of the Studiengang
+
+        studiengangSelector.getItems().addAll(Utility.getInstance().getStudiengänge());
+        studiengangSelector.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<Studiengang> call(ListView<Studiengang> p) {
+
+                final ListCell<Studiengang> cell = new ListCell<>() {
+
+                    @Override
+                    protected void updateItem(Studiengang t, boolean bln) {
+                        super.updateItem(t, bln);
+
+                        if (t != null) {
+                            setText(t.getStudienverlaufsplan());
+                        } else {
+                            setText(null);
+                        }
+                    }
+
+                };
+
+                return cell;
+            }
+        });
         modulNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         modulNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         modulNameColumn.setOnEditCommit(element -> (element.getTableView().getItems().get(

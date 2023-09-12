@@ -63,4 +63,9 @@ public class Studiengang extends Basemodel {
     public static int getStudiengangCounter() {
         return studiengangCounter;
     }
+
+    @Override
+    public String toString() {
+        return studienverlaufsplan;
+    }
 }
