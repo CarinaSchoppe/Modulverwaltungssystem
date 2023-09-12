@@ -1,11 +1,13 @@
 package de.lisa.studiumsorganisation.util;
 
 import de.lisa.studiumsorganisation.model.*;
+import javafx.scene.control.Alert;
 import javafx.util.StringConverter;
 import lombok.Getter;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -41,10 +43,19 @@ public class Utility {
         @Override
         public LocalDate fromString(String string) {
             //bekommt einen string im format dd.MM.yyyy und gibt ein Date Objekt zurück
-            var d = Integer.parseInt(string.substring(0, 2));
-            var m = Integer.parseInt(string.substring(3, 5));
-            var y = Integer.parseInt(string.substring(6, 10));
-            return LocalDate.of(y, m, d);
+            try {
+                var d = Integer.parseInt(string.substring(0, 2));
+                var m = Integer.parseInt(string.substring(3, 5));
+                var y = Integer.parseInt(string.substring(6, 10));
+                return LocalDate.of(y, m, d);
+            } catch (NumberFormatException e) {
+                var alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Fehler");
+                alert.setHeaderText("Ungültige Eingabe");
+                alert.setContentText("Bitte geben Sie ein gültiges Datum ein. dd.MM.yyyy");
+                alert.showAndWait();
+                return null;
+            }
         }
     };
     /**
@@ -55,20 +66,28 @@ public class Utility {
      *
      * @since (insert version number)
      */
-    public static final StringConverter<Time> TIME_FORMATTER = new StringConverter<>() {
+    public static final StringConverter<LocalTime> TIME_FORMATTER = new StringConverter<>() {
         @Override
-        public String toString(Time object) {
+        public String toString(LocalTime object) {
             //erhält ein Time Objekt und gibt es als String zurück im format hh:mm:sss
             return object.toString().substring(0, 8);
         }
 
         @Override
-        public Time fromString(String string) {
+        public LocalTime fromString(String string) {
             //bekommt einen string im format hh:mm:sss und gibt ein Time Objekt zurück
-            var h = Integer.parseInt(string.substring(0, 2));
-            var m = Integer.parseInt(string.substring(3, 5));
-            var s = Integer.parseInt(string.substring(6, 8));
-            return new Time(h, m, s);
+            try {
+                var h = Integer.parseInt(string.substring(0, 2));
+                var m = Integer.parseInt(string.substring(3, 5));
+                return LocalTime.of(h, m, 00);
+            } catch (NumberFormatException e) {
+                var alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Fehler");
+                alert.setHeaderText("Ungültige Eingabe");
+                alert.setContentText("Bitte geben Sie eine gültige Uhrzeit ein. hh:mm");
+                alert.showAndWait();
+                return null;
+            }
 
         }
     };
@@ -217,5 +236,9 @@ public class Utility {
 
     public LocalDate convertDateToLocalDate(Date datum) {
         return datum.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public LocalTime convertTimeToLocalTime(Time uhrzeit) {
+        return LocalTime.of(uhrzeit.getHours(), uhrzeit.getMinutes(), uhrzeit.getSeconds());
     }
 }

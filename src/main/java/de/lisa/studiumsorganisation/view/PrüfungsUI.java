@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -293,7 +294,7 @@ public class PrüfungsUI implements Initializable {
      * });
      */
     @FXML
-    private TableColumn<Prüfungsversuch, Time> uhrzeitColumn;
+    private TableColumn<Prüfungsversuch, LocalTime> uhrzeitColumn;
     /**
      * TableView representing a list of Prüfung objects.
      * <p>
@@ -776,7 +777,12 @@ public class PrüfungsUI implements Initializable {
                 }
         );
 
-
+        uhrzeitColumn.setCellValueFactory(new PropertyValueFactory<>("uhrzeit"));
+        uhrzeitColumn.setCellFactory(TextFieldTableCell.forTableColumn(Utility.TIME_FORMATTER));
+        uhrzeitColumn.setOnEditCommit(event -> {
+            var versuch = event.getRowValue();
+            versuch.setUhrzeit(event.getNewValue());
+        });
     }
 
     /**

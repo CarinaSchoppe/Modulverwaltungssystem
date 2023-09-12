@@ -3,10 +3,7 @@ package de.lisa.studiumsorganisation.controller;
 import de.lisa.studiumsorganisation.model.*;
 import de.lisa.studiumsorganisation.util.Utility;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * The Database class represents a database connection and provides methods to save and load data from the database.
@@ -214,7 +211,7 @@ public class Database {
                 statement.setInt(1, prüfungsversuch.getID());
                 //convert LocalDate to SQLDate
                 statement.setDate(2, Date.valueOf(prüfungsversuch.getDatum()));
-                statement.setTime(3, prüfungsversuch.getUhrzeit());
+                statement.setTime(3, Time.valueOf(prüfungsversuch.getUhrzeit()));
                 statement.setBoolean(4, prüfungsversuch.isBestanden());
                 statement.setFloat(5, prüfungsversuch.getNote());
                 statement.setInt(6, prüfungsversuch.getPrüfungsID());
@@ -244,7 +241,7 @@ public class Database {
                 statement.setInt(2, praktikumstermin.getPraktikumID());
                 //convert java.util.LocalDate to java.sql.date
                 statement.setDate(3, Date.valueOf(praktikumstermin.getDatum()));
-                statement.setTime(4, praktikumstermin.getUhrzeit());
+                statement.setTime(4, Time.valueOf(praktikumstermin.getUhrzeit()));
                 statement.setBoolean(5, praktikumstermin.isBestanden());
                 statement.setInt(6, praktikumstermin.getTerminnummer());
                 statement.executeUpdate();

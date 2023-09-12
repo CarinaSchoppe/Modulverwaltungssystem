@@ -13,6 +13,7 @@ dependencies{
     testCompileOnly("org.projectlombok:lombok:+")
     testAnnotationProcessor("org.projectlombok:lombok:+")
     implementation("mysql:mysql-connector-java:+")
+    implementation("com.jfoenix:jfoenix:9.0.10")
 }
 
 repositories{

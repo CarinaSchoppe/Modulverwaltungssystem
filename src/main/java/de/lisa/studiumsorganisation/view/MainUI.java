@@ -770,7 +770,16 @@ public class MainUI extends Application implements Initializable {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
                     var modul = getTableView().getItems().get(getIndex());
                     checkBox.setSelected(modul.getPrüfungBestanden());
-                    checkBox.setOnAction(e -> modul.setPrüfungenBestanden(checkBox.isSelected()));
+                    checkBox.setOnAction(e -> {
+                        modul.setPrüfungenBestanden(checkBox.isSelected());
+                        var module = Utility.getInstance().getModule();
+                        //get ects of all module and all fächer
+                        var ects = module.stream().mapToInt(modul1 -> modul1.getFächer().stream().mapToInt(Fach::getCredits).sum()).sum();
+                        //get ects of all module and all fächer that are bestanden
+                        var bestanden = module.stream().mapToInt(modul1 -> modul1.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum()).sum();
+
+                        ectsText.setText(bestanden + " / " + ects);
+                    });
                 }
             }
         });
@@ -860,7 +869,16 @@ public class MainUI extends Application implements Initializable {
                     CheckBox checkBox = (CheckBox) this.getGraphic();
                     var fach = getTableView().getItems().get(getIndex());
                     checkBox.setSelected(fach.isBestanden());
-                    checkBox.setOnAction(e -> fach.setBestanden(checkBox.isSelected()));
+                    checkBox.setOnAction(e -> {
+                        fach.setBestanden(checkBox.isSelected());
+                        var module = Utility.getInstance().getModule();
+                        //get ects of all module and all fächer
+                        var ects = module.stream().mapToInt(modul1 -> modul1.getFächer().stream().mapToInt(Fach::getCredits).sum()).sum();
+                        //get ects of all module and all fächer that are bestanden
+                        var bestanden = module.stream().mapToInt(modul1 -> modul1.getFächer().stream().filter(Fach::isBestanden).mapToInt(Fach::getCredits).sum()).sum();
+
+                        ectsText.setText(bestanden + " / " + ects);
+                    });
                 }
             }
         });

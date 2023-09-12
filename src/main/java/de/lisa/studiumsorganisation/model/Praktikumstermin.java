@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 /**
@@ -43,7 +44,7 @@ public class Praktikumstermin extends Basemodel {
     /**
      * Represents the time.
      */
-    private Time uhrzeit;
+    private LocalTime uhrzeit;
 
     private int terminnummer;
     /**
@@ -59,7 +60,7 @@ public class Praktikumstermin extends Basemodel {
         super(ID);
         this.praktikumID = praktikumID;
         this.datum = Utility.getInstance().convertDateToLocalDate(datum);
-        this.uhrzeit = uhrzeit;
+        this.uhrzeit = Utility.getInstance().convertTimeToLocalTime(uhrzeit);
         this.terminnummer = terminnummer;
         bestandenProperty = new SimpleBooleanProperty(bestanden);
         if (ID >= praktikumsterminCounter) praktikumsterminCounter = ID + 1;

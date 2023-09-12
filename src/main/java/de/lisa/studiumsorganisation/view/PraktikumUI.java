@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
@@ -317,7 +319,7 @@ public class PraktikumUI implements Initializable {
      */
 
     @FXML
-    private TableColumn<Praktikumstermin, Time> uhrzeitColumn;
+    private TableColumn<Praktikumstermin, LocalTime> uhrzeitColumn;
     /**
      * The TableView control represents a control used to display and manipulate tabular data.
      *
@@ -419,10 +421,9 @@ public class PraktikumUI implements Initializable {
             return;
         }
 
-        var date = LocalDate.now();
-        //convert date to a Date.class object
-        var time = Time.valueOf("00:00:00");
-        var versuch = new Praktikumstermin(Praktikumstermin.getPraktikumsterminCounter(), praktikum.getID(), java.sql.Date.valueOf(date), time, false, 0);
+        var date = new Date();
+        Time time = new Time(date.getTime());
+        var versuch = new Praktikumstermin(Praktikumstermin.getPraktikumsterminCounter(), praktikum.getID(), date, time, false, 0);
         Utility.getInstance().getPraktikumstermine().add(versuch);
         praktikum.isBestanden();
         updateTerminTable(praktikum);
@@ -735,10 +736,10 @@ public class PraktikumUI implements Initializable {
 
         // Configure uhrzeitColumn
         uhrzeitColumn.setCellValueFactory(new PropertyValueFactory<>("uhrzeit"));
-        uhrzeitColumn.setCellFactory(column -> new TextFieldTableCell<>(Utility.TIME_FORMATTER));
+        uhrzeitColumn.setCellFactory(TextFieldTableCell.forTableColumn(Utility.TIME_FORMATTER));
         uhrzeitColumn.setOnEditCommit(event -> {
-            var praktikumsTermin = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            praktikumsTermin.setUhrzeit(event.getNewValue());
+            var versuch = event.getRowValue();
+            versuch.setUhrzeit(event.getNewValue());
         });
     }
 

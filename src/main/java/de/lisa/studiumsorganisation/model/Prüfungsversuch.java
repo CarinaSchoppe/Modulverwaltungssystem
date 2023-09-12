@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 /**
@@ -52,7 +53,7 @@ public class Prüfungsversuch extends Basemodel {
     /**
      * Represents the time of day.
      */
-    private Time uhrzeit;
+    private LocalTime uhrzeit;
     /**
      * The note variable represents a floating point value that stores the note value.
      *
@@ -107,7 +108,7 @@ public class Prüfungsversuch extends Basemodel {
     public Prüfungsversuch(int ID, Date datum, Time uhrzeit, boolean bestanden, float note, int prüfungsID, int versuchsnummer) {
         super(ID);
         this.datum = Utility.getInstance().convertDateToLocalDate(datum);
-        this.uhrzeit = uhrzeit;
+        this.uhrzeit = Utility.getInstance().convertTimeToLocalTime(uhrzeit);
         this.note = note;
         this.prüfungsID = prüfungsID;
         this.versuchsnummer = versuchsnummer;
